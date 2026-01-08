@@ -157,7 +157,7 @@ class AnalyticsDemoSeeder extends Seeder
                 'impact_value' => (450 - 280) * ($product->stock_quantity ?? 10),
                 'status' => 'resolved',
                 'detected_at' => now()->subDays(5),
-                'resolved_at' => now()->subDays(4),
+                'reviewed_at' => now()->subDays(4),
                 'resolution_notes' => 'Promotion validée par le directeur pour écouler le stock avant renouvellement.',
             ]);
         }
@@ -180,7 +180,7 @@ class AnalyticsDemoSeeder extends Seeder
                 'impact_value' => 2 * 25,
                 'status' => 'dismissed',
                 'detected_at' => now()->subDays(10),
-                'resolved_at' => now()->subDays(9),
+                'reviewed_at' => now()->subDays(9),
                 'resolution_notes' => 'Écart normal dû à la casse. Ajustement effectué.',
             ]);
         }
