@@ -6,6 +6,8 @@ use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\BillsController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\OpsStatusController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\PurchasesController;
 use App\Http\Controllers\ReplenishmentController;
@@ -99,5 +101,23 @@ Route::middleware('auth')->group(function () {
         Route::get('/export', [AuditLogController::class, 'export'])->name('export');
         Route::get('/timeline', [AuditLogController::class, 'entityTimeline'])->name('timeline');
         Route::get('/{auditLog}', [AuditLogController::class, 'show'])->name('show');
+    });
+
+    // Notifications
+    Route::prefix('notifications')->name('notifications.')->group(function () {
+        Route::get('/', [NotificationController::class, 'index'])->name('index');
+        Route::post('/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('mark-all-read');
+        Route::post('/{notification}/read', [NotificationController::class, 'markAsRead'])->name('read');
+        Route::post('/{notification}/unread', [NotificationController::class, 'markAsUnread'])->name('unread');
+        Route::delete('/{notification}', [NotificationController::class, 'destroy'])->name('destroy');
+        // API endpoints for navbar
+        Route::get('/api/unread-count', [NotificationController::class, 'unreadCount'])->name('api.unread-count');
+        Route::get('/api/recent', [NotificationController::class, 'recent'])->name('api.recent');
+    });
+
+    // Ops Status
+    Route::prefix('ops')->name('ops.')->group(function () {
+        Route::get('/status', [OpsStatusController::class, 'index'])->name('status');
+        Route::post('/trigger/{jobName}', [OpsStatusController::class, 'triggerJob'])->name('trigger');
     });
 });

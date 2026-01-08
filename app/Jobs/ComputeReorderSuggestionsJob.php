@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\JobRun;
 use App\Services\Replenishment\ReorderCalculationService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -24,14 +25,16 @@ class ComputeReorderSuggestionsJob implements ShouldQueue
      */
     public int $timeout = 300;
 
+    protected ?JobRun $jobRun = null;
+
     /**
      * Execute the job.
      */
     public function handle(ReorderCalculationService $service): void
     {
-        Log::info('ComputeReorderSuggestionsJob: Starting reorder suggestion computation');
+        $this->jobRun = JobRun::startRun(JobRun::JOB_REORDER_SUGGESTIONS, JobRun::GROUP_REORDER);
 
-        $startTime = microtime(true);
+        Log::info('ComputeReorderSuggestionsJob: Starting reorder suggestion computation');
 
         try {
             // Compute suggestions for all products
@@ -44,14 +47,18 @@ class ComputeReorderSuggestionsJob implements ShouldQueue
             // Save to database
             $savedCount = $service->saveAllSuggestions($suggestions);
 
-            $elapsed = round(microtime(true) - $startTime, 2);
+            $this->jobRun->complete($savedCount, [
+                'suggestions_count' => count($suggestions),
+                'saved_count' => $savedCount,
+            ]);
 
             Log::info('ComputeReorderSuggestionsJob: Completed', [
                 'saved_count' => $savedCount,
-                'elapsed_seconds' => $elapsed,
             ]);
 
         } catch (\Exception $e) {
+            $this->jobRun?->fail($e->getMessage());
+
             Log::error('ComputeReorderSuggestionsJob: Failed', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
@@ -66,6 +73,8 @@ class ComputeReorderSuggestionsJob implements ShouldQueue
      */
     public function failed(\Throwable $exception): void
     {
+        $this->jobRun?->fail($exception->getMessage());
+
         Log::error('ComputeReorderSuggestionsJob: Job failed after retries', [
             'error' => $exception->getMessage(),
         ]);

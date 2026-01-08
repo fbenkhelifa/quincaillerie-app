@@ -6,6 +6,7 @@ use App\Models\AnomalyFinding;
 use App\Models\Bill;
 use App\Models\BillItem;
 use App\Models\InventoryMovement;
+use App\Models\JobRun;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
@@ -23,6 +24,8 @@ class DetectAnomaliesJob implements ShouldQueue
 
     protected Carbon $analysisDate;
     protected array $thresholds;
+    protected ?JobRun $jobRun = null;
+    protected int $anomaliesDetected = 0;
 
     public function __construct(?Carbon $analysisDate = null, array $thresholds = [])
     {
@@ -39,6 +42,8 @@ class DetectAnomaliesJob implements ShouldQueue
 
     public function handle(): void
     {
+        $this->jobRun = JobRun::startRun(JobRun::JOB_ANOMALY_DETECTION, JobRun::GROUP_ANOMALY);
+
         Log::info('Starting anomaly detection job', ['date' => $this->analysisDate->format('Y-m-d')]);
 
         try {
@@ -49,11 +54,26 @@ class DetectAnomaliesJob implements ShouldQueue
             $this->detectDeadStock();
             $this->detectUnusualVoids();
 
-            Log::info('Anomaly detection job completed');
+            $this->jobRun->complete($this->anomaliesDetected, [
+                'date' => $this->analysisDate->format('Y-m-d'),
+                'anomalies_detected' => $this->anomaliesDetected,
+            ]);
+
+            Log::info('Anomaly detection job completed', ['anomalies_detected' => $this->anomaliesDetected]);
         } catch (\Exception $e) {
+            $this->jobRun?->fail($e->getMessage());
             Log::error('Anomaly detection job failed', ['error' => $e->getMessage()]);
             throw $e;
         }
+    }
+
+    public function failed(\Throwable $exception): void
+    {
+        $this->jobRun?->fail($exception->getMessage());
+
+        Log::error('DetectAnomaliesJob: Job failed after retries', [
+            'error' => $exception->getMessage(),
+        ]);
     }
 
     /**
@@ -99,6 +119,7 @@ class DetectAnomaliesJob implements ShouldQueue
                     'impact_value' => $record->cancel_value,
                     'detected_at' => now(),
                 ]);
+                $this->anomaliesDetected++;
             }
         }
 
@@ -131,6 +152,7 @@ class DetectAnomaliesJob implements ShouldQueue
                     'impact_value' => $bill->total,
                     'detected_at' => now(),
                 ]);
+                $this->anomaliesDetected++;
             }
         }
     }
@@ -167,6 +189,7 @@ class DetectAnomaliesJob implements ShouldQueue
                     'impact_value' => abs($product->quantity * $product->purchase_price),
                     'detected_at' => now(),
                 ]);
+                $this->anomaliesDetected++;
             }
         }
     }
@@ -220,6 +243,7 @@ class DetectAnomaliesJob implements ShouldQueue
                     'impact_value' => $value,
                     'detected_at' => now(),
                 ]);
+                $this->anomaliesDetected++;
             }
         }
     }
@@ -268,6 +292,7 @@ class DetectAnomaliesJob implements ShouldQueue
                     'impact_value' => $bill->discount,
                     'detected_at' => now(),
                 ]);
+                $this->anomaliesDetected++;
             }
         }
     }
@@ -326,6 +351,7 @@ class DetectAnomaliesJob implements ShouldQueue
                     'impact_value' => $value,
                     'detected_at' => now(),
                 ]);
+                $this->anomaliesDetected++;
             }
         }
     }
@@ -370,6 +396,7 @@ class DetectAnomaliesJob implements ShouldQueue
                     'impact_value' => $bill->total,
                     'detected_at' => now(),
                 ]);
+                $this->anomaliesDetected++;
             }
         }
     }
