@@ -1,0 +1,896 @@
+{
+  "_Add-D8atyPup.js": {
+    "file": "assets/Add-D8atyPup.js",
+    "name": "Add",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js"
+    ]
+  },
+  "_ArrowBack-BnrSNxU1.js": {
+    "file": "assets/ArrowBack-BnrSNxU1.js",
+    "name": "ArrowBack",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js"
+    ]
+  },
+  "_CheckBoxOutlineBlank-DdaPN_uO.js": {
+    "file": "assets/CheckBoxOutlineBlank-DdaPN_uO.js",
+    "name": "CheckBoxOutlineBlank",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js"
+    ]
+  },
+  "_CloudUpload-DznlwJ0c.js": {
+    "file": "assets/CloudUpload-DznlwJ0c.js",
+    "name": "CloudUpload",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js"
+    ]
+  },
+  "_ConfirmDialog-DfQDxvSV.js": {
+    "file": "assets/ConfirmDialog-DfQDxvSV.js",
+    "name": "ConfirmDialog",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js",
+      "_DialogContent-D1aNQfGN.js",
+      "_Warning-C6-2R4Dj.js"
+    ]
+  },
+  "_Container-8zgZzNGg.js": {
+    "file": "assets/Container-8zgZzNGg.js",
+    "name": "Container",
+    "imports": [
+      "_app-0Z2KpI1l.js",
+      "resources/js/app.jsx"
+    ]
+  },
+  "_Delete-CYRmDn9v.js": {
+    "file": "assets/Delete-CYRmDn9v.js",
+    "name": "Delete",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js"
+    ]
+  },
+  "_DialogContent-D1aNQfGN.js": {
+    "file": "assets/DialogContent-D1aNQfGN.js",
+    "name": "DialogContent",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js"
+    ]
+  },
+  "_FormControlLabel-LS7wJhWP.js": {
+    "file": "assets/FormControlLabel-LS7wJhWP.js",
+    "name": "FormControlLabel",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js",
+      "_TextField-NSCvulBS.js"
+    ]
+  },
+  "_Grid-O3zKT5UJ.js": {
+    "file": "assets/Grid-O3zKT5UJ.js",
+    "name": "Grid",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js"
+    ]
+  },
+  "_InputAdornment-DtkpSnBA.js": {
+    "file": "assets/InputAdornment-DtkpSnBA.js",
+    "name": "InputAdornment",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js",
+      "_TextField-NSCvulBS.js"
+    ]
+  },
+  "_Layout-DQRu1Ffm.js": {
+    "file": "assets/Layout-DQRu1Ffm.js",
+    "name": "Layout",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js"
+    ]
+  },
+  "_PictureAsPdf-CCwRW6tS.js": {
+    "file": "assets/PictureAsPdf-CCwRW6tS.js",
+    "name": "PictureAsPdf",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js"
+    ]
+  },
+  "_Save-sfi3xPC3.js": {
+    "file": "assets/Save-sfi3xPC3.js",
+    "name": "Save",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js"
+    ]
+  },
+  "_Search-BAgLG2AU.js": {
+    "file": "assets/Search-BAgLG2AU.js",
+    "name": "Search",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js",
+      "_Layout-DQRu1Ffm.js",
+      "_TableCell-BQJFIH9i.js",
+      "_TextField-NSCvulBS.js",
+      "_InputAdornment-DtkpSnBA.js",
+      "_DialogContent-D1aNQfGN.js"
+    ]
+  },
+  "_Switch-CuRryv0i.js": {
+    "file": "assets/Switch-CuRryv0i.js",
+    "name": "Switch",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js",
+      "_SwitchBase-IMXq3F-G.js"
+    ]
+  },
+  "_SwitchBase-IMXq3F-G.js": {
+    "file": "assets/SwitchBase-IMXq3F-G.js",
+    "name": "SwitchBase",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js",
+      "_TextField-NSCvulBS.js"
+    ]
+  },
+  "_TableCell-BQJFIH9i.js": {
+    "file": "assets/TableCell-BQJFIH9i.js",
+    "name": "TableCell",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js"
+    ]
+  },
+  "_TableContainer-M4EM3-sb.js": {
+    "file": "assets/TableContainer-M4EM3-sb.js",
+    "name": "TableContainer",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js"
+    ]
+  },
+  "_TableRow-CnSUDeKE.js": {
+    "file": "assets/TableRow-CnSUDeKE.js",
+    "name": "TableRow",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js",
+      "_TableCell-BQJFIH9i.js"
+    ]
+  },
+  "_TextField-NSCvulBS.js": {
+    "file": "assets/TextField-NSCvulBS.js",
+    "name": "TextField",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js"
+    ]
+  },
+  "_Warning-C6-2R4Dj.js": {
+    "file": "assets/Warning-C6-2R4Dj.js",
+    "name": "Warning",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js"
+    ]
+  },
+  "_app-0Z2KpI1l.js": {
+    "file": "assets/app-0Z2KpI1l.js",
+    "name": "app",
+    "imports": [
+      "resources/js/app.jsx"
+    ],
+    "dynamicImports": [
+      "resources/js/Pages/Auth/Login.jsx",
+      "resources/js/Pages/Auth/Register.jsx",
+      "resources/js/Pages/Bills/Create.jsx",
+      "resources/js/Pages/Bills/Edit.jsx",
+      "resources/js/Pages/Bills/Index.jsx",
+      "resources/js/Pages/Bills/Show.jsx",
+      "resources/js/Pages/Categories/Index.jsx",
+      "resources/js/Pages/Dashboard.jsx",
+      "resources/js/Pages/Products/Create.jsx",
+      "resources/js/Pages/Products/Edit.jsx",
+      "resources/js/Pages/Products/Index.jsx",
+      "resources/js/Pages/Settings/Index.jsx",
+      "resources/js/Pages/Suppliers/Index.jsx",
+      "resources/js/Pages/Workers/Index.jsx"
+    ]
+  },
+  "_getValidReactChildren-BRWoYq41.js": {
+    "file": "assets/getValidReactChildren-BRWoYq41.js",
+    "name": "getValidReactChildren",
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "_index-C7P0P4Sa.js": {
+    "file": "assets/index-C7P0P4Sa.js",
+    "name": "index",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js",
+      "_TextField-NSCvulBS.js",
+      "_Layout-DQRu1Ffm.js",
+      "_SwitchBase-IMXq3F-G.js"
+    ]
+  },
+  "node_modules/@fontsource/roboto/files/roboto-cyrillic-300-normal.woff": {
+    "file": "assets/roboto-cyrillic-300-normal-D568C3aM.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-300-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-cyrillic-300-normal.woff2": {
+    "file": "assets/roboto-cyrillic-300-normal-BoeCr7ev.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-300-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-cyrillic-400-normal.woff": {
+    "file": "assets/roboto-cyrillic-400-normal-DZJji7Rx.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-400-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-cyrillic-400-normal.woff2": {
+    "file": "assets/roboto-cyrillic-400-normal-DAIM1_dR.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-400-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-cyrillic-500-normal.woff": {
+    "file": "assets/roboto-cyrillic-500-normal-BI4HuXre.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-500-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-cyrillic-500-normal.woff2": {
+    "file": "assets/roboto-cyrillic-500-normal-hCeO1jFL.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-500-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-cyrillic-700-normal.woff": {
+    "file": "assets/roboto-cyrillic-700-normal-KqaQ5bNp.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-700-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-cyrillic-700-normal.woff2": {
+    "file": "assets/roboto-cyrillic-700-normal-BiSG5NnW.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-700-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-300-normal.woff": {
+    "file": "assets/roboto-cyrillic-ext-300-normal-DQdcc27I.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-300-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-300-normal.woff2": {
+    "file": "assets/roboto-cyrillic-ext-300-normal-CUPJdUZp.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-300-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-400-normal.woff": {
+    "file": "assets/roboto-cyrillic-ext-400-normal-DtZHuW6i.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-400-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-400-normal.woff2": {
+    "file": "assets/roboto-cyrillic-ext-400-normal-DzMWdK87.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-400-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-500-normal.woff": {
+    "file": "assets/roboto-cyrillic-ext-500-normal-C927yMrb.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-500-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-500-normal.woff2": {
+    "file": "assets/roboto-cyrillic-ext-500-normal-B7rQpwPu.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-500-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-700-normal.woff": {
+    "file": "assets/roboto-cyrillic-ext-700-normal-BuQgZIrO.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-700-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-700-normal.woff2": {
+    "file": "assets/roboto-cyrillic-ext-700-normal-UFn0vR9r.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-700-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-greek-300-normal.woff": {
+    "file": "assets/roboto-greek-300-normal-CTj2MfNN.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-greek-300-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-greek-300-normal.woff2": {
+    "file": "assets/roboto-greek-300-normal-Cnub06j7.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-greek-300-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-greek-400-normal.woff": {
+    "file": "assets/roboto-greek-400-normal-CcizSnRP.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-greek-400-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-greek-400-normal.woff2": {
+    "file": "assets/roboto-greek-400-normal-jFM2czAU.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-greek-400-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-greek-500-normal.woff": {
+    "file": "assets/roboto-greek-500-normal-BLLWU9W-.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-greek-500-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-greek-500-normal.woff2": {
+    "file": "assets/roboto-greek-500-normal-BJMS0heP.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-greek-500-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-greek-700-normal.woff": {
+    "file": "assets/roboto-greek-700-normal-D3kmAf0K.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-greek-700-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-greek-700-normal.woff2": {
+    "file": "assets/roboto-greek-700-normal-BcGn9doz.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-greek-700-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-greek-ext-300-normal.woff": {
+    "file": "assets/roboto-greek-ext-300-normal-4A1Qb8eJ.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-greek-ext-300-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-greek-ext-300-normal.woff2": {
+    "file": "assets/roboto-greek-ext-300-normal-BsUvD7IV.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-greek-ext-300-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-greek-ext-400-normal.woff": {
+    "file": "assets/roboto-greek-ext-400-normal-E4A3zSa0.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-greek-ext-400-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-greek-ext-400-normal.woff2": {
+    "file": "assets/roboto-greek-ext-400-normal-LMQUMKXc.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-greek-ext-400-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-greek-ext-500-normal.woff": {
+    "file": "assets/roboto-greek-ext-500-normal-BoWv1jNG.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-greek-ext-500-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-greek-ext-500-normal.woff2": {
+    "file": "assets/roboto-greek-ext-500-normal-CGTRT-go.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-greek-ext-500-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-greek-ext-700-normal.woff": {
+    "file": "assets/roboto-greek-ext-700-normal-DAFKdZbJ.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-greek-ext-700-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-greek-ext-700-normal.woff2": {
+    "file": "assets/roboto-greek-ext-700-normal-CzvIc217.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-greek-ext-700-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-latin-300-normal.woff": {
+    "file": "assets/roboto-latin-300-normal-KByCBsad.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-latin-300-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-latin-300-normal.woff2": {
+    "file": "assets/roboto-latin-300-normal-CztWkFGs.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-latin-300-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff": {
+    "file": "assets/roboto-latin-400-normal-068yxgMN.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff2": {
+    "file": "assets/roboto-latin-400-normal-CNwBRw8h.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-latin-500-normal.woff": {
+    "file": "assets/roboto-latin-500-normal-CC5nhZkh.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-latin-500-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-latin-500-normal.woff2": {
+    "file": "assets/roboto-latin-500-normal-CkrA1NAy.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-latin-500-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff": {
+    "file": "assets/roboto-latin-700-normal-DUekQERp.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff2": {
+    "file": "assets/roboto-latin-700-normal-CXeAXeti.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-latin-ext-300-normal.woff": {
+    "file": "assets/roboto-latin-ext-300-normal-Tcf9y2tg.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-latin-ext-300-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-latin-ext-300-normal.woff2": {
+    "file": "assets/roboto-latin-ext-300-normal-BOz0oSmX.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-latin-ext-300-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-latin-ext-400-normal.woff": {
+    "file": "assets/roboto-latin-ext-400-normal-eTRLN0Nt.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-latin-ext-400-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-latin-ext-400-normal.woff2": {
+    "file": "assets/roboto-latin-ext-400-normal-ZYmyxeOy.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-latin-ext-400-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-latin-ext-500-normal.woff": {
+    "file": "assets/roboto-latin-ext-500-normal-FFcS8vBN.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-latin-ext-500-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-latin-ext-500-normal.woff2": {
+    "file": "assets/roboto-latin-ext-500-normal-C_ARlJGk.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-latin-ext-500-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-latin-ext-700-normal.woff": {
+    "file": "assets/roboto-latin-ext-700-normal-BS1OuQqR.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-latin-ext-700-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-latin-ext-700-normal.woff2": {
+    "file": "assets/roboto-latin-ext-700-normal-70GS1MYH.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-latin-ext-700-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-math-300-normal.woff": {
+    "file": "assets/roboto-math-300-normal-BU9CUCyj.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-math-300-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-math-300-normal.woff2": {
+    "file": "assets/roboto-math-300-normal-BMxwzQmU.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-math-300-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-math-400-normal.woff": {
+    "file": "assets/roboto-math-400-normal-rzxYvyVt.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-math-400-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-math-400-normal.woff2": {
+    "file": "assets/roboto-math-400-normal-B3wgz80t.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-math-400-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-math-500-normal.woff": {
+    "file": "assets/roboto-math-500-normal-DaFX-ZC8.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-math-500-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-math-500-normal.woff2": {
+    "file": "assets/roboto-math-500-normal-CFNaIMFC.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-math-500-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-math-700-normal.woff": {
+    "file": "assets/roboto-math-700-normal-pYD1nhov.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-math-700-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-math-700-normal.woff2": {
+    "file": "assets/roboto-math-700-normal-VUAI6Bz2.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-math-700-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-symbols-300-normal.woff": {
+    "file": "assets/roboto-symbols-300-normal-kyoSXp-d.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-symbols-300-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-symbols-300-normal.woff2": {
+    "file": "assets/roboto-symbols-300-normal-BtHl5mYl.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-symbols-300-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-symbols-400-normal.woff": {
+    "file": "assets/roboto-symbols-400-normal-Tzuungub.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-symbols-400-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-symbols-400-normal.woff2": {
+    "file": "assets/roboto-symbols-400-normal-fF1SLJBj.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-symbols-400-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-symbols-500-normal.woff": {
+    "file": "assets/roboto-symbols-500-normal-CAhAe-ik.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-symbols-500-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-symbols-500-normal.woff2": {
+    "file": "assets/roboto-symbols-500-normal-BXFTxrNR.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-symbols-500-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-symbols-700-normal.woff": {
+    "file": "assets/roboto-symbols-700-normal-CuuvBBxy.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-symbols-700-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-symbols-700-normal.woff2": {
+    "file": "assets/roboto-symbols-700-normal-rJi6RjIy.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-symbols-700-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-vietnamese-300-normal.woff": {
+    "file": "assets/roboto-vietnamese-300-normal-DXBG9gdz.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-vietnamese-300-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-vietnamese-300-normal.woff2": {
+    "file": "assets/roboto-vietnamese-300-normal-CNeuLW5X.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-vietnamese-300-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-vietnamese-400-normal.woff": {
+    "file": "assets/roboto-vietnamese-400-normal-DmXaN3yE.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-vietnamese-400-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-vietnamese-400-normal.woff2": {
+    "file": "assets/roboto-vietnamese-400-normal-CDDxGrUb.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-vietnamese-400-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-vietnamese-500-normal.woff": {
+    "file": "assets/roboto-vietnamese-500-normal-DW96CsrR.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-vietnamese-500-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-vietnamese-500-normal.woff2": {
+    "file": "assets/roboto-vietnamese-500-normal-HYpufUYk.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-vietnamese-500-normal.woff2"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-vietnamese-700-normal.woff": {
+    "file": "assets/roboto-vietnamese-700-normal-Dz0HwF-w.woff",
+    "src": "node_modules/@fontsource/roboto/files/roboto-vietnamese-700-normal.woff"
+  },
+  "node_modules/@fontsource/roboto/files/roboto-vietnamese-700-normal.woff2": {
+    "file": "assets/roboto-vietnamese-700-normal-iKxYNAzq.woff2",
+    "src": "node_modules/@fontsource/roboto/files/roboto-vietnamese-700-normal.woff2"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-GYCYX2KN.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/Pages/Auth/Login.jsx": {
+    "file": "assets/Login-BFeMsU--.js",
+    "name": "Login",
+    "src": "resources/js/Pages/Auth/Login.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js",
+      "_Container-8zgZzNGg.js",
+      "_TextField-NSCvulBS.js"
+    ]
+  },
+  "resources/js/Pages/Auth/Register.jsx": {
+    "file": "assets/Register-BYkQGDTx.js",
+    "name": "Register",
+    "src": "resources/js/Pages/Auth/Register.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-0Z2KpI1l.js",
+      "_Container-8zgZzNGg.js",
+      "_TextField-NSCvulBS.js"
+    ]
+  },
+  "resources/js/Pages/Bills/Create.jsx": {
+    "file": "assets/Create-gZNc4-cK.js",
+    "name": "Create",
+    "src": "resources/js/Pages/Bills/Create.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_Layout-DQRu1Ffm.js",
+      "_app-0Z2KpI1l.js",
+      "_index-C7P0P4Sa.js",
+      "_ArrowBack-BnrSNxU1.js",
+      "_Grid-O3zKT5UJ.js",
+      "_TextField-NSCvulBS.js",
+      "_CheckBoxOutlineBlank-DdaPN_uO.js",
+      "_Add-D8atyPup.js",
+      "_TableContainer-M4EM3-sb.js",
+      "_TableRow-CnSUDeKE.js",
+      "_TableCell-BQJFIH9i.js",
+      "_InputAdornment-DtkpSnBA.js",
+      "_Delete-CYRmDn9v.js",
+      "_Save-sfi3xPC3.js",
+      "_SwitchBase-IMXq3F-G.js"
+    ]
+  },
+  "resources/js/Pages/Bills/Edit.jsx": {
+    "file": "assets/Edit-BPwOJF8N.js",
+    "name": "Edit",
+    "src": "resources/js/Pages/Bills/Edit.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_Layout-DQRu1Ffm.js",
+      "_app-0Z2KpI1l.js",
+      "_index-C7P0P4Sa.js",
+      "_ArrowBack-BnrSNxU1.js",
+      "_Grid-O3zKT5UJ.js",
+      "_TextField-NSCvulBS.js",
+      "_CheckBoxOutlineBlank-DdaPN_uO.js",
+      "_Add-D8atyPup.js",
+      "_TableContainer-M4EM3-sb.js",
+      "_TableRow-CnSUDeKE.js",
+      "_TableCell-BQJFIH9i.js",
+      "_InputAdornment-DtkpSnBA.js",
+      "_Delete-CYRmDn9v.js",
+      "_Save-sfi3xPC3.js",
+      "_SwitchBase-IMXq3F-G.js"
+    ]
+  },
+  "resources/js/Pages/Bills/Index.jsx": {
+    "file": "assets/Index-brEFAsl8.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Bills/Index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_Layout-DQRu1Ffm.js",
+      "_app-0Z2KpI1l.js",
+      "_Add-D8atyPup.js",
+      "_TextField-NSCvulBS.js",
+      "_InputAdornment-DtkpSnBA.js",
+      "_Search-BAgLG2AU.js",
+      "_TableContainer-M4EM3-sb.js",
+      "_TableRow-CnSUDeKE.js",
+      "_TableCell-BQJFIH9i.js",
+      "_PictureAsPdf-CCwRW6tS.js",
+      "_DialogContent-D1aNQfGN.js"
+    ]
+  },
+  "resources/js/Pages/Bills/Show.jsx": {
+    "file": "assets/Show-BcynY4Gm.js",
+    "name": "Show",
+    "src": "resources/js/Pages/Bills/Show.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_Layout-DQRu1Ffm.js",
+      "_app-0Z2KpI1l.js",
+      "_ConfirmDialog-DfQDxvSV.js",
+      "_ArrowBack-BnrSNxU1.js",
+      "_PictureAsPdf-CCwRW6tS.js",
+      "_Grid-O3zKT5UJ.js",
+      "_TableRow-CnSUDeKE.js",
+      "_TableCell-BQJFIH9i.js",
+      "_DialogContent-D1aNQfGN.js",
+      "_getValidReactChildren-BRWoYq41.js",
+      "_Warning-C6-2R4Dj.js"
+    ]
+  },
+  "resources/js/Pages/Categories/Index.jsx": {
+    "file": "assets/Index-BDsnWf5l.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Categories/Index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_Layout-DQRu1Ffm.js",
+      "_app-0Z2KpI1l.js",
+      "_ConfirmDialog-DfQDxvSV.js",
+      "_Add-D8atyPup.js",
+      "_TableContainer-M4EM3-sb.js",
+      "_TableRow-CnSUDeKE.js",
+      "_TableCell-BQJFIH9i.js",
+      "_Delete-CYRmDn9v.js",
+      "_DialogContent-D1aNQfGN.js",
+      "_TextField-NSCvulBS.js",
+      "_Warning-C6-2R4Dj.js"
+    ]
+  },
+  "resources/js/Pages/Dashboard.jsx": {
+    "file": "assets/Dashboard-BHnHC6IH.js",
+    "name": "Dashboard",
+    "src": "resources/js/Pages/Dashboard.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_Layout-DQRu1Ffm.js",
+      "_app-0Z2KpI1l.js",
+      "_Add-D8atyPup.js",
+      "_Grid-O3zKT5UJ.js",
+      "_Warning-C6-2R4Dj.js"
+    ]
+  },
+  "resources/js/Pages/Products/Create.jsx": {
+    "file": "assets/Create-BUa7YRJu.js",
+    "name": "Create",
+    "src": "resources/js/Pages/Products/Create.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_Layout-DQRu1Ffm.js",
+      "_app-0Z2KpI1l.js",
+      "_ArrowBack-BnrSNxU1.js",
+      "_Grid-O3zKT5UJ.js",
+      "_CloudUpload-DznlwJ0c.js",
+      "_TextField-NSCvulBS.js",
+      "_InputAdornment-DtkpSnBA.js",
+      "_FormControlLabel-LS7wJhWP.js",
+      "_Switch-CuRryv0i.js",
+      "_Save-sfi3xPC3.js",
+      "_SwitchBase-IMXq3F-G.js"
+    ]
+  },
+  "resources/js/Pages/Products/Edit.jsx": {
+    "file": "assets/Edit-3bOyiy1S.js",
+    "name": "Edit",
+    "src": "resources/js/Pages/Products/Edit.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_Layout-DQRu1Ffm.js",
+      "_app-0Z2KpI1l.js",
+      "_ArrowBack-BnrSNxU1.js",
+      "_Grid-O3zKT5UJ.js",
+      "_CloudUpload-DznlwJ0c.js",
+      "_TextField-NSCvulBS.js",
+      "_InputAdornment-DtkpSnBA.js",
+      "_FormControlLabel-LS7wJhWP.js",
+      "_Switch-CuRryv0i.js",
+      "_Save-sfi3xPC3.js",
+      "_SwitchBase-IMXq3F-G.js"
+    ]
+  },
+  "resources/js/Pages/Products/Index.jsx": {
+    "file": "assets/Index-CLB-oYve.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Products/Index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_Layout-DQRu1Ffm.js",
+      "_app-0Z2KpI1l.js",
+      "_ConfirmDialog-DfQDxvSV.js",
+      "_getValidReactChildren-BRWoYq41.js",
+      "_Add-D8atyPup.js",
+      "_Delete-CYRmDn9v.js",
+      "_Search-BAgLG2AU.js",
+      "_TextField-NSCvulBS.js",
+      "_index-C7P0P4Sa.js",
+      "_InputAdornment-DtkpSnBA.js",
+      "_FormControlLabel-LS7wJhWP.js",
+      "_Grid-O3zKT5UJ.js",
+      "_DialogContent-D1aNQfGN.js",
+      "_Warning-C6-2R4Dj.js",
+      "_TableCell-BQJFIH9i.js",
+      "_SwitchBase-IMXq3F-G.js"
+    ]
+  },
+  "resources/js/Pages/Settings/Index.jsx": {
+    "file": "assets/Index-BA_xb6XU.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Settings/Index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_Layout-DQRu1Ffm.js",
+      "_app-0Z2KpI1l.js",
+      "_Grid-O3zKT5UJ.js",
+      "_TextField-NSCvulBS.js",
+      "_Save-sfi3xPC3.js"
+    ]
+  },
+  "resources/js/Pages/Suppliers/Index.jsx": {
+    "file": "assets/Index-CfPJSsw_.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Suppliers/Index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_Layout-DQRu1Ffm.js",
+      "_app-0Z2KpI1l.js",
+      "_ConfirmDialog-DfQDxvSV.js",
+      "_Add-D8atyPup.js",
+      "_TableContainer-M4EM3-sb.js",
+      "_TableRow-CnSUDeKE.js",
+      "_TableCell-BQJFIH9i.js",
+      "_Delete-CYRmDn9v.js",
+      "_DialogContent-D1aNQfGN.js",
+      "_TextField-NSCvulBS.js",
+      "_FormControlLabel-LS7wJhWP.js",
+      "_Switch-CuRryv0i.js",
+      "_Warning-C6-2R4Dj.js",
+      "_SwitchBase-IMXq3F-G.js"
+    ]
+  },
+  "resources/js/Pages/Workers/Index.jsx": {
+    "file": "assets/Index-z023nc1W.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Workers/Index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_Layout-DQRu1Ffm.js",
+      "_app-0Z2KpI1l.js",
+      "_ConfirmDialog-DfQDxvSV.js",
+      "_Add-D8atyPup.js",
+      "_TextField-NSCvulBS.js",
+      "_InputAdornment-DtkpSnBA.js",
+      "_Search-BAgLG2AU.js",
+      "_TableContainer-M4EM3-sb.js",
+      "_TableRow-CnSUDeKE.js",
+      "_TableCell-BQJFIH9i.js",
+      "_Delete-CYRmDn9v.js",
+      "_DialogContent-D1aNQfGN.js",
+      "_FormControlLabel-LS7wJhWP.js",
+      "_Switch-CuRryv0i.js",
+      "_Warning-C6-2R4Dj.js",
+      "_SwitchBase-IMXq3F-G.js"
+    ]
+  },
+  "resources/js/app.jsx": {
+    "file": "assets/app-rxeNZGCw.js",
+    "name": "app",
+    "src": "resources/js/app.jsx",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/Pages/Auth/Login.jsx",
+      "resources/js/Pages/Auth/Register.jsx",
+      "resources/js/Pages/Bills/Create.jsx",
+      "resources/js/Pages/Bills/Edit.jsx",
+      "resources/js/Pages/Bills/Index.jsx",
+      "resources/js/Pages/Bills/Show.jsx",
+      "resources/js/Pages/Categories/Index.jsx",
+      "resources/js/Pages/Dashboard.jsx",
+      "resources/js/Pages/Products/Create.jsx",
+      "resources/js/Pages/Products/Edit.jsx",
+      "resources/js/Pages/Products/Index.jsx",
+      "resources/js/Pages/Settings/Index.jsx",
+      "resources/js/Pages/Suppliers/Index.jsx",
+      "resources/js/Pages/Workers/Index.jsx"
+    ],
+    "css": [
+      "assets/app-C6D8Q6OS.css"
+    ],
+    "assets": [
+      "assets/roboto-cyrillic-ext-300-normal-CUPJdUZp.woff2",
+      "assets/roboto-cyrillic-ext-300-normal-DQdcc27I.woff",
+      "assets/roboto-cyrillic-300-normal-BoeCr7ev.woff2",
+      "assets/roboto-cyrillic-300-normal-D568C3aM.woff",
+      "assets/roboto-greek-ext-300-normal-BsUvD7IV.woff2",
+      "assets/roboto-greek-ext-300-normal-4A1Qb8eJ.woff",
+      "assets/roboto-greek-300-normal-Cnub06j7.woff2",
+      "assets/roboto-greek-300-normal-CTj2MfNN.woff",
+      "assets/roboto-math-300-normal-BMxwzQmU.woff2",
+      "assets/roboto-math-300-normal-BU9CUCyj.woff",
+      "assets/roboto-symbols-300-normal-BtHl5mYl.woff2",
+      "assets/roboto-symbols-300-normal-kyoSXp-d.woff",
+      "assets/roboto-vietnamese-300-normal-CNeuLW5X.woff2",
+      "assets/roboto-vietnamese-300-normal-DXBG9gdz.woff",
+      "assets/roboto-latin-ext-300-normal-BOz0oSmX.woff2",
+      "assets/roboto-latin-ext-300-normal-Tcf9y2tg.woff",
+      "assets/roboto-latin-300-normal-CztWkFGs.woff2",
+      "assets/roboto-latin-300-normal-KByCBsad.woff",
+      "assets/roboto-cyrillic-ext-400-normal-DzMWdK87.woff2",
+      "assets/roboto-cyrillic-ext-400-normal-DtZHuW6i.woff",
+      "assets/roboto-cyrillic-400-normal-DAIM1_dR.woff2",
+      "assets/roboto-cyrillic-400-normal-DZJji7Rx.woff",
+      "assets/roboto-greek-ext-400-normal-LMQUMKXc.woff2",
+      "assets/roboto-greek-ext-400-normal-E4A3zSa0.woff",
+      "assets/roboto-greek-400-normal-jFM2czAU.woff2",
+      "assets/roboto-greek-400-normal-CcizSnRP.woff",
+      "assets/roboto-math-400-normal-B3wgz80t.woff2",
+      "assets/roboto-math-400-normal-rzxYvyVt.woff",
+      "assets/roboto-symbols-400-normal-fF1SLJBj.woff2",
+      "assets/roboto-symbols-400-normal-Tzuungub.woff",
+      "assets/roboto-vietnamese-400-normal-CDDxGrUb.woff2",
+      "assets/roboto-vietnamese-400-normal-DmXaN3yE.woff",
+      "assets/roboto-latin-ext-400-normal-ZYmyxeOy.woff2",
+      "assets/roboto-latin-ext-400-normal-eTRLN0Nt.woff",
+      "assets/roboto-latin-400-normal-CNwBRw8h.woff2",
+      "assets/roboto-latin-400-normal-068yxgMN.woff",
+      "assets/roboto-cyrillic-ext-500-normal-B7rQpwPu.woff2",
+      "assets/roboto-cyrillic-ext-500-normal-C927yMrb.woff",
+      "assets/roboto-cyrillic-500-normal-hCeO1jFL.woff2",
+      "assets/roboto-cyrillic-500-normal-BI4HuXre.woff",
+      "assets/roboto-greek-ext-500-normal-CGTRT-go.woff2",
+      "assets/roboto-greek-ext-500-normal-BoWv1jNG.woff",
+      "assets/roboto-greek-500-normal-BJMS0heP.woff2",
+      "assets/roboto-greek-500-normal-BLLWU9W-.woff",
+      "assets/roboto-math-500-normal-CFNaIMFC.woff2",
+      "assets/roboto-math-500-normal-DaFX-ZC8.woff",
+      "assets/roboto-symbols-500-normal-BXFTxrNR.woff2",
+      "assets/roboto-symbols-500-normal-CAhAe-ik.woff",
+      "assets/roboto-vietnamese-500-normal-HYpufUYk.woff2",
+      "assets/roboto-vietnamese-500-normal-DW96CsrR.woff",
+      "assets/roboto-latin-ext-500-normal-C_ARlJGk.woff2",
+      "assets/roboto-latin-ext-500-normal-FFcS8vBN.woff",
+      "assets/roboto-latin-500-normal-CkrA1NAy.woff2",
+      "assets/roboto-latin-500-normal-CC5nhZkh.woff",
+      "assets/roboto-cyrillic-ext-700-normal-UFn0vR9r.woff2",
+      "assets/roboto-cyrillic-ext-700-normal-BuQgZIrO.woff",
+      "assets/roboto-cyrillic-700-normal-BiSG5NnW.woff2",
+      "assets/roboto-cyrillic-700-normal-KqaQ5bNp.woff",
+      "assets/roboto-greek-ext-700-normal-CzvIc217.woff2",
+      "assets/roboto-greek-ext-700-normal-DAFKdZbJ.woff",
+      "assets/roboto-greek-700-normal-BcGn9doz.woff2",
+      "assets/roboto-greek-700-normal-D3kmAf0K.woff",
+      "assets/roboto-math-700-normal-VUAI6Bz2.woff2",
+      "assets/roboto-math-700-normal-pYD1nhov.woff",
+      "assets/roboto-symbols-700-normal-rJi6RjIy.woff2",
+      "assets/roboto-symbols-700-normal-CuuvBBxy.woff",
+      "assets/roboto-vietnamese-700-normal-iKxYNAzq.woff2",
+      "assets/roboto-vietnamese-700-normal-Dz0HwF-w.woff",
+      "assets/roboto-latin-ext-700-normal-70GS1MYH.woff2",
+      "assets/roboto-latin-ext-700-normal-BS1OuQqR.woff",
+      "assets/roboto-latin-700-normal-CXeAXeti.woff2",
+      "assets/roboto-latin-700-normal-DUekQERp.woff"
+    ]
+  }
+}

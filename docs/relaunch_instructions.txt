@@ -1,0 +1,205 @@
+QUINCAILLERIE APP — Relaunch Instructions (Local / Offline)
+Academic Year: 2025/2026
+Project folder: C:\laragon\www\quincaillerie-app
+
+============================================================
+1) What you need before starting
+============================================================
+- Laragon installed on your PC
+- The project folder exists at: C:\laragon\www\quincaillerie-app
+- The database name exists in MySQL (example: quincaillerie)
+- If you already installed dependencies once, you do NOT need internet.
+
+Important note about “no internet required”:
+- If vendor/ (PHP deps) and node_modules/ (JS deps) are already present, you can start the project offline.
+- If they are missing, composer/npm will usually require internet to download packages.
+
+============================================================
+2) Start Laragon (Apache + MySQL)
+============================================================
+1) Open Laragon.
+2) Click “Start All”.
+   - Ensure Apache is “Running”.
+   - Ensure MySQL is “Running”.
+
+If Apache or MySQL does not start:
+- Another program may be using the port.
+- Try stopping conflicting software (Skype, IIS, other local servers).
+- In Laragon: Menu > Preferences > Services & Ports (change ports if needed).
+
+============================================================
+3) Open a terminal in the project folder
+============================================================
+Option A (recommended):
+- Open Windows PowerShell
+- Run:
+  cd C:\laragon\www\quincaillerie-app
+
+Option B:
+- In Laragon, click Menu > Terminal
+- Then run:
+  cd C:\laragon\www\quincaillerie-app
+
+IMPORTANT:
+Always run commands inside:
+C:\laragon\www\quincaillerie-app
+If you run them from C:\laragon\www, you will get errors like:
+“Could not open input file: artisan” or “package.json not found”.
+
+============================================================
+4) Install dependencies (only if needed)
+============================================================
+4.1) PHP dependencies (Composer)
+- Check if the folder vendor\ exists.
+  - If vendor\ exists: skip composer install.
+  - If vendor\ is missing: run:
+    composer install
+
+4.2) Frontend dependencies (npm)
+- Check if the folder node_modules\ exists.
+  - If node_modules\ exists: skip npm install.
+  - If node_modules\ is missing: run:
+    npm install
+
+============================================================
+5) Configure environment (.env) (usually already done)
+============================================================
+- Make sure you have a .env file in the project root.
+- If .env is missing, copy from .env.example:
+  copy .env.example .env
+
+- Generate app key (only needed once):
+  php artisan key:generate
+
+Database settings in .env should match your local MySQL:
+- DB_CONNECTION=mysql
+- DB_HOST=127.0.0.1
+- DB_PORT=3306
+- DB_DATABASE=quincaillerie   (example)
+- DB_USERNAME=root            (Laragon default often root)
+- DB_PASSWORD=                (Laragon default often empty)
+
+============================================================
+6) Run migrations
+============================================================
+To create/update database tables:
+- Standard safe command:
+  php artisan migrate
+
+If you want a fresh database (WARNING: deletes all data):
+- php artisan migrate:fresh --seed
+
+Note:
+- “--seed” loads demo data and test users (if seeders are configured).
+
+============================================================
+7) Make storage public (product images)
+============================================================
+To display uploaded images (products photos), run:
+- php artisan storage:link
+
+If you do not run this, images stored in storage/app/public will NOT show.
+
+============================================================
+8) Start the backend server (Laravel)
+============================================================
+Run:
+- php artisan serve
+
+You should see something like:
+Server running on http://127.0.0.1:8000
+
+Open in browser:
+- http://127.0.0.1:8000
+
+============================================================
+9) Start the frontend dev server (Vite)
+============================================================
+Open a SECOND terminal (leave php artisan serve running).
+Then run:
+- npm run dev
+
+Vite usually starts on:
+- http://localhost:5173
+If port 5173 is already used, it may switch to:
+- http://localhost:5174
+
+You normally still visit the application via:
+- http://127.0.0.1:8000
+
+============================================================
+10) Common problems and solutions
+============================================================
+A) Error: “Vite manifest not found ... public/build/manifest.json”
+Meaning:
+- Laravel cannot find Vite build output AND it does not detect the dev server.
+Fix (development mode):
+1) Run Vite:
+   npm run dev
+2) Refresh the page.
+
+Fix (if you want built assets):
+- npm run build
+This creates public/build/manifest.json.
+
+B) Error: “Could not open input file: artisan”
+Meaning:
+- You are NOT in the project folder.
+Fix:
+- cd C:\laragon\www\quincaillerie-app
+Then run php artisan ... again.
+
+C) Error: “package.json not found”
+Meaning:
+- You are not in the project folder.
+Fix:
+- cd C:\laragon\www\quincaillerie-app
+Then run npm ... again.
+
+D) Error: “ERR_CONNECTION_REFUSED”
+Meaning:
+- Backend server is not running.
+Fix:
+- php artisan serve
+Then open http://127.0.0.1:8000
+
+E) Images not showing in products
+Meaning:
+- storage link is missing.
+Fix:
+- php artisan storage:link
+
+F) Database connection error
+Meaning:
+- MySQL is not running or .env database settings are wrong.
+Fix:
+- Start MySQL in Laragon
+- Check DB_* values in .env
+- Then retry: php artisan migrate
+
+G) Port already in use (8000 or 5173)
+Fix:
+- Stop the process using the port, OR
+- Use another port:
+  php artisan serve --port=8001
+
+============================================================
+11) Quick “Restart Checklist” (fast)
+============================================================
+1) Start Laragon (Apache + MySQL)
+2) Terminal #1:
+   cd C:\laragon\www\quincaillerie-app
+   php artisan serve
+3) Terminal #2:
+   cd C:\laragon\www\quincaillerie-app
+   npm run dev
+4) Open:
+   http://127.0.0.1:8000
+
+============================================================
+12) Optional: test accounts (if seeded)
+============================================================
+If the database was seeded, you can try:
+- a@a.a / 123
+- c@c.c / 123
+- v@v.v / 123
