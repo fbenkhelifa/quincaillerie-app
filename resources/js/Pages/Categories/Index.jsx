@@ -1,36 +1,33 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useMemo } from 'react';
 import { Head, router, useForm } from '@inertiajs/react';
 import Layout from '@/Layouts/Layout';
 import { AppContext } from '../../app';
+import { EmptyState } from '@/Components/ui';
 import ConfirmDialog from '@/Components/ConfirmDialog';
 import {
     Box,
     Button,
     TextField,
     Paper,
-    Typography,
     Dialog,
     DialogTitle,
     DialogContent,
     DialogActions,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    IconButton,
     Chip,
+    Tooltip,
+    alpha,
 } from '@mui/material';
+import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import {
     Add as AddIcon,
     Edit as EditIcon,
     Delete as DeleteIcon,
+    Folder as FolderIcon,
 } from '@mui/icons-material';
 import toast from 'react-hot-toast';
 
 export default function CategoriesIndex({ categories }) {
-    const { t } = useContext(AppContext);
+    const { t, locale } = useContext(AppContext);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [editingCategory, setEditingCategory] = useState(null);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -91,6 +88,94 @@ export default function CategoriesIndex({ categories }) {
         });
     };
 
+    const columns = useMemo(() => [
+        {
+            field: 'name',
+            headerName: t('Nom'),
+            flex: 1,
+            minWidth: 180,
+            renderCell: (params) => (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                    <Box
+                        sx={{
+                            width: 36,
+                            height: 36,
+                            borderRadius: 1.5,
+                            bgcolor: (theme) => alpha(theme.palette.primary.main, 0.1),
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}
+                    >
+                        <FolderIcon fontSize="small" color="primary" />
+                    </Box>
+                    <span style={{ fontWeight: 500 }}>{params.value}</span>
+                </Box>
+            ),
+        },
+        {
+            field: 'name_ar',
+            headerName: t('Nom (arabe)'),
+            width: 180,
+            renderCell: (params) => (
+                <span dir="rtl" style={{ fontFamily: 'Noto Sans Arabic, Cairo, sans-serif' }}>
+                    {params.value || '-'}
+                </span>
+            ),
+        },
+        {
+            field: 'description',
+            headerName: t('Description'),
+            flex: 1,
+            minWidth: 200,
+            valueGetter: (value) => value || '-',
+        },
+        {
+            field: 'products_count',
+            headerName: t('Produits'),
+            width: 120,
+            type: 'number',
+            renderCell: (params) => (
+                <Chip
+                    label={params.value || 0}
+                    size="small"
+                    color={params.value > 0 ? 'primary' : 'default'}
+                    variant={params.value > 0 ? 'filled' : 'outlined'}
+                />
+            ),
+        },
+        {
+            field: 'actions',
+            type: 'actions',
+            headerName: t('Actions'),
+            width: 100,
+            getActions: (params) => [
+                <GridActionsCellItem
+                    icon={
+                        <Tooltip title={t('Modifier')}>
+                            <EditIcon />
+                        </Tooltip>
+                    }
+                    label={t('Modifier')}
+                    onClick={() => openEditDialog(params.row)}
+                    showInMenu={false}
+                />,
+                <GridActionsCellItem
+                    icon={
+                        <Tooltip title={params.row.products_count > 0 ? t('Catégorie avec produits') : t('Supprimer')}>
+                            <DeleteIcon />
+                        </Tooltip>
+                    }
+                    label={t('Supprimer')}
+                    onClick={() => handleDelete(params.row)}
+                    showInMenu={false}
+                    disabled={params.row.products_count > 0}
+                    sx={{ color: params.row.products_count > 0 ? 'action.disabled' : 'error.main' }}
+                />,
+            ],
+        },
+    ], [t]);
+
     return (
         <Layout
             title={t('Catégories')}
@@ -98,70 +183,56 @@ export default function CategoriesIndex({ categories }) {
         >
             <Head title={t('Catégories')} />
 
-            <Box sx={{ mb: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography variant="h5" fontWeight="bold">
-                    {t('Gestion des catégories')}
-                </Typography>
+            {/* Page Header */}
+            <Box sx={{ mb: 3, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                 <Button
                     variant="contained"
                     startIcon={<AddIcon />}
                     onClick={openCreateDialog}
+                    size="large"
                 >
                     {t('Nouvelle catégorie')}
                 </Button>
             </Box>
 
-            <TableContainer component={Paper}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>{t('Nom')}</TableCell>
-                            <TableCell>{t('Nom (arabe)')}</TableCell>
-                            <TableCell>{t('Description')}</TableCell>
-                            <TableCell>{t('Produits')}</TableCell>
-                            <TableCell align="right">{t('Actions')}</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {categories?.length > 0 ? (
-                            categories.map((category) => (
-                                <TableRow key={category.id}>
-                                    <TableCell>
-                                        <Typography fontWeight="medium">{category.name}</Typography>
-                                    </TableCell>
-                                    <TableCell dir="rtl">{category.name_ar || '-'}</TableCell>
-                                    <TableCell>{category.description || '-'}</TableCell>
-                                    <TableCell>
-                                        <Chip
-                                            label={category.products_count || 0}
-                                            size="small"
-                                            color="primary"
-                                        />
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <IconButton onClick={() => openEditDialog(category)}>
-                                            <EditIcon />
-                                        </IconButton>
-                                        <IconButton
-                                            onClick={() => handleDelete(category)}
-                                            color="error"
-                                            disabled={category.products_count > 0}
-                                        >
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    </TableCell>
-                                </TableRow>
-                            ))
-                        ) : (
-                            <TableRow>
-                                <TableCell colSpan={5} align="center">
-                                    {t('Aucune catégorie trouvée')}
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            {/* Data Table or Empty State */}
+            <Paper sx={{ overflow: 'hidden' }}>
+                {categories?.length > 0 ? (
+                    <DataGrid
+                        rows={categories}
+                        columns={columns}
+                        pageSizeOptions={[10, 25, 50]}
+                        initialState={{
+                            pagination: { paginationModel: { pageSize: 25 } },
+                        }}
+                        disableRowSelectionOnClick
+                        autoHeight
+                        sx={{
+                            border: 'none',
+                            '& .MuiDataGrid-cell:focus': {
+                                outline: 'none',
+                            },
+                        }}
+                        localeText={{
+                            noRowsLabel: t('Aucune catégorie trouvée'),
+                            MuiTablePagination: {
+                                labelRowsPerPage: t('Lignes par page'),
+                                labelDisplayedRows: ({ from, to, count }) =>
+                                    `${from}-${to} ${t('sur')} ${count}`,
+                            },
+                        }}
+                    />
+                ) : (
+                    <EmptyState
+                        type="empty"
+                        icon={FolderIcon}
+                        title={t('Aucune catégorie')}
+                        description={t('Commencez par créer votre première catégorie pour organiser vos produits')}
+                        actionLabel={t('Nouvelle catégorie')}
+                        onAction={openCreateDialog}
+                    />
+                )}
+            </Paper>
 
             {/* Create/Edit Dialog */}
             <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} maxWidth="sm" fullWidth>
@@ -170,7 +241,7 @@ export default function CategoriesIndex({ categories }) {
                         {editingCategory ? t('Modifier catégorie') : t('Nouvelle catégorie')}
                     </DialogTitle>
                     <DialogContent>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5, mt: 1 }}>
                             <TextField
                                 label={t('Nom')}
                                 value={data.name}
@@ -186,18 +257,19 @@ export default function CategoriesIndex({ categories }) {
                                 onChange={(e) => setData('name_ar', e.target.value)}
                                 fullWidth
                                 dir="rtl"
+                                inputProps={{ style: { fontFamily: 'Noto Sans Arabic, Cairo, sans-serif' } }}
                             />
                             <TextField
                                 label={t('Description')}
                                 value={data.description}
                                 onChange={(e) => setData('description', e.target.value)}
                                 multiline
-                                rows={2}
+                                rows={3}
                                 fullWidth
                             />
                         </Box>
                     </DialogContent>
-                    <DialogActions>
+                    <DialogActions sx={{ px: 3, pb: 2.5 }}>
                         <Button onClick={() => setDialogOpen(false)} color="inherit">
                             {t('Annuler')}
                         </Button>
@@ -215,6 +287,7 @@ export default function CategoriesIndex({ categories }) {
                 onConfirm={confirmDelete}
                 title={t('Supprimer catégorie')}
                 message={t('Êtes-vous sûr de vouloir supprimer cette catégorie ?')}
+                severity="danger"
             />
         </Layout>
     );

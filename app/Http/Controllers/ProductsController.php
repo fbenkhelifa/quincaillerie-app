@@ -206,4 +206,52 @@ class ProductsController extends Controller
 
         return response()->json($products);
     }
+
+    /**
+     * Fast barcode lookup for POS mode
+     * Returns exact match first, then partial matches
+     */
+    public function barcodeLookup(Request $request)
+    {
+        $request->validate([
+            'barcode' => 'required|string|min:1|max:100',
+        ]);
+
+        $barcode = trim($request->get('barcode'));
+
+        // First try exact barcode match (highest priority for scanners)
+        $exactMatch = Product::query()
+            ->where('is_active', true)
+            ->where(function ($q) use ($barcode) {
+                $q->where('barcode', $barcode)
+                    ->orWhere('sku', $barcode);
+            })
+            ->first(['id', 'name', 'name_ar', 'sku', 'barcode', 'selling_price', 'quantity', 'unit', 'min_stock', 'image']);
+
+        if ($exactMatch) {
+            return response()->json([
+                'found' => true,
+                'exact' => true,
+                'product' => $exactMatch,
+            ]);
+        }
+
+        // If no exact match, search by partial name/barcode (for manual entry)
+        $partialMatches = Product::query()
+            ->where('is_active', true)
+            ->where(function ($q) use ($barcode) {
+                $q->where('name', 'like', "%{$barcode}%")
+                    ->orWhere('name_ar', 'like', "%{$barcode}%")
+                    ->orWhere('barcode', 'like', "%{$barcode}%")
+                    ->orWhere('sku', 'like', "%{$barcode}%");
+            })
+            ->limit(10)
+            ->get(['id', 'name', 'name_ar', 'sku', 'barcode', 'selling_price', 'quantity', 'unit', 'min_stock', 'image']);
+
+        return response()->json([
+            'found' => $partialMatches->isNotEmpty(),
+            'exact' => false,
+            'products' => $partialMatches,
+        ]);
+    }
 }

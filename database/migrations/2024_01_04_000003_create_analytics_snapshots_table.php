@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('analytics_snapshots', function (Blueprint $table) {
+            $table->id();
+            
+            $table->date('date');
+            $table->string('type', 50); // daily_sales, inventory_valuation, category_performance
+            
+            // Cached metrics as JSON
+            $table->json('metrics');
+            
+            $table->timestamps();
+            
+            $table->unique(['date', 'type']);
+            $table->index('type');
+            $table->index('date');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('analytics_snapshots');
+    }
+};

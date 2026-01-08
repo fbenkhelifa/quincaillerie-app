@@ -1,7 +1,8 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useMemo } from 'react';
 import { Head, router, useForm } from '@inertiajs/react';
 import Layout from '@/Layouts/Layout';
 import { AppContext } from '../../app';
+import { FilterBar, EmptyState } from '@/Components/ui';
 import ConfirmDialog from '@/Components/ConfirmDialog';
 import {
     Box,
@@ -12,41 +13,39 @@ import {
     Select,
     MenuItem,
     Paper,
-    Typography,
     Dialog,
     DialogTitle,
     DialogContent,
     DialogActions,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    IconButton,
     Chip,
     FormControlLabel,
     Switch,
-    InputAdornment,
-    TablePagination,
+    Tooltip,
+    Avatar,
+    alpha,
 } from '@mui/material';
+import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import {
     Add as AddIcon,
     Edit as EditIcon,
     Delete as DeleteIcon,
-    Search as SearchIcon,
+    Person as PersonIcon,
+    Badge as BadgeIcon,
 } from '@mui/icons-material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import toast from 'react-hot-toast';
 
 export default function WorkersIndex({ workers, filters }) {
-    const { t } = useContext(AppContext);
+    const { t, locale } = useContext(AppContext);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [editingWorker, setEditingWorker] = useState(null);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [workerToDelete, setWorkerToDelete] = useState(null);
-    const [search, setSearch] = useState(filters.search || '');
+    const [paginationModel, setPaginationModel] = useState({
+        pageSize: workers.per_page || 25,
+        page: (workers.current_page || 1) - 1,
+    });
 
     const { data, setData, post, put, reset, processing, errors } = useForm({
         name: '',
@@ -57,9 +56,39 @@ export default function WorkersIndex({ workers, filters }) {
         notes: '',
     });
 
-    const handleSearch = (value) => {
-        setSearch(value);
-        router.get(route('workers.index'), { search: value }, { preserveState: true });
+    // Filter configuration
+    const filterConfig = useMemo(() => [
+        {
+            id: 'role',
+            label: t('Rôle'),
+            type: 'select',
+            width: 3,
+            options: [
+                { value: 'manager', label: t('Gérant') },
+                { value: 'cashier', label: t('Caissier') },
+                { value: 'warehouse', label: t('Magasinier') },
+                { value: 'other', label: t('Autre') },
+            ],
+        },
+        {
+            id: 'is_active',
+            label: t('Statut'),
+            type: 'select',
+            width: 3,
+            options: [
+                { value: '1', label: t('Actif') },
+                { value: '0', label: t('Inactif') },
+            ],
+        },
+    ], [t]);
+
+    const handlePageChange = (model) => {
+        setPaginationModel(model);
+        router.get(
+            route('workers.index'),
+            { ...filters, page: model.page + 1, per_page: model.pageSize },
+            { preserveState: true, preserveScroll: true }
+        );
     };
 
     const openCreateDialog = () => {
@@ -128,6 +157,109 @@ export default function WorkersIndex({ workers, filters }) {
         other: t('Autre'),
     };
 
+    const roleColors = {
+        manager: 'primary',
+        cashier: 'info',
+        warehouse: 'warning',
+        other: 'default',
+    };
+
+    const columns = useMemo(() => [
+        {
+            field: 'name',
+            headerName: t('Employé'),
+            flex: 1,
+            minWidth: 200,
+            renderCell: (params) => (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                    <Avatar
+                        sx={{
+                            width: 40,
+                            height: 40,
+                            bgcolor: (theme) => alpha(theme.palette.info.main, 0.1),
+                            color: 'info.main',
+                        }}
+                    >
+                        {params.value?.charAt(0)}
+                    </Avatar>
+                    <span style={{ fontWeight: 500 }}>{params.value}</span>
+                </Box>
+            ),
+        },
+        {
+            field: 'phone',
+            headerName: t('Téléphone'),
+            width: 140,
+            valueGetter: (value) => value || '-',
+        },
+        {
+            field: 'role',
+            headerName: t('Rôle'),
+            width: 130,
+            renderCell: (params) => (
+                <Chip
+                    icon={<BadgeIcon sx={{ fontSize: 16 }} />}
+                    label={roleLabels[params.value]}
+                    size="small"
+                    color={roleColors[params.value]}
+                />
+            ),
+        },
+        {
+            field: 'hire_date',
+            headerName: t('Date embauche'),
+            width: 140,
+            valueFormatter: (value) => {
+                if (!value) return '-';
+                return new Date(value).toLocaleDateString(
+                    locale === 'ar' ? 'ar-DZ' : 'fr-FR',
+                    { day: '2-digit', month: '2-digit', year: 'numeric' }
+                );
+            },
+        },
+        {
+            field: 'is_active',
+            headerName: t('Statut'),
+            width: 110,
+            renderCell: (params) => (
+                <Chip
+                    label={params.value ? t('Actif') : t('Inactif')}
+                    size="small"
+                    color={params.value ? 'success' : 'error'}
+                />
+            ),
+        },
+        {
+            field: 'actions',
+            type: 'actions',
+            headerName: t('Actions'),
+            width: 100,
+            getActions: (params) => [
+                <GridActionsCellItem
+                    icon={
+                        <Tooltip title={t('Modifier')}>
+                            <EditIcon />
+                        </Tooltip>
+                    }
+                    label={t('Modifier')}
+                    onClick={() => openEditDialog(params.row)}
+                    showInMenu={false}
+                />,
+                <GridActionsCellItem
+                    icon={
+                        <Tooltip title={t('Supprimer')}>
+                            <DeleteIcon />
+                        </Tooltip>
+                    }
+                    label={t('Supprimer')}
+                    onClick={() => handleDelete(params.row)}
+                    showInMenu={false}
+                    sx={{ color: 'error.main' }}
+                />,
+            ],
+        },
+    ], [t, locale]);
+
     return (
         <Layout
             title={t('Employés')}
@@ -135,110 +267,65 @@ export default function WorkersIndex({ workers, filters }) {
         >
             <Head title={t('Employés')} />
 
-            <Box sx={{ mb: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography variant="h5" fontWeight="bold">
-                    {t('Gestion des employés')}
-                </Typography>
+            {/* Page Header */}
+            <Box sx={{ mb: 3, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                 <Button
                     variant="contained"
                     startIcon={<AddIcon />}
                     onClick={openCreateDialog}
+                    size="large"
                 >
                     {t('Nouvel employé')}
                 </Button>
             </Box>
 
-            <Paper sx={{ p: 2, mb: 2 }}>
-                <TextField
-                    placeholder={t('Rechercher par nom ou téléphone...')}
-                    value={search}
-                    onChange={(e) => handleSearch(e.target.value)}
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <SearchIcon />
-                            </InputAdornment>
-                        ),
-                    }}
-                    fullWidth
-                />
-            </Paper>
+            {/* Filter Bar */}
+            <FilterBar
+                filters={filters}
+                filterConfig={filterConfig}
+                routeName="workers.index"
+                searchPlaceholder={t('Rechercher par nom ou téléphone...')}
+            />
 
-            <TableContainer component={Paper}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>{t('Nom')}</TableCell>
-                            <TableCell>{t('Téléphone')}</TableCell>
-                            <TableCell>{t('Rôle')}</TableCell>
-                            <TableCell>{t('Date embauche')}</TableCell>
-                            <TableCell>{t('Statut')}</TableCell>
-                            <TableCell align="right">{t('Actions')}</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {workers.data?.length > 0 ? (
-                            workers.data.map((worker) => (
-                                <TableRow key={worker.id}>
-                                    <TableCell>{worker.name}</TableCell>
-                                    <TableCell>{worker.phone || '-'}</TableCell>
-                                    <TableCell>
-                                        <Chip
-                                            label={roleLabels[worker.role]}
-                                            size="small"
-                                            color={worker.role === 'manager' ? 'primary' : 'default'}
-                                        />
-                                    </TableCell>
-                                    <TableCell>
-                                        {worker.hire_date
-                                            ? new Date(worker.hire_date).toLocaleDateString('fr-FR')
-                                            : '-'}
-                                    </TableCell>
-                                    <TableCell>
-                                        <Chip
-                                            label={worker.is_active ? t('Actif') : t('Inactif')}
-                                            size="small"
-                                            color={worker.is_active ? 'success' : 'error'}
-                                        />
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <IconButton onClick={() => openEditDialog(worker)}>
-                                            <EditIcon />
-                                        </IconButton>
-                                        <IconButton
-                                            onClick={() => handleDelete(worker)}
-                                            color="error"
-                                        >
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    </TableCell>
-                                </TableRow>
-                            ))
-                        ) : (
-                            <TableRow>
-                                <TableCell colSpan={6} align="center">
-                                    {t('Aucun employé trouvé')}
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-                {workers.total > workers.per_page && (
-                    <TablePagination
-                        component="div"
-                        count={workers.total}
-                        page={workers.current_page - 1}
-                        onPageChange={(e, page) =>
-                            router.get(route('workers.index'), { page: page + 1 }, { preserveState: true })
-                        }
-                        rowsPerPage={workers.per_page}
-                        rowsPerPageOptions={[workers.per_page]}
-                        labelDisplayedRows={({ from, to, count }) =>
-                            `${from}-${to} ${t('sur')} ${count}`
-                        }
+            {/* Data Table or Empty State */}
+            <Paper sx={{ overflow: 'hidden' }}>
+                {(workers.data?.length > 0 || filters.search) ? (
+                    <DataGrid
+                        rows={workers.data || []}
+                        columns={columns}
+                        rowCount={workers.total || 0}
+                        paginationMode="server"
+                        paginationModel={paginationModel}
+                        onPaginationModelChange={handlePageChange}
+                        pageSizeOptions={[10, 25, 50]}
+                        disableRowSelectionOnClick
+                        autoHeight
+                        sx={{
+                            border: 'none',
+                            '& .MuiDataGrid-cell:focus': {
+                                outline: 'none',
+                            },
+                        }}
+                        localeText={{
+                            noRowsLabel: t('Aucun employé trouvé'),
+                            MuiTablePagination: {
+                                labelRowsPerPage: t('Lignes par page'),
+                                labelDisplayedRows: ({ from, to, count }) =>
+                                    `${from}-${to} ${t('sur')} ${count}`,
+                            },
+                        }}
+                    />
+                ) : (
+                    <EmptyState
+                        type="empty"
+                        icon={PersonIcon}
+                        title={t('Aucun employé')}
+                        description={t('Commencez par ajouter vos employés pour gérer votre équipe')}
+                        actionLabel={t('Nouvel employé')}
+                        onAction={openCreateDialog}
                     />
                 )}
-            </TableContainer>
+            </Paper>
 
             {/* Create/Edit Dialog */}
             <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} maxWidth="sm" fullWidth>
@@ -247,7 +334,7 @@ export default function WorkersIndex({ workers, filters }) {
                         {editingWorker ? t('Modifier employé') : t('Nouvel employé')}
                     </DialogTitle>
                     <DialogContent>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5, mt: 1 }}>
                             <TextField
                                 label={t('Nom')}
                                 value={data.name}
@@ -257,27 +344,29 @@ export default function WorkersIndex({ workers, filters }) {
                                 fullWidth
                                 required
                             />
-                            <TextField
-                                label={t('Téléphone')}
-                                value={data.phone}
-                                onChange={(e) => setData('phone', e.target.value)}
-                                error={!!errors.phone}
-                                helperText={errors.phone}
-                                fullWidth
-                            />
-                            <FormControl fullWidth>
-                                <InputLabel>{t('Rôle')}</InputLabel>
-                                <Select
-                                    value={data.role}
-                                    onChange={(e) => setData('role', e.target.value)}
-                                    label={t('Rôle')}
-                                >
-                                    <MenuItem value="manager">{t('Gérant')}</MenuItem>
-                                    <MenuItem value="cashier">{t('Caissier')}</MenuItem>
-                                    <MenuItem value="warehouse">{t('Magasinier')}</MenuItem>
-                                    <MenuItem value="other">{t('Autre')}</MenuItem>
-                                </Select>
-                            </FormControl>
+                            <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 }}>
+                                <TextField
+                                    label={t('Téléphone')}
+                                    value={data.phone}
+                                    onChange={(e) => setData('phone', e.target.value)}
+                                    error={!!errors.phone}
+                                    helperText={errors.phone}
+                                    fullWidth
+                                />
+                                <FormControl fullWidth>
+                                    <InputLabel>{t('Rôle')}</InputLabel>
+                                    <Select
+                                        value={data.role}
+                                        onChange={(e) => setData('role', e.target.value)}
+                                        label={t('Rôle')}
+                                    >
+                                        <MenuItem value="manager">{t('Gérant')}</MenuItem>
+                                        <MenuItem value="cashier">{t('Caissier')}</MenuItem>
+                                        <MenuItem value="warehouse">{t('Magasinier')}</MenuItem>
+                                        <MenuItem value="other">{t('Autre')}</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Box>
                             <DatePicker
                                 label={t('Date d\'embauche')}
                                 value={data.hire_date}
@@ -291,7 +380,7 @@ export default function WorkersIndex({ workers, filters }) {
                                 value={data.notes}
                                 onChange={(e) => setData('notes', e.target.value)}
                                 multiline
-                                rows={2}
+                                rows={3}
                                 fullWidth
                             />
                             <FormControlLabel
@@ -305,7 +394,7 @@ export default function WorkersIndex({ workers, filters }) {
                             />
                         </Box>
                     </DialogContent>
-                    <DialogActions>
+                    <DialogActions sx={{ px: 3, pb: 2.5 }}>
                         <Button onClick={() => setDialogOpen(false)} color="inherit">
                             {t('Annuler')}
                         </Button>
@@ -323,6 +412,7 @@ export default function WorkersIndex({ workers, filters }) {
                 onConfirm={confirmDelete}
                 title={t('Supprimer employé')}
                 message={t('Êtes-vous sûr de vouloir supprimer cet employé ?')}
+                severity="danger"
             />
         </Layout>
     );

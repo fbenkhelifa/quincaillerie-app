@@ -1,18 +1,20 @@
 import './bootstrap';
 import '../css/app.css';
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
+import '@fontsource/inter/300.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
 
 import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';
-import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
+import { ThemeProvider, CssBaseline } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useState, useEffect, createContext, useMemo } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { createLightTheme, createDarkTheme } from './theme';
 import 'dayjs/locale/fr';
 import 'dayjs/locale/ar';
 
@@ -22,6 +24,8 @@ export const AppContext = createContext({
     theme: 'light',
     setTheme: () => {},
     t: (key) => key,
+    sidebarCollapsed: false,
+    setSidebarCollapsed: () => {},
 });
 
 const appName = import.meta.env.VITE_APP_NAME || 'Quincaillerie';
@@ -29,15 +33,16 @@ const appName = import.meta.env.VITE_APP_NAME || 'Quincaillerie';
 function AppWrapper({ App, props }) {
     const initialLocale = props.initialPage.props.locale || localStorage.getItem('locale') || 'fr';
     const initialTheme = props.initialPage.props.theme || localStorage.getItem('theme') || 'light';
+    const initialSidebarCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
     
     const [locale, setLocaleState] = useState(initialLocale);
     const [themeMode, setThemeModeState] = useState(initialTheme);
+    const [sidebarCollapsed, setSidebarCollapsedState] = useState(initialSidebarCollapsed);
 
     const setLocale = (newLocale) => {
         setLocaleState(newLocale);
         localStorage.setItem('locale', newLocale);
         document.documentElement.lang = newLocale;
-        // Keep LTR layout always - only translate text
         document.documentElement.dir = 'ltr';
     };
 
@@ -46,11 +51,19 @@ function AppWrapper({ App, props }) {
         localStorage.setItem('theme', newTheme);
     };
 
+    const setSidebarCollapsed = (collapsed) => {
+        setSidebarCollapsedState(collapsed);
+        localStorage.setItem('sidebarCollapsed', collapsed.toString());
+    };
+
     useEffect(() => {
         document.documentElement.lang = locale;
-        // Keep LTR layout always
         document.documentElement.dir = 'ltr';
-    }, [locale]);
+        
+        // Add theme class to body for CSS fallbacks
+        document.body.classList.remove('theme-light', 'theme-dark');
+        document.body.classList.add(`theme-${themeMode}`);
+    }, [locale, themeMode]);
 
     const translations = props.initialPage.props.translations || {};
 
@@ -62,56 +75,26 @@ function AppWrapper({ App, props }) {
         return text;
     };
 
+    // Create MUI theme based on current mode and locale
     const muiTheme = useMemo(
-        () =>
-            createTheme({
-                direction: 'ltr', // Always LTR layout
-                palette: {
-                    mode: themeMode,
-                    primary: {
-                        main: '#1976d2',
-                    },
-                    secondary: {
-                        main: '#f50057',
-                    },
-                    background: {
-                        default: themeMode === 'light' ? '#f5f5f5' : '#121212',
-                        paper: themeMode === 'light' ? '#ffffff' : '#1e1e1e',
-                    },
-                },
-                typography: {
-                    fontFamily: locale === 'ar' 
-                        ? '"Noto Sans Arabic", "Roboto", "Helvetica", "Arial", sans-serif'
-                        : '"Roboto", "Helvetica", "Arial", sans-serif',
-                },
-                components: {
-                    MuiTextField: {
-                        defaultProps: {
-                            size: 'small',
-                        },
-                    },
-                    MuiButton: {
-                        defaultProps: {
-                            size: 'medium',
-                        },
-                        styleOverrides: {
-                            root: {
-                                textTransform: 'none',
-                            },
-                        },
-                    },
-                    MuiDataGrid: {
-                        defaultProps: {
-                            density: 'comfortable',
-                        },
-                    },
-                },
-            }),
+        () => themeMode === 'dark' 
+            ? createDarkTheme(locale) 
+            : createLightTheme(locale),
         [locale, themeMode]
     );
 
     return (
-        <AppContext.Provider value={{ locale, setLocale, theme: themeMode, setTheme, t }}>
+        <AppContext.Provider 
+            value={{ 
+                locale, 
+                setLocale, 
+                theme: themeMode, 
+                setTheme, 
+                t,
+                sidebarCollapsed,
+                setSidebarCollapsed,
+            }}
+        >
             <ThemeProvider theme={muiTheme}>
                 <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
                     <CssBaseline />
@@ -121,8 +104,28 @@ function AppWrapper({ App, props }) {
                         toastOptions={{
                             duration: 4000,
                             style: {
-                                background: themeMode === 'dark' ? '#333' : '#fff',
-                                color: themeMode === 'dark' ? '#fff' : '#333',
+                                background: themeMode === 'dark' ? '#1E293B' : '#FFFFFF',
+                                color: themeMode === 'dark' ? '#F1F5F9' : '#1F2937',
+                                borderRadius: '12px',
+                                boxShadow: themeMode === 'dark' 
+                                    ? '0 10px 15px -3px rgba(0, 0, 0, 0.4)' 
+                                    : '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                                border: `1px solid ${themeMode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'}`,
+                                padding: '12px 16px',
+                                fontSize: '0.875rem',
+                                fontWeight: 500,
+                            },
+                            success: {
+                                iconTheme: {
+                                    primary: '#10B981',
+                                    secondary: themeMode === 'dark' ? '#1E293B' : '#FFFFFF',
+                                },
+                            },
+                            error: {
+                                iconTheme: {
+                                    primary: '#EF4444',
+                                    secondary: themeMode === 'dark' ? '#1E293B' : '#FFFFFF',
+                                },
                             },
                         }}
                     />
@@ -144,6 +147,7 @@ createInertiaApp({
         root.render(<AppWrapper App={App} props={props} />);
     },
     progress: {
-        color: '#1976d2',
+        color: '#2563EB',
+        showSpinner: true,
     },
 });

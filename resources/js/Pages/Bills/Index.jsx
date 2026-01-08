@@ -1,57 +1,59 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useMemo } from 'react';
 import { Head, Link, router } from '@inertiajs/react';
 import Layout from '@/Layouts/Layout';
 import { AppContext } from '../../app';
+import { FilterBar, EmptyState } from '@/Components/ui';
 import {
     Box,
     Button,
-    TextField,
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
     Paper,
     Typography,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
     Chip,
-    InputAdornment,
-    TablePagination,
     IconButton,
+    Tooltip,
+    alpha,
 } from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import {
     Add as AddIcon,
-    Search as SearchIcon,
     Visibility as ViewIcon,
     PictureAsPdf as PdfIcon,
+    Receipt as ReceiptIcon,
 } from '@mui/icons-material';
-import dayjs from 'dayjs';
 
 export default function BillsIndex({ bills, filters }) {
     const { t, locale } = useContext(AppContext);
-    const [localFilters, setLocalFilters] = useState({
-        search: filters.search || '',
-        status: filters.status || '',
-        payment_method: filters.payment_method || '',
-        date_from: filters.date_from ? dayjs(filters.date_from) : null,
-        date_to: filters.date_to ? dayjs(filters.date_to) : null,
+    const [paginationModel, setPaginationModel] = useState({
+        pageSize: bills.per_page || 25,
+        page: (bills.current_page || 1) - 1,
     });
 
-    const handleFilter = () => {
-        const params = {};
-        if (localFilters.search) params.search = localFilters.search;
-        if (localFilters.status) params.status = localFilters.status;
-        if (localFilters.payment_method) params.payment_method = localFilters.payment_method;
-        if (localFilters.date_from) params.date_from = localFilters.date_from.format('YYYY-MM-DD');
-        if (localFilters.date_to) params.date_to = localFilters.date_to.format('YYYY-MM-DD');
-        
-        router.get(route('bills.index'), params, { preserveState: true });
-    };
+    // Filter configuration with date range support
+    const filterConfig = useMemo(() => [
+        {
+            id: 'status',
+            label: t('Statut'),
+            type: 'select',
+            width: 3,
+            options: [
+                { value: 'pending', label: t('En attente') },
+                { value: 'completed', label: t('Terminée') },
+                { value: 'cancelled', label: t('Annulée') },
+            ],
+        },
+        {
+            id: 'payment_method',
+            label: t('Mode de paiement'),
+            type: 'select',
+            width: 3,
+            options: [
+                { value: 'cash', label: t('Espèces') },
+                { value: 'card', label: t('Carte') },
+                { value: 'check', label: t('Chèque') },
+                { value: 'credit', label: t('Crédit') },
+            ],
+        },
+    ], [t]);
 
     const formatCurrency = (value) => {
         return new Intl.NumberFormat(locale === 'ar' ? 'ar-DZ' : 'fr-DZ', {
@@ -79,6 +81,142 @@ export default function BillsIndex({ bills, filters }) {
         other: t('Autre'),
     };
 
+    const handlePageChange = (model) => {
+        setPaginationModel(model);
+        router.get(
+            route('bills.index'),
+            { ...filters, page: model.page + 1, per_page: model.pageSize },
+            { preserveState: true, preserveScroll: true }
+        );
+    };
+
+    const handleSort = (sortModel) => {
+        if (sortModel.length > 0) {
+            const { field, sort } = sortModel[0];
+            router.get(
+                route('bills.index'),
+                { ...filters, sort: field, direction: sort },
+                { preserveState: true, preserveScroll: true }
+            );
+        }
+    };
+
+    const columns = useMemo(() => [
+        {
+            field: 'bill_number',
+            headerName: t('N° Facture'),
+            width: 150,
+            renderCell: (params) => (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Box
+                        sx={{
+                            width: 36,
+                            height: 36,
+                            borderRadius: 1.5,
+                            bgcolor: (theme) => alpha(theme.palette.primary.main, 0.1),
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}
+                    >
+                        <ReceiptIcon fontSize="small" color="primary" />
+                    </Box>
+                    <Typography variant="body2" fontWeight={600}>
+                        {params.value}
+                    </Typography>
+                </Box>
+            ),
+        },
+        {
+            field: 'customer_name',
+            headerName: t('Client'),
+            flex: 1,
+            minWidth: 150,
+            valueGetter: (value) => value || '-',
+        },
+        {
+            field: 'worker',
+            headerName: t('Vendeur'),
+            width: 150,
+            valueGetter: (value, row) => row.worker?.name || '-',
+        },
+        {
+            field: 'total',
+            headerName: t('Total'),
+            width: 140,
+            type: 'number',
+            renderCell: (params) => (
+                <Typography fontWeight={600} color="primary.main">
+                    {formatCurrency(params.value)}
+                </Typography>
+            ),
+        },
+        {
+            field: 'payment_method',
+            headerName: t('Paiement'),
+            width: 130,
+            renderCell: (params) => (
+                <Chip
+                    label={paymentMethodLabels[params.value] || params.value}
+                    size="small"
+                    variant="outlined"
+                />
+            ),
+        },
+        {
+            field: 'status',
+            headerName: t('Statut'),
+            width: 120,
+            renderCell: (params) => (
+                <Chip
+                    label={statusLabels[params.value] || params.value}
+                    size="small"
+                    color={statusColors[params.value] || 'default'}
+                />
+            ),
+        },
+        {
+            field: 'created_at',
+            headerName: t('Date'),
+            width: 170,
+            valueFormatter: (value) => {
+                return new Date(value).toLocaleDateString(
+                    locale === 'ar' ? 'ar-DZ' : 'fr-FR',
+                    { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }
+                );
+            },
+        },
+        {
+            field: 'actions',
+            type: 'actions',
+            headerName: t('Actions'),
+            width: 100,
+            getActions: (params) => [
+                <GridActionsCellItem
+                    icon={
+                        <Tooltip title={t('Voir détails')}>
+                            <ViewIcon />
+                        </Tooltip>
+                    }
+                    label={t('Voir')}
+                    onClick={() => router.get(route('bills.show', params.row.id))}
+                    showInMenu={false}
+                />,
+                <GridActionsCellItem
+                    icon={
+                        <Tooltip title={t('Télécharger PDF')}>
+                            <PdfIcon />
+                        </Tooltip>
+                    }
+                    label={t('PDF')}
+                    onClick={() => window.open(route('bills.pdf', { bill: params.row.id, lang: locale }), '_blank')}
+                    showInMenu={false}
+                    sx={{ color: 'error.main' }}
+                />,
+            ],
+        },
+    ], [t, locale]);
+
     return (
         <Layout
             title={t('Factures')}
@@ -86,173 +224,73 @@ export default function BillsIndex({ bills, filters }) {
         >
             <Head title={t('Factures')} />
 
+            {/* Page Header with Actions */}
             <Box sx={{ mb: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography variant="h5" fontWeight="bold">
-                    {t('Gestion des factures')}
-                </Typography>
+                <Box />
                 <Button
                     component={Link}
                     href={route('bills.create')}
                     variant="contained"
                     startIcon={<AddIcon />}
+                    size="large"
                 >
                     {t('Nouvelle facture')}
                 </Button>
             </Box>
 
-            {/* Filters */}
-            <Paper sx={{ p: 2, mb: 2 }}>
-                <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center' }}>
-                    <TextField
-                        placeholder={t('Rechercher...')}
-                        value={localFilters.search}
-                        onChange={(e) => setLocalFilters({ ...localFilters, search: e.target.value })}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <SearchIcon />
-                                </InputAdornment>
-                            ),
-                        }}
-                        sx={{ minWidth: 200 }}
-                    />
-                    <FormControl size="small" sx={{ minWidth: 120 }}>
-                        <InputLabel>{t('Statut')}</InputLabel>
-                        <Select
-                            value={localFilters.status}
-                            onChange={(e) => setLocalFilters({ ...localFilters, status: e.target.value })}
-                            label={t('Statut')}
-                        >
-                            <MenuItem value="">{t('Tous')}</MenuItem>
-                            <MenuItem value="pending">{t('En attente')}</MenuItem>
-                            <MenuItem value="completed">{t('Terminée')}</MenuItem>
-                            <MenuItem value="cancelled">{t('Annulée')}</MenuItem>
-                        </Select>
-                    </FormControl>
-                    <FormControl size="small" sx={{ minWidth: 120 }}>
-                        <InputLabel>{t('Paiement')}</InputLabel>
-                        <Select
-                            value={localFilters.payment_method}
-                            onChange={(e) => setLocalFilters({ ...localFilters, payment_method: e.target.value })}
-                            label={t('Paiement')}
-                        >
-                            <MenuItem value="">{t('Tous')}</MenuItem>
-                            <MenuItem value="cash">{t('Espèces')}</MenuItem>
-                            <MenuItem value="card">{t('Carte')}</MenuItem>
-                            <MenuItem value="check">{t('Chèque')}</MenuItem>
-                            <MenuItem value="credit">{t('Crédit')}</MenuItem>
-                        </Select>
-                    </FormControl>
-                    <DatePicker
-                        label={t('Du')}
-                        value={localFilters.date_from}
-                        onChange={(value) => setLocalFilters({ ...localFilters, date_from: value })}
-                        slotProps={{ textField: { size: 'small', sx: { width: 150 } } }}
-                    />
-                    <DatePicker
-                        label={t('Au')}
-                        value={localFilters.date_to}
-                        onChange={(value) => setLocalFilters({ ...localFilters, date_to: value })}
-                        slotProps={{ textField: { size: 'small', sx: { width: 150 } } }}
-                    />
-                    <Button variant="contained" onClick={handleFilter}>
-                        {t('Filtrer')}
-                    </Button>
-                </Box>
-            </Paper>
+            {/* Enhanced Filter Bar with Date Range */}
+            <FilterBar
+                filters={filters}
+                filterConfig={filterConfig}
+                routeName="bills.index"
+                searchPlaceholder={t('Rechercher par numéro, client...')}
+                showDateRange={true}
+                dateFromKey="date_from"
+                dateToKey="date_to"
+                showPresets={true}
+            />
 
-            {/* Table */}
-            <TableContainer component={Paper}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>{t('N° Facture')}</TableCell>
-                            <TableCell>{t('Client')}</TableCell>
-                            <TableCell>{t('Vendeur')}</TableCell>
-                            <TableCell align="right">{t('Total')}</TableCell>
-                            <TableCell>{t('Paiement')}</TableCell>
-                            <TableCell>{t('Statut')}</TableCell>
-                            <TableCell>{t('Date')}</TableCell>
-                            <TableCell align="right">{t('Actions')}</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {bills.data?.length > 0 ? (
-                            bills.data.map((bill) => (
-                                <TableRow key={bill.id}>
-                                    <TableCell>
-                                        <Typography fontWeight="medium">{bill.bill_number}</Typography>
-                                    </TableCell>
-                                    <TableCell>{bill.customer_name || '-'}</TableCell>
-                                    <TableCell>{bill.worker?.name || '-'}</TableCell>
-                                    <TableCell align="right">
-                                        <Typography fontWeight="bold" color="primary">
-                                            {formatCurrency(bill.total)}
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Chip
-                                            label={paymentMethodLabels[bill.payment_method]}
-                                            size="small"
-                                        />
-                                    </TableCell>
-                                    <TableCell>
-                                        <Chip
-                                            label={statusLabels[bill.status]}
-                                            size="small"
-                                            color={statusColors[bill.status]}
-                                        />
-                                    </TableCell>
-                                    <TableCell>
-                                        {new Date(bill.created_at).toLocaleDateString(
-                                            locale === 'ar' ? 'ar-DZ' : 'fr-FR',
-                                            { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }
-                                        )}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <IconButton
-                                            component={Link}
-                                            href={route('bills.show', bill.id)}
-                                            size="small"
-                                        >
-                                            <ViewIcon />
-                                        </IconButton>
-                                        <IconButton
-                                            component="a"
-                                            href={route('bills.pdf', { bill: bill.id, lang: locale })}
-                                            size="small"
-                                            color="error"
-                                        >
-                                            <PdfIcon />
-                                        </IconButton>
-                                    </TableCell>
-                                </TableRow>
-                            ))
-                        ) : (
-                            <TableRow>
-                                <TableCell colSpan={8} align="center">
-                                    {t('Aucune facture trouvée')}
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-                {bills.total > bills.per_page && (
-                    <TablePagination
-                        component="div"
-                        count={bills.total}
-                        page={bills.current_page - 1}
-                        onPageChange={(e, page) =>
-                            router.get(route('bills.index'), { ...filters, page: page + 1 }, { preserveState: true })
-                        }
-                        rowsPerPage={bills.per_page}
-                        rowsPerPageOptions={[bills.per_page]}
-                        labelDisplayedRows={({ from, to, count }) =>
-                            `${from}-${to} ${t('sur')} ${count}`
-                        }
+            {/* Data Table */}
+            <Paper sx={{ overflow: 'hidden' }}>
+                {(bills.data?.length > 0 || filters.search || filters.status || filters.payment_method || filters.date_from) ? (
+                    <DataGrid
+                        rows={bills.data || []}
+                        columns={columns}
+                        rowCount={bills.total || 0}
+                        paginationMode="server"
+                        sortingMode="server"
+                        paginationModel={paginationModel}
+                        onPaginationModelChange={handlePageChange}
+                        onSortModelChange={handleSort}
+                        pageSizeOptions={[10, 25, 50, 100]}
+                        disableRowSelectionOnClick
+                        autoHeight
+                        sx={{
+                            border: 'none',
+                            '& .MuiDataGrid-cell:focus': {
+                                outline: 'none',
+                            },
+                        }}
+                        localeText={{
+                            noRowsLabel: t('Aucune facture trouvée'),
+                            MuiTablePagination: {
+                                labelRowsPerPage: t('Lignes par page'),
+                                labelDisplayedRows: ({ from, to, count }) =>
+                                    `${from}-${to} ${t('sur')} ${count}`,
+                            },
+                        }}
+                    />
+                ) : (
+                    <EmptyState
+                        type="empty"
+                        icon={ReceiptIcon}
+                        title={t('Aucune facture')}
+                        description={t('Commencez par créer votre première facture')}
+                        actionLabel={t('Nouvelle facture')}
+                        onAction={() => router.get(route('bills.create'))}
                     />
                 )}
-            </TableContainer>
+            </Paper>
         </Layout>
     );
 }

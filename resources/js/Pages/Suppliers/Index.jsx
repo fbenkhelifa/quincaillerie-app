@@ -1,7 +1,8 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useMemo } from 'react';
 import { Head, router, useForm } from '@inertiajs/react';
 import Layout from '@/Layouts/Layout';
 import { AppContext } from '../../app';
+import { EmptyState } from '@/Components/ui';
 import ConfirmDialog from '@/Components/ConfirmDialog';
 import {
     Box,
@@ -13,21 +14,21 @@ import {
     DialogTitle,
     DialogContent,
     DialogActions,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    IconButton,
     Chip,
     FormControlLabel,
     Switch,
+    Tooltip,
+    alpha,
+    Avatar,
 } from '@mui/material';
+import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import {
     Add as AddIcon,
     Edit as EditIcon,
     Delete as DeleteIcon,
+    LocalShipping as ShippingIcon,
+    Phone as PhoneIcon,
+    Email as EmailIcon,
 } from '@mui/icons-material';
 import toast from 'react-hot-toast';
 
@@ -101,6 +102,123 @@ export default function SuppliersIndex({ suppliers }) {
         });
     };
 
+    const columns = useMemo(() => [
+        {
+            field: 'name',
+            headerName: t('Fournisseur'),
+            flex: 1,
+            minWidth: 220,
+            renderCell: (params) => (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                    <Avatar
+                        sx={{
+                            width: 40,
+                            height: 40,
+                            bgcolor: (theme) => alpha(theme.palette.secondary.main, 0.1),
+                            color: 'secondary.main',
+                        }}
+                    >
+                        {params.value?.charAt(0)}
+                    </Avatar>
+                    <Box>
+                        <Typography variant="body2" fontWeight={500}>
+                            {params.value}
+                        </Typography>
+                        {params.row.contact_person && (
+                            <Typography variant="caption" color="text.secondary">
+                                {params.row.contact_person}
+                            </Typography>
+                        )}
+                    </Box>
+                </Box>
+            ),
+        },
+        {
+            field: 'phone',
+            headerName: t('Téléphone'),
+            width: 150,
+            renderCell: (params) => (
+                params.value ? (
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                        <PhoneIcon fontSize="small" sx={{ color: 'text.secondary' }} />
+                        <span>{params.value}</span>
+                    </Box>
+                ) : '-'
+            ),
+        },
+        {
+            field: 'email',
+            headerName: t('Email'),
+            width: 200,
+            renderCell: (params) => (
+                params.value ? (
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                        <EmailIcon fontSize="small" sx={{ color: 'text.secondary' }} />
+                        <Typography variant="body2" noWrap sx={{ maxWidth: 170 }}>
+                            {params.value}
+                        </Typography>
+                    </Box>
+                ) : '-'
+            ),
+        },
+        {
+            field: 'products_count',
+            headerName: t('Produits'),
+            width: 110,
+            type: 'number',
+            renderCell: (params) => (
+                <Chip
+                    label={params.value || 0}
+                    size="small"
+                    color={params.value > 0 ? 'primary' : 'default'}
+                    variant={params.value > 0 ? 'filled' : 'outlined'}
+                />
+            ),
+        },
+        {
+            field: 'is_active',
+            headerName: t('Statut'),
+            width: 110,
+            renderCell: (params) => (
+                <Chip
+                    label={params.value ? t('Actif') : t('Inactif')}
+                    size="small"
+                    color={params.value ? 'success' : 'error'}
+                />
+            ),
+        },
+        {
+            field: 'actions',
+            type: 'actions',
+            headerName: t('Actions'),
+            width: 100,
+            getActions: (params) => [
+                <GridActionsCellItem
+                    icon={
+                        <Tooltip title={t('Modifier')}>
+                            <EditIcon />
+                        </Tooltip>
+                    }
+                    label={t('Modifier')}
+                    onClick={() => openEditDialog(params.row)}
+                    showInMenu={false}
+                />,
+                <GridActionsCellItem
+                    icon={
+                        <Tooltip title={params.row.products_count > 0 ? t('Fournisseur avec produits') : t('Supprimer')}>
+                            <DeleteIcon />
+                        </Tooltip>
+                    }
+                    label={t('Supprimer')}
+                    onClick={() => handleDelete(params.row)}
+                    showInMenu={false}
+                    disabled={params.row.products_count > 0}
+                    sx={{ color: params.row.products_count > 0 ? 'action.disabled' : 'error.main' }}
+                />,
+            ],
+        },
+    ], [t]);
+
     return (
         <Layout
             title={t('Fournisseurs')}
@@ -108,80 +226,56 @@ export default function SuppliersIndex({ suppliers }) {
         >
             <Head title={t('Fournisseurs')} />
 
-            <Box sx={{ mb: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography variant="h5" fontWeight="bold">
-                    {t('Gestion des fournisseurs')}
-                </Typography>
+            {/* Page Header */}
+            <Box sx={{ mb: 3, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                 <Button
                     variant="contained"
                     startIcon={<AddIcon />}
                     onClick={openCreateDialog}
+                    size="large"
                 >
                     {t('Nouveau fournisseur')}
                 </Button>
             </Box>
 
-            <TableContainer component={Paper}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>{t('Nom')}</TableCell>
-                            <TableCell>{t('Contact')}</TableCell>
-                            <TableCell>{t('Téléphone')}</TableCell>
-                            <TableCell>{t('Email')}</TableCell>
-                            <TableCell>{t('Produits')}</TableCell>
-                            <TableCell>{t('Statut')}</TableCell>
-                            <TableCell align="right">{t('Actions')}</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {suppliers?.length > 0 ? (
-                            suppliers.map((supplier) => (
-                                <TableRow key={supplier.id}>
-                                    <TableCell>
-                                        <Typography fontWeight="medium">{supplier.name}</Typography>
-                                    </TableCell>
-                                    <TableCell>{supplier.contact_person || '-'}</TableCell>
-                                    <TableCell>{supplier.phone || '-'}</TableCell>
-                                    <TableCell>{supplier.email || '-'}</TableCell>
-                                    <TableCell>
-                                        <Chip
-                                            label={supplier.products_count || 0}
-                                            size="small"
-                                            color="primary"
-                                        />
-                                    </TableCell>
-                                    <TableCell>
-                                        <Chip
-                                            label={supplier.is_active ? t('Actif') : t('Inactif')}
-                                            size="small"
-                                            color={supplier.is_active ? 'success' : 'error'}
-                                        />
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <IconButton onClick={() => openEditDialog(supplier)}>
-                                            <EditIcon />
-                                        </IconButton>
-                                        <IconButton
-                                            onClick={() => handleDelete(supplier)}
-                                            color="error"
-                                            disabled={supplier.products_count > 0}
-                                        >
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    </TableCell>
-                                </TableRow>
-                            ))
-                        ) : (
-                            <TableRow>
-                                <TableCell colSpan={7} align="center">
-                                    {t('Aucun fournisseur trouvé')}
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            {/* Data Table or Empty State */}
+            <Paper sx={{ overflow: 'hidden' }}>
+                {suppliers?.length > 0 ? (
+                    <DataGrid
+                        rows={suppliers}
+                        columns={columns}
+                        pageSizeOptions={[10, 25, 50]}
+                        initialState={{
+                            pagination: { paginationModel: { pageSize: 25 } },
+                        }}
+                        disableRowSelectionOnClick
+                        autoHeight
+                        sx={{
+                            border: 'none',
+                            '& .MuiDataGrid-cell:focus': {
+                                outline: 'none',
+                            },
+                        }}
+                        localeText={{
+                            noRowsLabel: t('Aucun fournisseur trouvé'),
+                            MuiTablePagination: {
+                                labelRowsPerPage: t('Lignes par page'),
+                                labelDisplayedRows: ({ from, to, count }) =>
+                                    `${from}-${to} ${t('sur')} ${count}`,
+                            },
+                        }}
+                    />
+                ) : (
+                    <EmptyState
+                        type="empty"
+                        icon={ShippingIcon}
+                        title={t('Aucun fournisseur')}
+                        description={t('Commencez par ajouter vos premiers fournisseurs')}
+                        actionLabel={t('Nouveau fournisseur')}
+                        onAction={openCreateDialog}
+                    />
+                )}
+            </Paper>
 
             {/* Create/Edit Dialog */}
             <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} maxWidth="sm" fullWidth>
@@ -190,7 +284,7 @@ export default function SuppliersIndex({ suppliers }) {
                         {editingSupplier ? t('Modifier fournisseur') : t('Nouveau fournisseur')}
                     </DialogTitle>
                     <DialogContent>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5, mt: 1 }}>
                             <TextField
                                 label={t('Nom')}
                                 value={data.name}
@@ -206,19 +300,21 @@ export default function SuppliersIndex({ suppliers }) {
                                 onChange={(e) => setData('contact_person', e.target.value)}
                                 fullWidth
                             />
-                            <TextField
-                                label={t('Téléphone')}
-                                value={data.phone}
-                                onChange={(e) => setData('phone', e.target.value)}
-                                fullWidth
-                            />
-                            <TextField
-                                label={t('Email')}
-                                type="email"
-                                value={data.email}
-                                onChange={(e) => setData('email', e.target.value)}
-                                fullWidth
-                            />
+                            <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 }}>
+                                <TextField
+                                    label={t('Téléphone')}
+                                    value={data.phone}
+                                    onChange={(e) => setData('phone', e.target.value)}
+                                    fullWidth
+                                />
+                                <TextField
+                                    label={t('Email')}
+                                    type="email"
+                                    value={data.email}
+                                    onChange={(e) => setData('email', e.target.value)}
+                                    fullWidth
+                                />
+                            </Box>
                             <TextField
                                 label={t('Adresse')}
                                 value={data.address}
@@ -246,7 +342,7 @@ export default function SuppliersIndex({ suppliers }) {
                             />
                         </Box>
                     </DialogContent>
-                    <DialogActions>
+                    <DialogActions sx={{ px: 3, pb: 2.5 }}>
                         <Button onClick={() => setDialogOpen(false)} color="inherit">
                             {t('Annuler')}
                         </Button>
@@ -264,6 +360,7 @@ export default function SuppliersIndex({ suppliers }) {
                 onConfirm={confirmDelete}
                 title={t('Supprimer fournisseur')}
                 message={t('Êtes-vous sûr de vouloir supprimer ce fournisseur ?')}
+                severity="danger"
             />
         </Layout>
     );
