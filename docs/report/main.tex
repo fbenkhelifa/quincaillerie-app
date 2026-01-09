@@ -1,0 +1,140 @@
+% Quincaillerie Application - Technical Report
+\documentclass[12pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage{enumitem}
+
+% TikZ libraries
+\usetikzlibrary{shapes,arrows,positioning,fit,backgrounds}
+
+% Page setup
+\geometry{
+    a4paper,
+    left=25mm,
+    right=25mm,
+    top=30mm,
+    bottom=30mm
+}
+
+% Colors
+\definecolor{primaryblue}{RGB}{37,99,235}
+\definecolor{secondarypurple}{RGB}{124,58,237}
+\definecolor{codegreen}{RGB}{16,185,129}
+\definecolor{codegray}{RGB}{107,114,128}
+\definecolor{codepurple}{RGB}{139,92,246}
+\definecolor{backcolour}{RGB}{249,250,251}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primaryblue,
+    filecolor=primaryblue,
+    urlcolor=primaryblue,
+    citecolor=primaryblue,
+    pdftitle={Quincaillerie Application - Technical Report},
+    pdfauthor={},
+    pdfsubject={Hardware Store Management System},
+}
+
+% Code listing style
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{primaryblue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    frame=single,
+    rulecolor=\color{codegray}
+}
+\lstset{style=mystyle}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Quincaillerie App}
+\fancyhead[R]{\small Technical Report}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Title page
+\title{
+    \vspace{2cm}
+    \Huge\textbf{Quincaillerie Application}\\[0.5cm]
+    \Large Hardware Store Management System\\[0.3cm]
+    \large Technical Report \& Architecture Documentation\\[1cm]
+    % \includegraphics[width=0.3\textwidth]{figures/logo.png}\\[1cm]
+    % Optional: Add logo image to figures/ directory
+}
+\author{
+    \textbf{Developer Team}\\[0.3cm]
+    \small Built with Laravel 12, React 18 \& Inertia.js\\
+    \small Full-Stack Inventory, POS \& Analytics Platform
+}
+\date{\today}
+
+\begin{document}
+
+% Title page (no header/footer)
+\thispagestyle{empty}
+\maketitle
+\newpage
+
+% Abstract
+\thispagestyle{empty}
+\section*{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+\input{sections/abstract}
+\newpage
+
+% Table of contents
+\tableofcontents
+\newpage
+
+% Main sections
+\input{sections/introduction}
+\input{sections/objectives}
+\input{sections/features}
+\input{sections/architecture}
+\input{sections/workflows}
+\input{sections/performance}
+\input{sections/ux_design}
+\input{sections/testing}
+\input{sections/demo}
+\input{sections/conclusion}
+
+% Bibliography (optional)
+\newpage
+\addcontentsline{toc}{section}{References}
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

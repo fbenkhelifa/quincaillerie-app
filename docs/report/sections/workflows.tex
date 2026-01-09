@@ -1,0 +1,491 @@
+\section{Core Business Workflows}
+
+This section describes the detailed step-by-step execution of four critical business processes.
+
+\subsection{Workflow 1: POS Bill Creation}
+
+\textbf{Actors:} Cashier, System\\
+\textbf{Preconditions:} User authenticated with cashier or admin role\\
+\textbf{Trigger:} Customer brings items to checkout
+
+\subsubsection{Step-by-Step Sequence}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Navigate to Bill Creation}
+    \begin{itemize}
+        \item Cashier clicks "Factures" $\rightarrow$ "Nouvelle facture"
+        \item System loads \texttt{Bills/Create.jsx} with empty cart
+        \item Backend provides available workers list via \texttt{BillsController::create()}
+    \end{itemize}
+    
+    \item \textbf{Toggle POS Mode (Optional)}
+    \begin{itemize}
+        \item Cashier enables POS Mode switch
+        \item UI transforms: larger fonts, auto-focus on barcode input, keyboard shortcuts activated
+        \item Audio feedback system initialized (Web Audio API)
+    \end{itemize}
+    
+    \item \textbf{Scan/Search Products}
+    \begin{itemize}
+        \item Cashier scans barcode or types product name/SKU
+        \item Frontend debounces input (300ms delay) and calls \texttt{/products/barcode-lookup}
+        \item Backend queries: \texttt{Product::where('barcode', \$code)->orWhere('sku', \$code)->with('category')->first()}
+        \item System returns product with current stock level
+        \item If found: success beep (800Hz, 100ms)
+        \item If not found: error beep (300Hz, 200ms)
+    \end{itemize}
+    
+    \item \textbf{Add Products to Cart}
+    \begin{itemize}
+        \item System validates \texttt{quantity <= product.quantity} (available stock)
+        \item If valid:
+        \begin{itemize}
+            \item Product added to cart array in component state
+            \item Add sound plays (600Hz, 150ms)
+            \item Stock warning displayed if \texttt{cartQty > 0.8 * availableStock}
+        \end{itemize}
+        \item If invalid: error notification "Insufficient stock"
+        \item Cart totals recomputed: \texttt{subtotal = sum(item.quantity * item.unit\_price - item.discount)}
+    \end{itemize}
+    
+    \item \textbf{Adjust Quantities (if needed)}
+    \begin{itemize}
+        \item Cashier uses \texttt{+/-} buttons or keyboard shortcuts
+        \item System re-validates stock on each increment
+        \item Totals update reactively
+    \end{itemize}
+    
+    \item \textbf{Apply Discounts \& Tax}
+    \begin{itemize}
+        \item Cashier enters bill-level discount (amount or percentage)
+        \item Tax auto-calculated: \texttt{tax = (subtotal - discount) * settings.default\_tax\_rate}
+        \item Final total: \texttt{total = subtotal - discount + tax}
+    \end{itemize}
+    
+    \item \textbf{Enter Customer \& Payment Details}
+    \begin{itemize}
+        \item Optional: customer name, phone
+        \item Select payment method: cash, card, check, credit, other
+        \item Assign worker (salesperson credit)
+    \end{itemize}
+    
+    \item \textbf{Submit Bill}
+    \begin{itemize}
+        \item Frontend validates: at least 1 item, payment method selected
+        \item POST request to \texttt{/bills} with payload:
+    \end{itemize}
+\end{enumerate}
+
+\begin{lstlisting}[language=JavaScript,label=lst:bill-payload]
+{
+    "worker_id": 3,
+    "customer_name": "Ahmed Ben Ali",
+    "customer_phone": "0612345678",
+    "discount": 50.00,
+    "tax": 20.00,
+    "payment_method": "cash",
+    "items": [
+        {
+            "product_id": 15,
+            "quantity": 2,
+            "unit_price": 120.00,
+            "discount": 0
+        },
+        // ...
+    ]
+}
+\end{lstlisting}
+
+\begin{enumerate}[resume,leftmargin=*]
+    \item \textbf{Backend Processing (\texttt{BillsController::store()})}
+    \begin{itemize}
+        \item Begin database transaction
+        \item Generate unique bill number: \texttt{BILL-YYYYMMDD-XXXX}
+        \item Create \texttt{Bill} record with totals
+        \item For each item:
+        \begin{itemize}
+            \item Create \texttt{BillItem} record
+            \item Decrement product quantity: \texttt{Product::decrement('quantity', \$qty)}
+            \item Create \texttt{InventoryMovement} record (\texttt{type: 'sale', quantity: -\$qty})
+        \end{itemize}
+        \item Commit transaction
+        \item Fire \texttt{BillCreated} event (for potential listeners)
+    \end{itemize}
+    
+    \item \textbf{Success Response}
+    \begin{itemize}
+        \item System plays finalize sound (1000Hz, 300ms)
+        \item Redirects to \texttt{/bills/\{id\}} (bill detail page)
+        \item Shows success toast: "Facture créée avec succès"
+        \item Provides PDF download button
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Exception Handling:}
+\begin{itemize}
+    \item If validation fails: display field-specific errors, no database changes
+    \item If product deleted during transaction: rollback, show error notification
+    \item If stock insufficient: rollback, list problematic items
+\end{itemize}
+
+\subsection{Workflow 2: Purchase Order Creation \& Receiving}
+
+\textbf{Actors:} Admin, System, Supplier (external)\\
+\textbf{Preconditions:} User authenticated with admin role\\
+\textbf{Trigger:} Reorder suggestion approved OR manual PO creation
+
+\subsubsection{Phase 1: Purchase Order Creation}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Initiate PO}
+    \begin{itemize}
+        \item Admin navigates to "Achats" $\rightarrow$ "Nouveau commande"
+        \item OR clicks "Approve" on replenishment suggestion
+        \item System loads \texttt{Purchases/Create.jsx}
+        \item Backend provides suppliers list and products
+    \end{itemize}
+    
+    \item \textbf{Select Supplier}
+    \begin{itemize}
+        \item Admin selects supplier from dropdown
+        \item System retrieves supplier's \texttt{default\_lead\_time\_days}
+        \item Expected delivery date auto-calculated: \texttt{order\_date + lead\_time}
+    \end{itemize}
+    
+    \item \textbf{Add Products}
+    \begin{itemize}
+        \item Admin searches products, adds to PO items list
+        \item For each product:
+        \begin{itemize}
+            \item Specify \texttt{quantity\_ordered}
+            \item Enter \texttt{unit\_cost} (defaults to product's purchase price or supplier cost)
+            \item Line total calculated: \texttt{quantity\_ordered * unit\_cost}
+        \end{itemize}
+        \item If triggered by reorder suggestion: product, quantity, supplier pre-filled
+    \end{itemize}
+    
+    \item \textbf{Calculate Totals}
+    \begin{itemize}
+        \item \texttt{subtotal = sum(line\_totals)}
+        \item Admin enters optional \texttt{shipping} and \texttt{tax}
+        \item \texttt{total = subtotal + shipping + tax}
+    \end{itemize}
+    
+    \item \textbf{Submit PO}
+    \begin{itemize}
+        \item POST to \texttt{/purchases} with items array
+        \item Backend validates: at least 1 item, valid supplier
+        \item Creates \texttt{PurchaseOrder} with unique number \texttt{PO-YYYYMM-XXXX}
+        \item Creates \texttt{PurchaseOrderItem} records
+        \item Initial status: \texttt{draft}
+        \item If from reorder suggestion: update suggestion status to \texttt{ordered}
+    \end{itemize}
+    
+    \item \textbf{Send to Supplier (Optional)}
+    \begin{itemize}
+        \item Admin clicks "Envoyer au fournisseur" button
+        \item System generates PDF: \texttt{/purchases/\{id\}/pdf}
+        \item Status changes to \texttt{sent}
+        \item PO emailed to supplier (future: email integration)
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Phase 2: Goods Receiving}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Initiate Receiving Process}
+    \begin{itemize}
+        \item When shipment arrives, admin navigates to PO detail page
+        \item Clicks "Recevoir la commande" button
+        \item System loads \texttt{Purchases/Receive.jsx} with PO items
+    \end{itemize}
+    
+    \item \textbf{Verify Quantities}
+    \begin{itemize}
+        \item For each item, admin enters \texttt{quantity\_received}
+        \item System displays:
+        \begin{itemize}
+            \item Ordered quantity
+            \item Previously received quantity (if partial receipt)
+            \item Remaining quantity to receive
+        \end{itemize}
+        \item Validation: \texttt{quantity\_received <= (quantity\_ordered - quantity\_already\_received)}
+    \end{itemize}
+    
+    \item \textbf{Submit Receipt}
+    \begin{itemize}
+        \item POST to \texttt{/purchases/\{id\}/receive}
+        \item Backend processing:
+    \end{itemize}
+\end{enumerate}
+
+\begin{lstlisting}[language=PHP,label=lst:receive-logic]
+DB::beginTransaction();
+
+foreach ($items as $item) {
+    // Update PO item
+    $poItem->increment('quantity_received', $item['qty_received']);
+    
+    // Update product stock
+    $product->increment('quantity', $item['qty_received']);
+    
+    // Create inventory movement
+    InventoryMovement::create([
+        'product_id' => $product->id,
+        'type' => 'purchase',
+        'quantity' => $item['qty_received'],
+        'reference_type' => 'App\\Models\\PurchaseOrder',
+        'reference_id' => $purchaseOrder->id,
+        'user_id' => auth()->id(),
+    ]);
+}
+
+// Update PO status
+if (all items fully received) {
+    $purchaseOrder->update(['status' => 'received', 'received_date' => now()]);
+} else {
+    $purchaseOrder->update(['status' => 'partial']);
+}
+
+// Fire event
+event(new PurchaseReceived($purchaseOrder));
+
+DB::commit();
+\end{lstlisting}
+
+\begin{enumerate}[resume,leftmargin=*]
+    \item \textbf{Post-Receipt Actions}
+    \begin{itemize}
+        \item \texttt{LogPurchaseReceived} listener creates audit log entry
+        \item Low-stock notifications automatically cleared if stock now above \texttt{min\_stock}
+        \item Dashboard KPIs update (inventory value increases)
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Workflow 3: Automated Replenishment Recommendations}
+
+\textbf{Actors:} System (scheduled job)\\
+\textbf{Trigger:} Daily scheduler at 02:30\\
+\textbf{Objective:} Generate data-driven reorder suggestions
+
+\subsubsection{Execution Flow}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Job Initiation}
+    \begin{itemize}
+        \item Laravel Scheduler triggers \texttt{ComputeReorderSuggestionsJob}
+        \item Job creates \texttt{JobRun} record with status \texttt{running}
+    \end{itemize}
+    
+    \item \textbf{Data Gathering}
+    \begin{itemize}
+        \item Query products with \texttt{quantity > 0 AND min\_stock > 0}
+        \item For each product, retrieve:
+        \begin{itemize}
+            \item Current stock level
+            \item Last 90 days of sales (\texttt{bill\_items} aggregated by date)
+            \item Supplier relationships with lead times
+        \end{itemize}
+    \end{itemize}
+    
+    \item \textbf{Demand Forecasting (via \texttt{DemandForecastService})}
+    
+    \textbf{Algorithm:}
+    \begin{align*}
+        MA_7 &= \frac{1}{7} \sum_{i=0}^{6} sales_{today-i} \\
+        MA_{14} &= \frac{1}{14} \sum_{i=0}^{13} sales_{today-i} \\
+        MA_{30} &= \frac{1}{30} \sum_{i=0}^{29} sales_{today-i} \\
+        ES &= \alpha \cdot sales_{today} + (1-\alpha) \cdot ES_{yesterday} \quad (\alpha=0.3) \\
+        AvgDailyDemand &= 0.4 \cdot MA_7 + 0.3 \cdot MA_{14} + 0.2 \cdot MA_{30} + 0.1 \cdot ES
+    \end{align*}
+    
+    \item \textbf{Reorder Point Calculation}
+    \begin{align*}
+        SafetyStock &= AvgDailyDemand \times \sqrt{LeadTimeDays} \\
+        ROP &= (AvgDailyDemand \times LeadTimeDays) + SafetyStock
+    \end{align*}
+    
+    \item \textbf{Decide Recommendation}
+    \begin{itemize}
+        \item If \texttt{CurrentStock > ROP}: Skip (no action needed)
+        \item If \texttt{CurrentStock <= ROP}: Create reorder suggestion
+    \end{itemize}
+    
+    \item \textbf{Calculate Recommended Quantity}
+    \begin{align*}
+        RecommendedQty &= ROP - CurrentStock + (AvgDailyDemand \times 7) \\
+        &\text{(restock to ROP + 1 week buffer)}
+    \end{align*}
+    
+    \item \textbf{Determine Urgency}
+    \begin{itemize}
+        \item Calculate \texttt{ProjectedStockoutDate = today + (CurrentStock / AvgDailyDemand)}
+        \item Urgency levels:
+        \begin{itemize}
+            \item \texttt{critical}: stockout in <3 days
+            \item \texttt{high}: stockout in 3-7 days
+            \item \texttt{medium}: stockout in 7-14 days
+            \item \texttt{low}: stockout in 14-30 days
+        \end{itemize}
+    \end{itemize}
+    
+    \item \textbf{Confidence Scoring}
+    \begin{itemize}
+        \item Based on historical data quality:
+        \begin{itemize}
+            \item 90-100\%: >60 days of sales data, low variance
+            \item 70-89\%: 30-60 days of data, moderate variance
+            \item 50-69\%: 10-30 days of data, high variance
+            \item <50\%: <10 days of data (new product)
+        \end{itemize}
+    \end{itemize}
+    
+    \item \textbf{Select Suggested Supplier}
+    \begin{itemize}
+        \item Prefer supplier marked as \texttt{is\_primary} in \texttt{product\_supplier}
+        \item Fallback: supplier with shortest lead time
+        \item If no supplier: leave \texttt{suggested\_supplier\_id} NULL
+    \end{itemize}
+    
+    \item \textbf{Store Recommendation}
+    \begin{itemize}
+        \item Delete old suggestions for same product (\texttt{status: 'pending'})
+        \item Create \texttt{ReorderSuggestion} record with:
+        \begin{itemize}
+            \item All calculated metrics
+            \item \texttt{forecast\_data} JSON (historical + projected sales for charting)
+            \item \texttt{reason\_json} (human-readable explanation factors)
+        \end{itemize}
+    \end{itemize}
+    
+    \item \textbf{Job Completion}
+    \begin{itemize}
+        \item Update \texttt{JobRun} status to \texttt{completed}
+        \item Record \texttt{items\_processed} count and execution duration
+        \item If error occurs: status \texttt{failed}, log error message
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{User Interaction}
+
+\begin{itemize}
+    \item Admin visits \texttt{/replenishment} page
+    \item Views suggestions sorted by urgency (critical first)
+    \item Clicks suggestion to see forecast chart and detailed metrics
+    \item Actions:
+    \begin{itemize}
+        \item \textbf{Approve:} Redirects to PO creation with pre-filled data
+        \item \textbf{Dismiss:} Sets status to \texttt{dismissed}, hides from list
+        \item \textbf{Ignore:} No action, suggestion remains \texttt{pending}
+    \end{itemize}
+\end{itemize}
+
+\subsection{Workflow 4: Anomaly Detection \& Investigation}
+
+\textbf{Actors:} System (scheduled job), Admin\\
+\textbf{Trigger:} Every 6 hours via scheduler\\
+\textbf{Objective:} Identify unusual patterns requiring human attention
+
+\subsubsection{Detection Process}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Job Execution (\texttt{DetectAnomaliesJob})}
+    \begin{itemize}
+        \item Retrieves products with sales history
+        \item Calculates baseline metrics for each product:
+        \begin{itemize}
+            \item 30-day moving average sales
+            \item Standard deviation of daily sales
+            \item Expected profit margin
+        \end{itemize}
+    \end{itemize}
+    
+    \item \textbf{Demand Spike Detection}
+    \begin{itemize}
+        \item \textbf{Condition:} \texttt{sales\_today > 3 * moving\_average}
+        \item \textbf{Severity:} High if spike >5x, Medium if 3-5x
+        \item \textbf{Metadata:} Current sales, expected sales, spike factor
+        \item \textbf{Reason:} Possible promotion, seasonal demand, or data error
+    \end{itemize}
+    
+    \item \textbf{Demand Drop Detection}
+    \begin{itemize}
+        \item \textbf{Condition:} \texttt{sales\_today < 0.5 * moving\_average AND sales\_today > 0}
+        \item \textbf{Severity:} Medium
+        \item \textbf{Reason:} Possible competitor activity, product issue, or market shift
+    \end{itemize}
+    
+    \item \textbf{Stock Discrepancy Detection}
+    \begin{itemize}
+        \item Compare expected stock vs. actual stock:
+        \item \texttt{expected = previous\_stock + purchases - sales - adjustments}
+        \item \textbf{Condition:} \texttt{|actual - expected| > threshold}
+        \item \textbf{Severity:} Critical if discrepancy >20\%, High if 10-20\%
+        \item \textbf{Reason:} Possible theft, damage, or data entry error
+    \end{itemize}
+    
+    \item \textbf{Margin Alert Detection}
+    \begin{itemize}
+        \item \textbf{Condition:} \texttt{profit\_margin < 10\%} for products with recent sales
+        \item \textbf{Severity:} Medium
+        \item \textbf{Reason:} Pricing error or supplier cost increase
+    \end{itemize}
+    
+    \item \textbf{Create Findings}
+    \begin{itemize}
+        \item For each detected anomaly, create \texttt{AnomalyFinding} record
+        \item Avoid duplicates: check if same anomaly type exists for product in last 24 hours
+        \item Set initial status: \texttt{new}
+    \end{itemize}
+    
+    \item \textbf{Notification}
+    \begin{itemize}
+        \item Create notification for admin users
+        \item Summary: "X new anomalies detected" with severity breakdown
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Investigation Workflow}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Admin Reviews Findings}
+    \begin{itemize}
+        \item Navigates to \texttt{/findings}
+        \item Views list sorted by severity (Critical $\rightarrow$ Low)
+        \item Filters by type, status, date range
+    \end{itemize}
+    
+    \item \textbf{Investigate Individual Finding}
+    \begin{itemize}
+        \item Clicks finding to open detail drawer
+        \item Reviews metadata: affected product, timeline, metrics
+        \item Adds investigation notes
+    \end{itemize}
+    
+    \item \textbf{Take Action}
+    \begin{itemize}
+        \item \textbf{If false positive:} Mark as \texttt{dismissed}
+        \item \textbf{If requires action:} Update status to \texttt{investigating}
+        \item Perform corrective actions:
+        \begin{itemize}
+            \item Stock discrepancy: adjust inventory, log in audit
+            \item Margin alert: update pricing
+            \item Demand spike: increase reorder quantity
+        \end{itemize}
+        \item Mark as \texttt{resolved} with resolution notes
+    \end{itemize}
+    
+    \item \textbf{Bulk Operations}
+    \begin{itemize}
+        \item Select multiple findings
+        \item Bulk update status (e.g., dismiss all low-severity price anomalies)
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Benefits:}
+\begin{itemize}
+    \item Proactive problem identification before customer impact
+    \item Data quality improvement through discrepancy detection
+    \item Revenue protection via margin monitoring
+    \item Operational efficiency through automated monitoring
+\end{itemize}

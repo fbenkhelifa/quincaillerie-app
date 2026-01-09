@@ -1,0 +1,482 @@
+\section{System Architecture}
+
+\subsection{Technology Stack}
+
+\subsubsection{Backend Technologies}
+
+\begin{description}[leftmargin=3cm,style=nextline]
+    \item[Framework] Laravel 12.0 (PHP 8.2)
+    \item[Authentication] Laravel Sanctum 4.0
+    \item[PDF Generation] barryvdh/laravel-dompdf 3.0
+    \item[Routing Helper] tightenco/ziggy 2.4 (Inertia route helpers)
+    \item[Testing] PHPUnit 11.5, Mockery 1.6
+    \item[Code Quality] Laravel Pint 1.18 (PHP CS Fixer)
+\end{description}
+
+\subsubsection{Frontend Technologies}
+
+\begin{description}[leftmargin=3cm,style=nextline]
+    \item[Framework] React 18.3.1
+    \item[Bridge] Inertia.js 2.0.3 (Laravel-React SPA bridge)
+    \item[UI Library] Material-UI (MUI) 6.3.0
+    \item[Data Grid] @mui/x-data-grid 7.24.1
+    \item[Date Pickers] @mui/x-date-pickers 7.24.1
+    \item[Charts] Recharts 3.6.0
+    \item[CSS Framework] Tailwind CSS 3.4.17
+    \item[Build Tool] Vite 6.0.7
+    \item[Notifications] react-hot-toast 2.5.1
+    \item[Utilities] dayjs 1.11.13, lodash.debounce 4.0.8
+\end{description}
+
+\subsubsection{Database \& Infrastructure}
+
+\begin{description}[leftmargin=3cm,style=nextline]
+    \item[Database] MySQL 5.7+ / MariaDB 10.3+
+    \item[Web Server] Nginx or Apache (Laragon WAMP stack)
+    \item[Process Manager] Laravel Queue Worker (database driver for dev, Redis/Horizon for production)
+    \item[Scheduler] Laravel Task Scheduler (cron-based)
+    \item[Storage] Local filesystem (with symlink to \texttt{public/storage})
+\end{description}
+
+\subsection{Backend Architecture}
+
+\subsubsection{Directory Structure}
+
+\begin{lstlisting}[language=bash,label=lst:backend-structure,caption={Laravel Backend Structure}]
+app/
+├── Console/Commands/          # Artisan commands
+├── Domains/Products/          # Domain-driven design modules
+├── Events/                    # Event classes
+│   ├── BillCancelled.php
+│   ├── ProductPriceChanged.php
+│   ├── PurchaseReceived.php
+│   └── StockAdjusted.php
+├── Http/
+│   ├── Controllers/          # 15 controllers
+│   │   ├── BillsController.php
+│   │   ├── ProductsController.php
+│   │   ├── PurchasesController.php
+│   │   ├── ReplenishmentController.php
+│   │   └── ...
+│   ├── Middleware/           # Custom middleware
+│   └── Requests/             # Form request validation
+├── Jobs/                     # Background jobs
+│   ├── CheckLowStockJob.php
+│   ├── ComputeDailyAnalyticsJob.php
+│   ├── ComputeReorderSuggestionsJob.php
+│   └── DetectAnomaliesJob.php
+├── Listeners/                # Event listeners
+│   ├── LogBillCancellation.php
+│   ├── LogProductPriceChange.php
+│   ├── LogPurchaseReceived.php
+│   └── LogStockAdjustment.php
+├── Models/                   # Eloquent models (17 models)
+│   ├── Product.php
+│   ├── Bill.php
+│   ├── PurchaseOrder.php
+│   ├── ReorderSuggestion.php
+│   └── ...
+├── Observers/                # Model observers
+├── Policies/                 # Authorization policies
+│   └── BillPolicy.php
+├── Providers/
+│   └── AppServiceProvider.php
+└── Services/                 # Business logic services
+    ├── Analytics/
+    │   ├── SalesAnalyticsService.php
+    │   └── InventoryAnalyticsService.php
+    ├── Forecasting/
+    │   └── DemandForecastService.php
+    └── NotificationService.php
+\end{lstlisting}
+
+\subsubsection{Routing Architecture}
+
+The application uses a single web routes file (\texttt{routes/web.php}) with middleware-based route groups:
+
+\begin{lstlisting}[language=PHP,label=lst:routing,caption={Route Structure Example}]
+// Public routes
+Route::middleware('guest')->group(function () {
+    Route::get('login', [AuthenticatedSessionController::class, 'create']);
+    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+});
+
+// Protected routes
+Route::middleware('auth')->group(function () {
+    Route::get('/', [DashboardController::class, 'index']);
+    
+    // Resource routes with additional actions
+    Route::resource('products', ProductsController::class);
+    Route::post('products/{product}/adjust-stock', 
+        [ProductsController::class, 'adjustStock']);
+    
+    // Nested route groups
+    Route::prefix('replenishment')->name('replenishment.')->group(function () {
+        Route::get('/', [ReplenishmentController::class, 'index']);
+        Route::post('/approve', [ReplenishmentController::class, 'approve']);
+        // ...
+    });
+});
+\end{lstlisting}
+
+\subsubsection{Controller Design Pattern}
+
+Controllers follow a consistent pattern:
+
+\begin{enumerate}
+    \item \textbf{Validation:} Form Request classes or inline \texttt{\$request->validate()}
+    \item \textbf{Authorization:} Policy checks via \texttt{authorize()} or middleware
+    \item \textbf{Business Logic:} Delegated to Service classes or Eloquent models
+    \item \textbf{Response:} \texttt{Inertia::render()} for pages, JSON for AJAX
+\end{enumerate}
+
+\textbf{Example:} \texttt{BillsController::store()}
+
+\begin{lstlisting}[language=PHP,label=lst:controller-pattern]
+public function store(Request $request) {
+    $validated = $request->validate([
+        'worker_id' => 'nullable|exists:workers,id',
+        'items' => 'required|array|min:1',
+        'items.*.product_id' => 'required|exists:products,id',
+        // ...
+    ]);
+    
+    DB::beginTransaction();
+    try {
+        $bill = Bill::create([/* ... */]);
+        foreach ($validated['items'] as $item) {
+            $bill->items()->create($item);
+            $product->decrement('quantity', $item['quantity']);
+        }
+        DB::commit();
+        return redirect()->route('bills.show', $bill);
+    } catch (\Exception $e) {
+        DB::rollBack();
+        throw $e;
+    }
+}
+\end{lstlisting}
+
+\subsubsection{Service Layer}
+
+Complex business logic resides in dedicated service classes:
+
+\begin{itemize}
+    \item \textbf{SalesAnalyticsService:} Aggregates sales data, computes KPIs
+    \item \textbf{InventoryAnalyticsService:} Calculates inventory turnover, stock aging
+    \item \textbf{DemandForecastService:} Implements forecasting algorithms (moving average, exponential smoothing)
+    \item \textbf{NotificationService:} Creates and dispatches notifications
+\end{itemize}
+
+\subsubsection{Job Queue Architecture}
+
+Background jobs implement \texttt{ShouldQueue} interface and are processed by Laravel Queue Workers:
+
+\begin{description}[style=nextline]
+    \item[CheckLowStockJob] Runs daily at 06:00, creates low-stock notifications
+    \item[ComputeDailyAnalyticsJob] Runs daily at 02:00, aggregates previous day's sales/inventory
+    \item[ComputeReorderSuggestionsJob] Runs daily at 02:30, generates replenishment recommendations
+    \item[DetectAnomaliesJob] Runs every 6 hours, identifies unusual patterns
+\end{description}
+
+Job execution is tracked via \texttt{JobRun} model with status (\texttt{running}, \texttt{completed}, \texttt{failed}), duration, and metadata.
+
+\subsubsection{Event-Driven Architecture}
+
+Critical operations fire Laravel Events handled by Listeners:
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Event} & \textbf{Listener} \\
+\midrule
+\texttt{BillCancelled} & \texttt{LogBillCancellation} \\
+\texttt{ProductPriceChanged} & \texttt{LogProductPriceChange} \\
+\texttt{StockAdjusted} & \texttt{LogStockAdjustment} \\
+\texttt{PurchaseReceived} & \texttt{LogPurchaseReceived} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Listeners write to \texttt{audit\_logs} table and can trigger notifications or additional business logic.
+
+\subsection{Frontend Architecture}
+
+\subsubsection{Inertia.js Bridge}
+
+Inertia.js eliminates the need for a REST API by allowing controllers to return React components directly:
+
+\begin{lstlisting}[language=PHP,label=lst:inertia-backend]
+// Laravel Controller
+return Inertia::render('Products/Index', [
+    'products' => $products,
+    'filters' => $filters,
+]);
+\end{lstlisting}
+
+\begin{lstlisting}[language=JavaScript,label=lst:inertia-frontend]
+// React Component (Products/Index.jsx)
+export default function Index({ products, filters }) {
+    return (
+        <AuthenticatedLayout>
+            <DataGrid rows={products.data} />
+        </AuthenticatedLayout>
+    );
+}
+\end{lstlisting}
+
+Inertia provides:
+\begin{itemize}
+    \item Server-side routing with client-side rendering
+    \item Automatic CSRF protection
+    \item Form helpers (\texttt{useForm} hook)
+    \item Ziggy route helpers in JavaScript
+\end{itemize}
+
+\subsubsection{Component Structure}
+
+\begin{lstlisting}[language=bash,label=lst:frontend-structure,caption={React Frontend Structure}]
+resources/js/
+├── Components/              # Shared components
+│   ├── Layout/
+│   │   └── AuthenticatedLayout.jsx  # Main app shell
+│   ├── UI/
+│   │   ├── DataTable.jsx
+│   │   ├── KPICard.jsx
+│   │   ├── FilterPanel.jsx
+│   │   └── ...
+│   └── Forms/
+│       ├── ProductForm.jsx
+│       └── BillForm.jsx
+├── Pages/                  # Inertia page components
+│   ├── Dashboard.jsx
+│   ├── Bills/
+│   │   ├── Index.jsx
+│   │   ├── Create.jsx
+│   │   └── Show.jsx
+│   ├── Products/
+│   │   ├── Index.jsx
+│   │   ├── Create.jsx
+│   │   └── Edit.jsx
+│   └── ...
+├── hooks/                  # Custom React hooks
+│   ├── useTheme.js
+│   ├── useFilters.js
+│   └── useDebounce.js
+├── theme/                  # MUI theme configuration
+│   ├── tokens.js           # Design tokens
+│   ├── lightTheme.js
+│   └── darkTheme.js
+└── app.jsx                 # Inertia app entry point
+\end{lstlisting}
+
+\subsubsection{State Management}
+
+The application uses a hybrid state management approach:
+
+\begin{itemize}
+    \item \textbf{Server State:} Managed by Inertia.js (automatic synchronization on navigation)
+    \item \textbf{Local UI State:} React \texttt{useState} and \texttt{useReducer} hooks
+    \item \textbf{Global Settings:} React Context (\texttt{ThemeContext}, \texttt{LocaleContext})
+    \item \textbf{Persistent State:} \texttt{localStorage} for theme and language preferences
+\end{itemize}
+
+No Redux or external state library is required due to Inertia's server-driven model.
+
+\subsubsection{UI Design System}
+
+Custom MUI theme based on design tokens (\texttt{theme/tokens.js}):
+
+\begin{lstlisting}[language=JavaScript,label=lst:theme-tokens]
+export const tokens = {
+    colors: {
+        primary: { main: '#2563EB', light: '#3B82F6', dark: '#1E40AF' },
+        secondary: { main: '#7C3AED', light: '#8B5CF6', dark: '#6D28D9' },
+        success: { main: '#10B981' },
+        warning: { main: '#F59E0B' },
+        error: { main: '#EF4444' },
+    },
+    typography: {
+        fontFamily: "'Inter', 'Roboto', sans-serif",
+        h1: { fontSize: '2.5rem', fontWeight: 700 },
+        body1: { fontSize: '1rem', lineHeight: 1.5 },
+    },
+    spacing: {
+        xs: 4, sm: 8, md: 16, lg: 24, xl: 32,
+    },
+};
+\end{lstlisting}
+
+Light and dark themes extend these tokens with mode-specific background and text colors.
+
+\subsection{Database Architecture}
+
+\subsubsection{Entity-Relationship Overview}
+
+The database consists of 17 primary tables organized into functional groups:
+
+\begin{center}
+\begin{longtable}{@{}p{4cm}p{9cm}@{}}
+\caption{Database Tables by Category}\\
+\toprule
+\textbf{Category} & \textbf{Tables} \\
+\midrule
+\endfirsthead
+\multicolumn{2}{c}{\textit{(continued from previous page)}}\\
+\toprule
+\textbf{Category} & \textbf{Tables} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{2}{r}{\textit{(continued on next page)}}\\
+\endfoot
+\bottomrule
+\endlastfoot
+Core Inventory & \texttt{products}, \texttt{categories}, \texttt{suppliers}, \texttt{product\_supplier} (pivot) \\
+Sales & \texttt{bills}, \texttt{bill\_items} \\
+Procurement & \texttt{purchase\_orders}, \texttt{purchase\_order\_items} \\
+Analytics & \texttt{analytics\_snapshots}, \texttt{inventory\_movements}, \texttt{reorder\_suggestions}, \texttt{anomaly\_findings} \\
+Administration & \texttt{users}, \texttt{workers}, \texttt{settings}, \texttt{audit\_logs}, \texttt{notifications}, \texttt{job\_runs} \\
+Framework & \texttt{cache}, \texttt{jobs}, \texttt{failed\_jobs}, \texttt{sessions} \\
+\end{longtable}
+\end{center}
+
+\subsubsection{Core Table Relationships}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+    node distance=2cm,
+    entity/.style={rectangle, draw, fill=blue!10, text width=2.5cm, text centered, minimum height=1cm},
+    relationship/.style={diamond, draw, fill=orange!20, text width=1.5cm, text centered, aspect=2},
+    arrow/.style={->, >=stealth, thick}
+]
+
+% Entities
+\node[entity] (product) {Product};
+\node[entity, below left=of product] (category) {Category};
+\node[entity, below right=of product] (supplier) {Supplier};
+\node[entity, right=3cm of product] (bill) {Bill};
+\node[entity, below=of bill] (billitem) {BillItem};
+\node[entity, above right=of product] (po) {PurchaseOrder};
+\node[entity, right=of po] (poitem) {POItem};
+
+% Relationships
+\draw[arrow] (product) -- (category) node[midway, above, sloped] {belongs to};
+\draw[arrow] (product) -- (supplier) node[midway, above, sloped] {has many};
+\draw[arrow] (billitem) -- (product);
+\draw[arrow] (billitem) -- (bill);
+\draw[arrow] (poitem) -- (product);
+\draw[arrow] (poitem) -- (po);
+\draw[arrow] (po) -- (supplier);
+
+\end{tikzpicture}
+\caption{Simplified Entity Relationship Diagram}
+\label{fig:erd}
+\end{figure}
+
+\subsubsection{Key Schema Details}
+
+\textbf{Products Table}
+
+\begin{lstlisting}[language=SQL]
+CREATE TABLE products (
+    id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    name_ar VARCHAR(255),
+    sku VARCHAR(100) UNIQUE,
+    barcode VARCHAR(100) UNIQUE,
+    description TEXT,
+    category_id BIGINT UNSIGNED,
+    purchase_price DECIMAL(10,2) NOT NULL,
+    selling_price DECIMAL(10,2) NOT NULL,
+    quantity DECIMAL(10,2) DEFAULT 0,
+    unit VARCHAR(50),
+    min_stock DECIMAL(10,2) DEFAULT 0,
+    location VARCHAR(100),
+    image VARCHAR(255),
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    INDEX idx_barcode (barcode),
+    INDEX idx_sku (sku),
+    INDEX idx_category (category_id),
+    INDEX idx_active_stock (is_active, quantity)
+);
+\end{lstlisting}
+
+\textbf{Bills \& Bill Items}
+
+\begin{lstlisting}[language=SQL]
+CREATE TABLE bills (
+    id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    bill_number VARCHAR(50) UNIQUE,
+    user_id BIGINT UNSIGNED NOT NULL,
+    worker_id BIGINT UNSIGNED,
+    customer_name VARCHAR(255),
+    customer_phone VARCHAR(20),
+    subtotal DECIMAL(10,2) DEFAULT 0,
+    discount DECIMAL(10,2) DEFAULT 0,
+    tax DECIMAL(10,2) DEFAULT 0,
+    total DECIMAL(10,2) DEFAULT 0,
+    payment_method ENUM('cash','card','check','credit','other'),
+    status ENUM('completed','cancelled') DEFAULT 'completed',
+    notes TEXT,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    INDEX idx_bill_number (bill_number),
+    INDEX idx_created_at (created_at),
+    INDEX idx_status (status)
+);
+
+CREATE TABLE bill_items (
+    id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    bill_id BIGINT UNSIGNED NOT NULL,
+    product_id BIGINT UNSIGNED NOT NULL,
+    product_name VARCHAR(255),
+    quantity DECIMAL(10,2) NOT NULL,
+    unit_price DECIMAL(10,2) NOT NULL,
+    discount DECIMAL(10,2) DEFAULT 0,
+    total DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (bill_id) REFERENCES bills(id) ON DELETE CASCADE
+);
+\end{lstlisting}
+
+\textbf{Reorder Suggestions}
+
+\begin{lstlisting}[language=SQL]
+CREATE TABLE reorder_suggestions (
+    id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    product_id BIGINT UNSIGNED NOT NULL,
+    suggested_supplier_id BIGINT UNSIGNED,
+    recommended_qty DECIMAL(10,2) NOT NULL,
+    current_stock DECIMAL(10,2) NOT NULL,
+    reorder_point DECIMAL(10,2) NOT NULL,
+    safety_stock DECIMAL(10,2),
+    avg_daily_demand DECIMAL(10,2),
+    projected_stockout_date DATE,
+    urgency ENUM('critical','high','medium','low'),
+    confidence DECIMAL(5,2) DEFAULT 0,
+    reason_json JSON,
+    forecast_data JSON,
+    status ENUM('pending','approved','dismissed','ordered'),
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    INDEX idx_status_urgency (status, urgency),
+    INDEX idx_product (product_id)
+);
+\end{lstlisting}
+
+\subsubsection{Indexing Strategy}
+
+Performance-critical indexes include:
+
+\begin{itemize}
+    \item \textbf{products:} \texttt{barcode}, \texttt{sku}, \texttt{category\_id}, composite \texttt{(is\_active, quantity)}
+    \item \textbf{bills:} \texttt{bill\_number}, \texttt{created\_at}, \texttt{status}
+    \item \textbf{inventory\_movements:} composite \texttt{(product\_id, type, created\_at)}
+    \item \textbf{reorder\_suggestions:} composite \texttt{(status, urgency)}
+    \item \textbf{audit\_logs:} composite \texttt{(event\_type, created\_at)}
+\end{itemize}
+
+A dedicated migration (\texttt{2024\_01\_01\_100000\_add\_dashboard\_performance\_indexes.php}) adds additional indexes to optimize dashboard queries.

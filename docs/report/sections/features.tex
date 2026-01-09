@@ -1,0 +1,237 @@
+\section{Features Overview}
+
+\subsection{Core Modules}
+
+The application is organized into eleven primary modules, each addressing specific business requirements:
+
+\subsubsection{1. Dashboard}
+
+\textbf{Controller:} \texttt{DashboardController}\\
+\textbf{Routes:} \texttt{GET /}, \texttt{GET /dashboard/refresh}\\
+\textbf{View:} \texttt{Dashboard.jsx}
+
+\begin{itemize}
+    \item Real-time KPI cards: today's revenue, total inventory value, low-stock alerts, pending purchase orders
+    \item Sales trend chart (last 30 days) using Recharts
+    \item Top 10 selling products table with quantity sold and revenue
+    \item Recent bills list with quick access links
+    \item Critical notifications (stockouts, anomalies, overdue POs)
+\end{itemize}
+
+\subsubsection{2. Products Module}
+
+\textbf{Controller:} \texttt{ProductsController}\\
+\textbf{Model:} \texttt{Product} (17 fields including barcode, SKU, multilingual names)\\
+\textbf{Routes:} Full CRUD + \texttt{search}, \texttt{barcode-lookup}, \texttt{adjust-stock}\\
+\textbf{Views:} \texttt{Products/Index.jsx}, \texttt{Products/Create.jsx}, \texttt{Products/Edit.jsx}
+
+\begin{itemize}
+    \item Complete product catalog with image uploads (stored in \texttt{storage/app/public/products})
+    \item Support for bilingual names (\texttt{name}, \texttt{name\_ar})
+    \item Multiple units (pieces, meters, kg, liters, boxes)
+    \item Purchase price, selling price, and automatic profit margin calculation
+    \item Category assignment with hierarchical display
+    \item Multiple supplier relationships via pivot table \texttt{product\_supplier}
+    \item Manual stock adjustment with audit logging
+    \item Low-stock indicator (\texttt{quantity <= min\_stock})
+\end{itemize}
+
+\subsubsection{3. Bills (Point of Sale)}
+
+\textbf{Controller:} \texttt{BillsController}\\
+\textbf{Models:} \texttt{Bill}, \texttt{BillItem}\\
+\textbf{Routes:} CRUD + \texttt{bills/\{bill\}/pdf/\{lang?\}}, \texttt{bills/\{bill\}/cancel}\\
+\textbf{Views:} \texttt{Bills/Index.jsx}, \texttt{Bills/Create.jsx}, \texttt{Bills/Show.jsx}
+
+\begin{itemize}
+    \item Professional POS interface with two modes: Standard and POS Mode
+    \item \textbf{POS Mode features:}
+    \begin{itemize}
+        \item Barcode scanner auto-focus
+        \item Audio feedback (beep on scan, error, add, remove)
+        \item Keyboard shortcuts (\texttt{/} focus, \texttt{Ctrl+Enter} save, \texttt{+/-} adjust qty)
+        \item Real-time stock validation
+        \item Cart filtering: all, duplicates, low-stock warnings
+    \end{itemize}
+    \item PDF invoice generation in French or Arabic with RTL support (DomPDF)
+    \item Payment methods: cash, card, check, credit, other
+    \item Worker assignment (cashier/salesperson tracking)
+    \item Discount at bill level and item level
+    \item Tax calculation (configurable rate)
+    \item Bill cancellation with admin authorization (logged in \texttt{audit\_logs})
+\end{itemize}
+
+\subsubsection{4. Purchase Orders}
+
+\textbf{Controller:} \texttt{PurchasesController}\\
+\textbf{Models:} \texttt{PurchaseOrder}, \texttt{PurchaseOrderItem}\\
+\textbf{Routes:} CRUD + \texttt{send}, \texttt{cancel}, \texttt{receive}, \texttt{pdf}\\
+\textbf{Views:} \texttt{Purchases/Index.jsx}, \texttt{Purchases/Create.jsx}, \texttt{Purchases/Receive.jsx}
+
+\begin{itemize}
+    \item Full lifecycle: Draft $\rightarrow$ Sent $\rightarrow$ Partial $\rightarrow$ Received $\rightarrow$ Cancelled
+    \item Unique PO numbers: \texttt{PO-YYYYMM-XXXX}
+    \item Multi-item PO creation with unit cost tracking
+    \item Expected delivery date with lead time calculation
+    \item Goods receipt form with quantity verification (supports partial receipts)
+    \item Automatic inventory movement creation on receipt (\texttt{type: 'purchase'})
+    \item PDF export for supplier communication
+    \item Supplier notes field for special instructions
+\end{itemize}
+
+\subsubsection{5. Replenishment Assistant}
+
+\textbf{Controller:} \texttt{ReplenishmentController}\\
+\textbf{Model:} \texttt{ReorderSuggestion}\\
+\textbf{Job:} \texttt{ComputeReorderSuggestionsJob}\\
+\textbf{Routes:} \texttt{/replenishment/*} (index, approve, dismiss, recompute, stats)\\
+\textbf{View:} \texttt{Replenishment/Index.jsx}
+
+\begin{itemize}
+    \item \textbf{Statistical forecasting:}
+    \begin{itemize}
+        \item Moving average (7, 14, 30 days)
+        \item Exponential smoothing ($\alpha = 0.3$)
+        \item Weighted average combining both methods
+    \end{itemize}
+    \item \textbf{Reorder point calculation:} $ROP = (AvgDailyDemand \times LeadTime) + SafetyStock$
+    \item Urgency levels: Critical (stockout in <3 days), High (<7 days), Medium (<14 days), Low (<30 days)
+    \item Confidence scoring (0-100\%) based on data quality and variance
+    \item Interactive forecast chart showing historical sales and projections
+    \item Supplier recommendation based on primary supplier relationship
+    \item Bulk approve to generate purchase orders automatically
+    \item Manual dismissal with reason tracking
+    \item Background job execution via Laravel Scheduler (\texttt{daily at 02:00})
+\end{itemize}
+
+\subsubsection{6. Analytics \& Reporting}
+
+\textbf{Controller:} \texttt{AnalyticsController}\\
+\textbf{Model:} \texttt{AnalyticsSnapshot}\\
+\textbf{Jobs:} \texttt{ComputeDailyAnalyticsJob}\\
+\textbf{Routes:} \texttt{/analytics/sales}, \texttt{/analytics/inventory}, \texttt{/analytics/export}\\
+\textbf{Views:} \texttt{Analytics/Sales.jsx}, \texttt{Analytics/Inventory.jsx}
+
+\begin{itemize}
+    \item \textbf{Sales Analytics:}
+    \begin{itemize}
+        \item Revenue trends (daily, weekly, monthly aggregations)
+        \item Product category breakdown with pie charts
+        \item Payment method distribution
+        \item Top products by revenue and quantity
+        \item Average transaction value
+    \end{itemize}
+    \item \textbf{Inventory Analytics:}
+    \begin{itemize}
+        \item Total inventory value calculation
+        \item Stock turnover ratio
+        \item Slow-moving inventory identification
+        \item Category-wise stock distribution
+        \item Stock aging analysis
+    \end{itemize}
+    \item Daily snapshot aggregation for historical trend analysis
+    \item CSV export functionality for external reporting tools
+\end{itemize}
+
+\subsubsection{7. Anomaly Detection}
+
+\textbf{Controller:} \texttt{AnomalyController}\\
+\textbf{Model:} \texttt{AnomalyFinding}\\
+\textbf{Job:} \texttt{DetectAnomaliesJob}\\
+\textbf{Routes:} \texttt{/findings/*} (index, show, update-status, bulk-update)\\
+\textbf{View:} \texttt{Findings/Index.jsx}
+
+\begin{itemize}
+    \item \textbf{Anomaly types:}
+    \begin{itemize}
+        \item \texttt{demand\_spike}: Sales exceed 3x moving average
+        \item \texttt{demand\_drop}: Sales below 0.5x moving average
+        \item \texttt{stock\_discrepancy}: Unexpected inventory changes
+        \item \texttt{price\_anomaly}: Unusual pricing patterns
+        \item \texttt{margin\_alert}: Profit margin below threshold
+    \end{itemize}
+    \item Severity levels: Critical, High, Medium, Low
+    \item Status workflow: New $\rightarrow$ Investigating $\rightarrow$ Resolved $\rightarrow$ Dismissed
+    \item Investigation notes and action tracking
+    \item Bulk status updates for efficient triage
+    \item Background detection via scheduled job
+\end{itemize}
+
+\subsubsection{8. Audit Log}
+
+\textbf{Controller:} \texttt{AuditLogController}\\
+\textbf{Model:} \texttt{AuditLog}\\
+\textbf{Listeners:} \texttt{LogBillCancellation}, \texttt{LogProductPriceChange}, \texttt{LogStockAdjustment}, \texttt{LogPurchaseReceived}\\
+\textbf{Routes:} \texttt{/audit-log} (index with filtering)\\
+\textbf{View:} \texttt{AuditLog/Index.jsx}
+
+\begin{itemize}
+    \item Event-driven logging using Laravel Events/Listeners
+    \item Captured events: \texttt{BillCancelled}, \texttt{ProductPriceChanged}, \texttt{StockAdjusted}, \texttt{PurchaseReceived}
+    \item Metadata: user, timestamp, entity type/ID, old/new values
+    \item Filterable by event type, user, date range, entity
+    \item Immutable records for compliance and forensic analysis
+\end{itemize}
+
+\subsubsection{9. Categories \& Suppliers}
+
+\textbf{Controllers:} \texttt{CategoriesController}, \texttt{SuppliersController}\\
+\textbf{Models:} \texttt{Category}, \texttt{Supplier}\\
+\textbf{Routes:} Resource routes (API-style CRUD without dedicated views)\\
+\textbf{Views:} \texttt{Categories/Index.jsx}, \texttt{Suppliers/Index.jsx}
+
+\begin{itemize}
+    \item Inline editing via modal dialogs
+    \item Category hierarchy support (future enhancement)
+    \item Supplier lead time configuration
+    \item Product count per category/supplier
+    \item Soft delete with restore capability (future)
+\end{itemize}
+
+\subsubsection{10. Workers (Staff Management)}
+
+\textbf{Controller:} \texttt{WorkersController}\\
+\textbf{Model:} \texttt{Worker}\\
+\textbf{Routes:} Full CRUD\\
+\textbf{Views:} \texttt{Workers/Index.jsx}, \texttt{Workers/Create.jsx}, \texttt{Workers/Edit.jsx}
+
+\begin{itemize}
+    \item Employee registry with roles (Cashier, Manager, Stock Keeper, Other)
+    \item Phone and email contact information
+    \item Hire date and salary tracking (view restricted to admins)
+    \item Active/inactive status toggle
+    \item Sales attribution (link bills to workers)
+\end{itemize}
+
+\subsubsection{11. Settings \& User Preferences}
+
+\textbf{Controller:} \texttt{SettingsController}\\
+\textbf{Model:} \texttt{Setting} (Singleton pattern), \texttt{User}\\
+\textbf{Routes:} \texttt{/settings}, \texttt{/settings/locale}, \texttt{/settings/theme}\\
+\textbf{View:} \texttt{Settings/Index.jsx}
+
+\begin{itemize}
+    \item \textbf{Store configuration:}
+    \begin{itemize}
+        \item Store name, owner name, address, phone
+        \item Tax ID and registration numbers
+        \item Default currency (MAD, EUR, USD)
+        \item Default tax rate for bills
+    \end{itemize}
+    \item \textbf{User preferences:}
+    \begin{itemize}
+        \item Language selection (French/Arabic)
+        \item Theme toggle (light/dark) with localStorage persistence
+        \item Notification preferences (future)
+    \end{itemize}
+\end{itemize}
+
+\subsection{Supporting Features}
+
+\begin{itemize}
+    \item \textbf{Inventory Movements:} Automatic tracking model capturing all stock changes (sales, purchases, adjustments) with \texttt{type}, \texttt{quantity}, \texttt{reference\_type/id}
+    \item \textbf{Notifications:} In-app notification system (\texttt{Notification} model) for low-stock alerts, anomaly findings, and system events
+    \item \textbf{Job Monitoring:} \texttt{JobRun} model tracks background job execution (status, duration, items processed, error messages)
+    \item \textbf{Authentication:} Laravel Breeze with email/password login, registration, and password reset
+    \item \textbf{Authorization:} Policy-based RBAC with three roles (Admin, Cashier, Viewer)
+\end{itemize}

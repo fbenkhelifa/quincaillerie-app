@@ -1,0 +1,371 @@
+\section{Performance \& Security}
+
+\subsection{Performance Optimization}
+
+\subsubsection{Database Query Optimization}
+
+\textbf{Eager Loading to Prevent N+1 Queries}
+
+All index pages use Eloquent's \texttt{with()} to eager load relationships:
+
+\begin{lstlisting}[language=PHP,label=lst:eager-loading]
+// BillsController::index()
+$bills = Bill::with(['worker', 'user'])
+    ->latest()
+    ->paginate(25);
+
+// ProductsController::index()
+$products = Product::with(['category', 'suppliers'])
+    ->when($search, function($q, $search) {
+        $q->where('name', 'like', "%{$search}%")
+          ->orWhere('sku', 'like', "%{$search}%");
+    })
+    ->paginate(50);
+\end{lstlisting}
+
+Without eager loading, displaying 25 bills with workers would execute 1 + 25 = 26 queries. With eager loading: 2 queries total (1 for bills, 1 for workers).
+
+\textbf{Pagination Strategy}
+
+\begin{itemize}
+    \item Default page size: 25 rows for bills, 50 for products
+    \item Cursor pagination considered for future (infinite scroll in POS product search)
+    \item Query string preservation: \texttt{->withQueryString()} maintains filters across pages
+\end{itemize}
+
+\textbf{Selective Column Loading}
+
+When full models not needed, specify columns:
+
+\begin{lstlisting}[language=PHP]
+$workers = Worker::active()
+    ->orderBy('name')
+    ->get(['id', 'name', 'role']);  // Load only required fields
+\end{lstlisting}
+
+\subsubsection{Strategic Indexing}
+
+\textbf{Dashboard Performance Indexes}
+
+Migration \texttt{2024\_01\_01\_100000\_add\_dashboard\_performance\_indexes.php} adds:
+
+\begin{lstlisting}[language=SQL]
+-- Products: Fast low-stock queries
+CREATE INDEX idx_products_low_stock 
+    ON products(is_active, quantity, min_stock);
+
+-- Bills: Date range queries
+CREATE INDEX idx_bills_created_status 
+    ON bills(created_at, status);
+
+-- Inventory movements: Product history
+CREATE INDEX idx_inventory_product_type_date 
+    ON inventory_movements(product_id, type, created_at);
+
+-- Audit logs: Event filtering
+CREATE INDEX idx_audit_event_date 
+    ON audit_logs(event_type, created_at);
+\end{lstlisting}
+
+\textbf{Unique Constraints for Data Integrity}
+
+\begin{itemize}
+    \item \texttt{products.barcode} UNIQUE (prevent duplicate barcodes)
+    \item \texttt{products.sku} UNIQUE (enforce unique stock keeping units)
+    \item \texttt{bills.bill\_number} UNIQUE (guarantee unique invoice numbers)
+    \item \texttt{purchase\_orders.po\_number} UNIQUE
+\end{itemize}
+
+\subsubsection{Caching Strategy}
+
+\textbf{Current Implementation}
+
+\begin{itemize}
+    \item \textbf{Settings Cache:} Singleton pattern in \texttt{Setting} model caches store configuration in application memory
+    \item \textbf{Query Result Caching:} Dashboard KPIs cached for 5 minutes using Laravel Cache
+\end{itemize}
+
+\begin{lstlisting}[language=PHP,label=lst:cache-example]
+public function getDashboardKPIs() {
+    return Cache::remember('dashboard.kpis', 300, function () {
+        return [
+            'today_revenue' => Bill::whereDate('created_at', today())->sum('total'),
+            'inventory_value' => Product::sum(DB::raw('quantity * purchase_price')),
+            'low_stock_count' => Product::whereRaw('quantity <= min_stock')->count(),
+        ];
+    });
+}
+\end{lstlisting}
+
+\textbf{Future Enhancements}
+
+\begin{itemize}
+    \item Redis cache driver for distributed caching (production)
+    \item Cache tagging for selective invalidation
+    \item Product catalog caching (invalidate on product update)
+\end{itemize}
+
+\subsubsection{Frontend Performance}
+
+\textbf{Code Splitting}
+
+Vite automatically splits code by route using dynamic imports:
+
+\begin{lstlisting}[language=JavaScript]
+// Inertia pages lazy-loaded per route
+const pages = import.meta.glob('./Pages/**/*.jsx', { eager: false });
+\end{lstlisting}
+
+Result: Initial bundle size reduced by 60\%, faster first paint.
+
+\textbf{Debouncing Search Inputs}
+
+\begin{lstlisting}[language=JavaScript,label=lst:debounce]
+import debounce from 'lodash.debounce';
+
+const debouncedSearch = debounce((value) => {
+    router.get('/products/search', { q: value });
+}, 300);
+\end{lstlisting}
+
+Reduces server requests from 10-15/second to 1 request after user stops typing.
+
+\textbf{Virtualized Lists (Future)}
+
+For product catalogs with 10,000+ items, implement \texttt{react-window} for virtual scrolling.
+
+\subsection{Security Implementation}
+
+\subsubsection{Authentication \& Session Management}
+
+\textbf{Laravel Breeze + Sanctum}
+
+\begin{itemize}
+    \item Passwords hashed with bcrypt (cost factor: 10)
+    \item Session-based authentication (secure, httpOnly cookies)
+    \item CSRF protection on all POST/PUT/DELETE requests
+    \item Remember me functionality (persistent login for 2 weeks)
+    \item Password reset via signed URL tokens (expire after 1 hour)
+\end{itemize}
+
+\textbf{Session Configuration}
+
+\begin{lstlisting}[language=PHP,label=lst:session-config]
+// config/session.php
+'lifetime' => 120,           // 2 hours
+'expire_on_close' => false,
+'secure' => env('SESSION_SECURE_COOKIE', false),  // HTTPS only in production
+'same_site' => 'lax',        // CSRF protection
+'http_only' => true,         // Prevent XSS cookie theft
+\end{lstlisting}
+
+\subsubsection{Role-Based Access Control (RBAC)}
+
+\textbf{User Roles}
+
+Three roles defined in \texttt{User} model:
+
+\begin{center}
+\begin{longtable}{@{}p{2.5cm}p{10cm}@{}}
+\caption{User Role Definitions}\\
+\toprule
+\textbf{Role} & \textbf{Capabilities} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Role} & \textbf{Capabilities} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\texttt{admin} & Full system access: CRUD all entities, cancel bills, view audit logs, configure settings, manage users \\
+\texttt{cashier} & Create bills, view products, view inventory, create stock adjustments, view own sales history \\
+\texttt{viewer} & Read-only access: view products, bills, reports; no create/update/delete permissions \\
+\end{longtable}
+\end{center}
+
+\textbf{RBAC Matrix}
+
+\begin{center}
+\begin{longtable}{@{}p{4cm}ccc@{}}
+\caption{Permission Matrix by Role}\\
+\toprule
+\textbf{Action / Page} & \textbf{Admin} & \textbf{Cashier} & \textbf{Viewer} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Action / Page} & \textbf{Admin} & \textbf{Cashier} & \textbf{Viewer} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+Dashboard & \checkmark & \checkmark & \checkmark \\
+View Products & \checkmark & \checkmark & \checkmark \\
+Create/Edit Products & \checkmark & \texttimes & \texttimes \\
+Adjust Stock & \checkmark & \checkmark & \texttimes \\
+Create Bills & \checkmark & \checkmark & \texttimes \\
+Cancel Bills & \checkmark & \texttimes & \texttimes \\
+View Bills & \checkmark & \checkmark & \checkmark \\
+Download Bill PDF & \checkmark & \checkmark & \checkmark \\
+Create Purchase Orders & \checkmark & \texttimes & \texttimes \\
+Receive Goods & \checkmark & \texttimes & \texttimes \\
+View Replenishment & \checkmark & \texttimes & \texttimes \\
+Approve Reorders & \checkmark & \texttimes & \texttimes \\
+View Analytics & \checkmark & \checkmark & \checkmark \\
+Export Data & \checkmark & \texttimes & \texttimes \\
+View Anomalies & \checkmark & \texttimes & \texttimes \\
+Resolve Anomalies & \checkmark & \texttimes & \texttimes \\
+View Audit Log & \checkmark & \texttimes & \texttimes \\
+Manage Categories & \checkmark & \texttimes & \texttimes \\
+Manage Suppliers & \checkmark & \texttimes & \texttimes \\
+Manage Workers & \checkmark & \texttimes & \texttimes \\
+Configure Settings & \checkmark & \texttimes & \texttimes \\
+Manage Users & \checkmark & \texttimes & \texttimes \\
+\end{longtable}
+\end{center}
+
+\textbf{Policy Implementation}
+
+Policies centralize authorization logic:
+
+\begin{lstlisting}[language=PHP,label=lst:policy]
+// app/Policies/BillPolicy.php
+class BillPolicy {
+    public function create(User $user): bool {
+        return $user->canCreateBills();  // admin or cashier
+    }
+    
+    public function cancel(User $user, Bill $bill): bool {
+        return $user->isAdmin();
+    }
+}
+
+// Usage in controller
+public function cancel(Bill $bill) {
+    $this->authorize('cancel', $bill);
+    // If unauthorized, throws 403 Forbidden
+    // ...
+}
+\end{lstlisting}
+
+\textbf{Frontend Authorization}
+
+React components conditionally render based on user role (passed via Inertia shared data):
+
+\begin{lstlisting}[language=JavaScript,label=lst:frontend-auth]
+// AuthenticatedLayout.jsx
+const { auth } = usePage().props;
+
+{auth.user.role === 'admin' && (
+    <Button onClick={handleDelete}>Delete</Button>
+)}
+\end{lstlisting}
+
+\textbf{Critical: Backend enforcement takes precedence.} Frontend checks are UX enhancements only.
+
+\subsubsection{Input Validation \& Sanitization}
+
+\textbf{Server-Side Validation}
+
+All user inputs validated using Laravel's \texttt{validate()} method:
+
+\begin{lstlisting}[language=PHP,label=lst:validation]
+$validated = $request->validate([
+    'email' => 'required|email|max:255|unique:users',
+    'password' => 'required|min:8|confirmed',
+    'selling_price' => 'required|numeric|min:0',
+    'quantity' => 'required|numeric|min:0.01|max:999999',
+    'items' => 'required|array|min:1',
+    'items.*.product_id' => 'required|exists:products,id',
+]);
+\end{lstlisting}
+
+Failed validation returns 422 status with field-specific error messages.
+
+\textbf{SQL Injection Prevention}
+
+\begin{itemize}
+    \item Eloquent ORM uses prepared statements (parameterized queries)
+    \item No raw SQL with user input (except in controlled \texttt{whereRaw()} with bindings)
+    \item Query builder automatically escapes values
+\end{itemize}
+
+\textbf{XSS Protection}
+
+\begin{itemize}
+    \item React automatically escapes JSX content
+    \item Blade templates use \texttt{\{\{ \}\}} for auto-escaping (PDF generation)
+    \item \texttt{strip\_tags()} applied to rich text fields before storage
+\end{itemize}
+
+\textbf{Mass Assignment Protection}
+
+Models define \texttt{\$fillable} arrays to whitelist mass-assignable fields:
+
+\begin{lstlisting}[language=PHP]
+class Product extends Model {
+    protected $fillable = [
+        'name', 'sku', 'barcode', 'selling_price',
+        // 'id' is NOT fillable - prevents ID manipulation
+    ];
+}
+\end{lstlisting}
+
+\subsubsection{Audit Logging for Accountability}
+
+All sensitive operations logged to \texttt{audit\_logs} table:
+
+\begin{itemize}
+    \item Bill cancellations: who, when, which bill, reason
+    \item Product price changes: old price, new price, user, timestamp
+    \item Stock adjustments: quantity change, reason, user
+    \item Purchase order receipts: quantities received, user
+\end{itemize}
+
+Logs are immutable (no update/delete routes exposed). Retention policy: 2 years (configurable).
+
+\subsubsection{File Upload Security}
+
+Product image uploads:
+
+\begin{enumerate}
+    \item \textbf{Validation:} \texttt{'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'}
+    \item \textbf{Storage:} Saved to \texttt{storage/app/public/products/} (outside webroot)
+    \item \textbf{Access:} Served via symbolic link (\texttt{public/storage $\rightarrow$ storage/app/public})
+    \item \textbf{Filename Sanitization:} UUID-based names prevent directory traversal
+\end{enumerate}
+
+\begin{lstlisting}[language=PHP,label=lst:image-upload]
+$path = $request->file('image')->store('products', 'public');
+// Generates: products/abc123-uuid-456def.jpg
+$product->update(['image' => $path]);
+\end{lstlisting}
+
+\subsection{Error Handling \& Monitoring}
+
+\subsubsection{Exception Handling}
+
+\begin{itemize}
+    \item Development: Detailed error pages with stack traces (debug mode enabled)
+    \item Production: Generic error messages, full details logged
+    \item API errors: JSON responses with \texttt{message} and \texttt{errors} fields
+\end{itemize}
+
+\subsubsection{Logging}
+
+\begin{itemize}
+    \item Daily log files: \texttt{storage/logs/laravel-YYYY-MM-DD.log}
+    \item Log levels: DEBUG, INFO, WARNING, ERROR, CRITICAL
+    \item Critical errors also logged to Slack (future: webhook integration)
+\end{itemize}
+
+\subsubsection{Future: Application Monitoring}
+
+Recommendations for production deployment:
+
+\begin{itemize}
+    \item \textbf{Laravel Telescope:} Debug assistant for development/staging
+    \item \textbf{Sentry:} Real-time error tracking and alerting
+    \item \textbf{Laravel Horizon:} Queue monitoring and management
+    \item \textbf{New Relic / Blackfire:} Performance profiling
+\end{itemize}

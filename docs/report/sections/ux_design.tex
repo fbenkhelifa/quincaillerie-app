@@ -1,0 +1,398 @@
+\section{UX Design Decisions}
+
+\subsection{Design Philosophy}
+
+The Quincaillerie Application's user experience is built on four core principles:
+
+\begin{enumerate}
+    \item \textbf{Efficiency:} Minimize clicks and cognitive load for high-frequency operations (POS checkout, stock lookup)
+    \item \textbf{Clarity:} Use clear visual hierarchy, consistent terminology, and intuitive iconography
+    \item \textbf{Accessibility:} Support keyboard navigation, screen readers (ARIA labels), and bilingual interfaces
+    \item \textbf{Delight:} Provide smooth animations, responsive feedback, and thoughtful micro-interactions
+\end{enumerate}
+
+\subsection{Theme System}
+
+\subsubsection{Light \& Dark Mode}
+
+Users toggle between light and dark themes via a switch in the main navigation. Preference persists in \texttt{localStorage} and syncs to backend (\texttt{users.preferred\_theme}).
+
+\textbf{Design Tokens}
+
+\begin{center}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Token} & \textbf{Light Mode} & \textbf{Dark Mode} & \textbf{Usage} \\
+\midrule
+Primary & \texttt{\#2563EB} & \texttt{\#3B82F6} & Buttons, links \\
+Background & \texttt{\#FFFFFF} & \texttt{\#121212} & Page background \\
+Surface & \texttt{\#F9FAFB} & \texttt{\#1E1E1E} & Cards, drawers \\
+Text Primary & \texttt{\#111827} & \texttt{\#F9FAFB} & Headings, body \\
+Text Secondary & \texttt{\#6B7280} & \texttt{\#9CA3AF} & Labels, captions \\
+Divider & \texttt{\#E5E7EB} & \texttt{\#374151} & Borders, separators \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Implementation}
+
+Themes configured in \texttt{resources/js/theme/lightTheme.js} and \texttt{darkTheme.js} using MUI's \texttt{createTheme()}:
+
+\begin{lstlisting}[language=JavaScript,label=lst:theme-config]
+import { createTheme } from '@mui/material/styles';
+import { tokens } from './tokens';
+
+export const lightTheme = createTheme({
+    palette: {
+        mode: 'light',
+        primary: { main: tokens.colors.primary.main },
+        background: {
+            default: '#FFFFFF',
+            paper: '#F9FAFB',
+        },
+        text: {
+            primary: '#111827',
+            secondary: '#6B7280',
+        },
+    },
+    typography: {
+        fontFamily: "'Inter', 'Roboto', sans-serif",
+        h1: { fontSize: '2.5rem', fontWeight: 700 },
+        // ...
+    },
+});
+\end{lstlisting}
+
+\subsection{Layout Architecture}
+
+\subsubsection{Authenticated Layout}
+
+All protected pages use \texttt{AuthenticatedLayout.jsx} providing:
+
+\begin{itemize}
+    \item \textbf{App Bar:} Logo, page title, language selector, theme toggle, user menu
+    \item \textbf{Side Navigation:} Collapsible drawer with module links (Dashboard, Products, Bills, Purchases, Analytics, etc.)
+    \item \textbf{Breadcrumbs:} Current page hierarchy (hidden on dashboard)
+    \item \textbf{Main Content Area:} Page-specific content with consistent padding
+\end{itemize}
+
+\textbf{Responsive Behavior}
+
+\begin{itemize}
+    \item Desktop ($\geq$1024px): Permanent side drawer (240px wide)
+    \item Tablet (768-1023px): Collapsible drawer, toggle button in app bar
+    \item Mobile (<768px): Full-screen drawer overlay, hamburger menu
+\end{itemize}
+
+\subsection{Component Design Patterns}
+
+\subsubsection{KPI Cards}
+
+Dashboard uses custom \texttt{KPICard} component for metrics:
+
+\begin{itemize}
+    \item Large primary value (e.g., "45,280 MAD")
+    \item Descriptive label (e.g., "Revenue Today")
+    \item Trend indicator: percentage change with up/down arrow
+    \item Color coding: green (positive), red (negative), blue (neutral)
+    \item Optional sparkline chart (Recharts LineChart)
+\end{itemize}
+
+\subsubsection{Data Tables}
+
+All list pages use MUI \texttt{DataGrid} with:
+
+\begin{itemize}
+    \item \textbf{Server-side pagination:} 25-50 rows per page
+    \item \textbf{Column sorting:} Click headers to sort (synced with backend)
+    \item \textbf{Column visibility toggle:} Hide/show columns via toolbar menu
+    \item \textbf{Row actions:} Inline edit, delete, view details buttons
+    \item \textbf{Bulk selection:} Checkboxes for multi-row operations
+    \item \textbf{Empty state:} Friendly message when no data ("No products found. Create your first product!")
+    \item \textbf{Loading skeletons:} Placeholder rows during data fetch
+\end{itemize}
+
+\subsubsection{Form Drawers}
+
+Create/edit forms displayed in slide-in drawers (not separate pages) for faster workflow:
+
+\begin{itemize}
+    \item Right-side drawer (600px wide on desktop)
+    \item Structured sections with dividers
+    \item Inline validation with real-time error messages
+    \item Primary action button: "Enregistrer" (blue)
+    \item Secondary action: "Annuler" (gray outline)
+    \item Autosave drafts to \texttt{localStorage} (future enhancement)
+\end{itemize}
+
+\subsubsection{Filter Panels}
+
+Search-heavy pages (Bills, Products, Analytics) include \texttt{FilterPanel}:
+
+\begin{itemize}
+    \item Collapsible section above data table
+    \item Search input with debouncing (300ms)
+    \item Date range pickers (MUI DatePicker)
+    \item Category/status dropdowns
+    \item Active filters displayed as dismissible chips
+    \item "Clear All" button resets filters
+\end{itemize}
+
+\subsection{POS Mode Optimizations}
+
+\subsubsection{Visual Design}
+
+When POS Mode enabled:
+
+\begin{itemize}
+    \item Font sizes increase 20\% (better readability at distance)
+    \item Cart items displayed in large cards (not compact table)
+    \item Primary action button grows 1.5x (easier touch targets)
+    \item Color contrast boosted (WCAG AAA compliance)
+\end{itemize}
+
+\subsubsection{Keyboard Shortcuts}
+
+All shortcuts displayed in help tooltip (? icon):
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Shortcut} & \textbf{Action} \\
+\midrule
+\texttt{/} & Focus barcode/search input \\
+\texttt{Enter} & Add first search result to cart \\
+\texttt{+} or \texttt{↑} & Increase selected item quantity \\
+\texttt{-} or \texttt{↓} & Decrease selected item quantity \\
+\texttt{Delete} & Remove selected item from cart \\
+\texttt{Ctrl+Enter} & Save and finalize bill \\
+\texttt{Esc} & Clear search / Close drawer \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsubsection{Audio Feedback}
+
+Implemented using Web Audio API (\texttt{AudioContext} + \texttt{OscillatorNode}):
+
+\begin{lstlisting}[language=JavaScript,label=lst:audio-feedback]
+const playBeep = (frequency, duration) => {
+    const ctx = new AudioContext();
+    const oscillator = ctx.createOscillator();
+    oscillator.frequency.value = frequency;
+    oscillator.connect(ctx.destination);
+    oscillator.start();
+    oscillator.stop(ctx.currentTime + duration / 1000);
+};
+
+// Usage
+playBeep(800, 100);  // Success: 800Hz, 100ms
+playBeep(300, 200);  // Error: 300Hz, 200ms
+\end{lstlisting}
+
+\textbf{Sound Mapping}
+
+\begin{itemize}
+    \item \textbf{800Hz, 100ms:} Product found (barcode scan success)
+    \item \textbf{300Hz, 200ms:} Error (product not found, validation failed)
+    \item \textbf{600Hz, 150ms:} Item added to cart
+    \item \textbf{400Hz, 150ms:} Item removed from cart
+    \item \textbf{1000Hz, 300ms:} Bill finalized successfully
+\end{itemize}
+
+\subsection{Bilingual Interface}
+
+\subsubsection{Language Switching}
+
+\begin{itemize}
+    \item App bar dropdown: "Français" / "العربية"
+    \item Preference saved to \texttt{users.preferred\_locale}
+    \item Page reloads with new locale (\texttt{router.reload()})
+    \item Laravel translations in \texttt{lang/fr.json} and \texttt{lang/ar.json}
+\end{itemize}
+
+\subsubsection{RTL Support}
+
+When Arabic selected:
+
+\begin{itemize}
+    \item \texttt{dir="rtl"} applied to \texttt{<html>} tag
+    \item MUI theme switches to RTL mode (\texttt{theme.direction = 'rtl'})
+    \item Side navigation moves to right side
+    \item Text alignment flips (right-aligned by default)
+    \item Icons mirror (arrows, chevrons)
+    \item Date formats adapt (Arabic numerals, hijri calendar option)
+\end{itemize}
+
+\textbf{Bilingual Data Fields}
+
+Products have \texttt{name} (French) and \texttt{name\_ar} (Arabic). Display logic:
+
+\begin{lstlisting}[language=JavaScript,label=lst:bilingual-display]
+const displayName = locale === 'ar' 
+    ? (product.name_ar || product.name) 
+    : product.name;
+\end{lstlisting}
+
+\subsection{Accessibility (A11y)}
+
+\subsubsection{Keyboard Navigation}
+
+\begin{itemize}
+    \item All interactive elements reachable via \texttt{Tab}
+    \item Focus indicators: 2px blue outline
+    \item Modal traps focus (cannot tab outside while open)
+    \item Skip links: "Skip to main content" for screen readers
+\end{itemize}
+
+\subsubsection{ARIA Labels}
+
+\begin{lstlisting}[language=JavaScript,label=lst:aria-labels]
+<Button
+    aria-label="Add product to cart"
+    aria-describedby="product-stock-warning"
+>
+    <AddIcon />
+</Button>
+
+<Alert id="product-stock-warning" role="alert">
+    Low stock: only 3 units remaining
+</Alert>
+\end{lstlisting}
+
+\subsubsection{Color Contrast}
+
+All text meets WCAG AA standards:
+
+\begin{itemize}
+    \item Normal text: 4.5:1 contrast ratio minimum
+    \item Large text (18pt+): 3:1 ratio
+    \item Interactive elements: 3:1 against adjacent colors
+\end{itemize}
+
+Verified using Chrome DevTools Lighthouse and Axe accessibility auditor.
+
+\subsection{Empty States \& Onboarding}
+
+\subsubsection{Empty State Design}
+
+When lists are empty, show:
+
+\begin{itemize}
+    \item Friendly illustration or icon (e.g., empty box)
+    \item Descriptive heading: "Aucun produit trouvé"
+    \item Actionable CTA: "Créer votre premier produit" button
+    \item Optional help text explaining next steps
+\end{itemize}
+
+\subsubsection{First-Time User Experience}
+
+Dashboard detects new installations (\texttt{products.count() === 0}) and displays:
+
+\begin{itemize}
+    \item Welcome card: "Bienvenue dans Quincaillerie App!"
+    \item Quick setup checklist:
+    \begin{enumerate}
+        \item Add categories
+        \item Add suppliers
+        \item Import products (CSV upload - future)
+        \item Configure store settings
+        \item Create first bill
+    \end{enumerate}
+    \item Dismissible after completion (stored in \texttt{localStorage})
+\end{itemize}
+
+\subsection{Performance Feedback}
+
+\subsubsection{Loading States}
+
+\begin{itemize}
+    \item \textbf{Skeleton screens:} Animated placeholders during data fetch
+    \item \textbf{Progress bars:} Linear progress at top of page during navigation
+    \item \textbf{Spinners:} Circular loaders for buttons during form submission
+    \item \textbf{Optimistic updates:} UI updates immediately, rollback on error
+\end{itemize}
+
+\subsubsection{Success/Error Notifications}
+
+Using \texttt{react-hot-toast}:
+
+\begin{lstlisting}[language=JavaScript,label=lst:notifications]
+import toast from 'react-hot-toast';
+
+// Success
+toast.success('Produit créé avec succès', { duration: 3000 });
+
+// Error
+toast.error('Erreur: Stock insuffisant', { duration: 5000 });
+
+// Custom
+toast((t) => (
+    <div>
+        <strong>Low Stock Alert</strong>
+        <p>Product X has only 2 units left</p>
+        <Button onClick={() => toast.dismiss(t.id)}>Dismiss</Button>
+    </div>
+));
+\end{lstlisting}
+
+Toasts appear in top-right corner (top-left in RTL mode), auto-dismiss after duration.
+
+\subsection{Mobile Responsiveness}
+
+\subsubsection{Breakpoint Strategy}
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Device} & \textbf{Breakpoint} & \textbf{Adjustments} \\
+\midrule
+Mobile & <600px & Single column, bottom nav, full-width cards \\
+Tablet & 600-1023px & Two columns, collapsible drawer \\
+Desktop & $\geq$1024px & Multi-column, permanent drawer \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsubsection{Touch Optimizations}
+
+\begin{itemize}
+    \item Minimum touch target size: 48x48px (Apple/Google guidelines)
+    \item Increased spacing between interactive elements
+    \item Swipe gestures: swipe left on table row to reveal actions
+    \item Pull-to-refresh on list pages (future enhancement)
+\end{itemize}
+
+\subsection{Animation \& Transitions}
+
+\subsubsection{Motion Principles}
+
+\begin{itemize}
+    \item \textbf{Duration:} 200ms for small elements, 300ms for modals/drawers
+    \item \textbf{Easing:} \texttt{cubic-bezier(0.4, 0, 0.2, 1)} (Material Design standard)
+    \item \textbf{Reduced motion:} Respect \texttt{prefers-reduced-motion} media query
+\end{itemize}
+
+\subsubsection{Key Animations}
+
+\begin{itemize}
+    \item \textbf{Page transitions:} Fade in content (200ms)
+    \item \textbf{Drawer open/close:} Slide from edge (300ms)
+    \item \textbf{Notification toasts:} Slide in from top-right with bounce
+    \item \textbf{Table row hover:} Background color transition (150ms)
+    \item \textbf{Button click:} Ripple effect (MUI built-in)
+\end{itemize}
+
+\subsection{Design System Documentation}
+
+A living style guide (\texttt{docs/UI\_WOW\_CHECKLIST.md}) documents:
+
+\begin{itemize}
+    \item Color palette with hex codes
+    \item Typography scale (h1-h6, body, caption)
+    \item Spacing system (4px grid)
+    \item Component usage examples
+    \item Accessibility guidelines
+\end{itemize}
+
+Ensures consistency across all pages and facilitates onboarding new developers.
