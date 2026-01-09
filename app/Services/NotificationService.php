@@ -32,8 +32,8 @@ class NotificationService
      */
     public function notifyLowStock(Product $product, string $severity = 'warning'): Notification
     {
-        $stockPercentage = $product->reorder_level > 0 
-            ? round(($product->stock_quantity / $product->reorder_level) * 100)
+        $stockPercentage = $product->min_stock > 0 
+            ? round(($product->quantity / $product->min_stock) * 100)
             : 0;
 
         return $this->create([
@@ -42,14 +42,14 @@ class NotificationService
             'title' => __('Stock bas: :name', ['name' => $product->name]),
             'message' => __('Le produit ":name" a un stock de :qty unités (seuil: :threshold). Pensez à réapprovisionner.', [
                 'name' => $product->name,
-                'qty' => $product->stock_quantity,
-                'threshold' => $product->reorder_level,
+                'qty' => $product->quantity,
+                'threshold' => $product->min_stock,
             ]),
             'metadata' => [
                 'product_id' => $product->id,
                 'product_name' => $product->name,
-                'current_stock' => $product->stock_quantity,
-                'reorder_level' => $product->reorder_level,
+                'current_stock' => $product->quantity,
+                'min_stock' => $product->min_stock,
                 'stock_percentage' => $stockPercentage,
             ],
             'action_url' => "/products/{$product->id}/edit",
@@ -68,13 +68,13 @@ class NotificationService
             'title' => __('Stock critique: :name', ['name' => $product->name]),
             'message' => __('URGENT: Le produit ":name" est en rupture de stock (:qty unités restantes).', [
                 'name' => $product->name,
-                'qty' => $product->stock_quantity,
+                'qty' => $product->quantity,
             ]),
             'metadata' => [
                 'product_id' => $product->id,
                 'product_name' => $product->name,
-                'current_stock' => $product->stock_quantity,
-                'reorder_level' => $product->reorder_level,
+                'current_stock' => $product->quantity,
+                'min_stock' => $product->min_stock,
             ],
             'action_url' => "/replenishment",
             'action_label' => __('Voir réapprovisionnement'),

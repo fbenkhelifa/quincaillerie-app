@@ -204,12 +204,12 @@ class DetectAnomaliesJob implements ShouldQueue
 
         $largeAdjustments = InventoryMovement::where('type', 'adjustment')
             ->whereBetween('created_at', [$startOfDay, $endOfDay])
-            ->whereRaw('ABS(quantity) > ?', [$this->thresholds['adjustment_threshold']])
+            ->whereRaw('ABS(quantity_change) > ?', [$this->thresholds['adjustment_threshold']])
             ->with(['product:id,name,sku,purchase_price', 'user:id,name'])
             ->get();
 
         foreach ($largeAdjustments as $movement) {
-            $value = abs($movement->quantity * ($movement->product?->purchase_price ?? 0));
+            $value = abs($movement->quantity_change * ($movement->product?->purchase_price ?? 0));
 
             // Skip if below value threshold
             if ($value < $this->thresholds['adjustment_value']) {
@@ -222,7 +222,7 @@ class DetectAnomaliesJob implements ShouldQueue
                 ->exists();
 
             if (!$existing) {
-                $direction = $movement->quantity > 0 ? 'ajouté' : 'retiré';
+                $direction = $movement->quantity_change > 0 ? 'ajouté' : 'retiré';
 
                 AnomalyFinding::create([
                     'type' => AnomalyFinding::TYPE_LARGE_ADJUSTMENT,
@@ -230,11 +230,11 @@ class DetectAnomaliesJob implements ShouldQueue
                     'entity_type' => InventoryMovement::class,
                     'entity_id' => $movement->id,
                     'title' => "Ajustement important: {$movement->product?->name}",
-                    'explanation' => "{$movement->user?->name} a {$direction} " . abs($movement->quantity) . " unités de {$movement->product?->name} (valeur: " . number_format($value, 2) . " DA). Raison: {$movement->reason}",
+                    'explanation' => "{$movement->user?->name} a {$direction} " . abs($movement->quantity_change) . " unités de {$movement->product?->name} (valeur: " . number_format($value, 2) . " DA). Raison: {$movement->reason}",
                     'metadata' => [
                         'product_name' => $movement->product?->name,
                         'product_sku' => $movement->product?->sku,
-                        'quantity' => $movement->quantity,
+                        'quantity' => $movement->quantity_change,
                         'user_name' => $movement->user?->name,
                         'reason' => $movement->reason,
                         'before' => $movement->quantity_before,

@@ -30,10 +30,10 @@ class CheckLowStockJob implements ShouldQueue
         try {
             $notificationsCreated = 0;
 
-            // Find products below reorder level
-            $lowStockProducts = Product::where('stock_quantity', '<=', \DB::raw('reorder_level'))
-                ->where('stock_quantity', '>', 0)
-                ->where('reorder_level', '>', 0)
+            // Find products below reorder level (min_stock)
+            $lowStockProducts = Product::where('quantity', '<=', \DB::raw('min_stock'))
+                ->where('quantity', '>', 0)
+                ->where('min_stock', '>', 0)
                 ->get();
 
             foreach ($lowStockProducts as $product) {
@@ -51,10 +51,10 @@ class CheckLowStockJob implements ShouldQueue
 
             // Find products at critical level (stock = 0 or very low)
             $criticalProducts = Product::where(function ($query) {
-                    $query->where('stock_quantity', '<=', 0)
-                        ->orWhere('stock_quantity', '<=', \DB::raw('reorder_level * 0.25'));
+                    $query->where('quantity', '<=', 0)
+                        ->orWhere('quantity', '<=', \DB::raw('min_stock * 0.25'));
                 })
-                ->where('reorder_level', '>', 0)
+                ->where('min_stock', '>', 0)
                 ->get();
 
             foreach ($criticalProducts as $product) {

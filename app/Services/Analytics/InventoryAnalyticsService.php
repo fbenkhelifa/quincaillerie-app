@@ -29,9 +29,9 @@ class InventoryAnalyticsService
                 'category_id',
                 'quantity',
                 'purchase_price',
-                'price',
+                'selling_price',
                 DB::raw('quantity * purchase_price as cost_value'),
-                DB::raw('quantity * price as retail_value')
+                DB::raw('quantity * selling_price as retail_value')
             )->with('category:id,name')->get();
 
             $totalCostValue = $products->sum('cost_value');
