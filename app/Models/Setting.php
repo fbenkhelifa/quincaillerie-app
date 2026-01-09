@@ -11,14 +11,23 @@ class Setting extends Model
 
     protected $fillable = [
         'store_name',
+        'store_name_ar',
         'owner_name',
+        'owner_name_ar',
         'phone',
+        'email',
         'address',
+        'address_ar',
         'logo',
         'default_locale',
         'default_theme',
         'currency',
         'tax_id',
+        'rc_number',
+        'ai_number',
+        'nis_number',
+        'invoice_footer',
+        'invoice_footer_ar',
     ];
 
     public static function instance(): self

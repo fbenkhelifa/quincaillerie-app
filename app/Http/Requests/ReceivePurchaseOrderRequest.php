@@ -20,6 +20,34 @@ class ReceivePurchaseOrderRequest extends FormRequest
         ];
     }
 
+    /**
+     * Add additional validation after base rules pass.
+     */
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $purchase = $this->route('purchase');
+            if (!$purchase) return;
+            
+            $purchase->load('items');
+            
+            foreach ($this->input('items', []) as $index => $itemData) {
+                $item = $purchase->items->find($itemData['item_id'] ?? null);
+                if (!$item) continue;
+                
+                $maxReceivable = $item->quantity_ordered - $item->quantity_received;
+                $requestedQty = floatval($itemData['quantity_received'] ?? 0);
+                
+                if ($requestedQty > $maxReceivable) {
+                    $validator->errors()->add(
+                        "items.{$index}.quantity_received",
+                        __('Quantité dépasse le reste à recevoir (:max).', ['max' => $maxReceivable])
+                    );
+                }
+            }
+        });
+    }
+
     public function messages(): array
     {
         return [

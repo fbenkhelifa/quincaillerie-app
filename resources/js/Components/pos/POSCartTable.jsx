@@ -238,14 +238,15 @@ export const POSCartTable = memo(function POSCartTable({
         }
     };
 
-    // Filter and sort items
+    // Filter and sort items - track original indices to handle duplicates correctly
     const displayedItems = useMemo(() => {
-        let filtered = [...items];
+        // First, map items with their original indices
+        let filtered = items.map((item, index) => ({ ...item, _originalIndex: index }));
 
         // Apply filter
         if (filter === 'duplicates') {
             filtered = filtered.filter((item) =>
-                duplicateProducts.includes(String(item.product_id))
+                duplicateProducts.includes(item.product_id)
             );
         } else if (filter === 'lowstock') {
             filtered = filtered.filter(
@@ -275,11 +276,6 @@ export const POSCartTable = memo(function POSCartTable({
 
         return filtered;
     }, [items, filter, duplicateProducts, sortBy, sortDirection]);
-
-    // Find original index for filtered items
-    const getOriginalIndex = (filteredItem) => {
-        return items.findIndex((item) => item.product_id === filteredItem.product_id);
-    };
 
     if (items.length === 0) {
         return (
@@ -351,14 +347,14 @@ export const POSCartTable = memo(function POSCartTable({
                 </TableHead>
                 <TableBody>
                     {displayedItems.map((item) => {
-                        const originalIndex = getOriginalIndex(item);
+                        const originalIndex = item._originalIndex;
                         return (
                             <CartRow
                                 key={`${item.product_id}-${originalIndex}`}
                                 item={item}
                                 index={originalIndex}
                                 isSelected={selectedIndex === originalIndex}
-                                isDuplicate={duplicateProducts.includes(String(item.product_id))}
+                                isDuplicate={duplicateProducts.includes(item.product_id)}
                                 onSelect={onSelect}
                                 onIncrement={onIncrement}
                                 onDecrement={onDecrement}

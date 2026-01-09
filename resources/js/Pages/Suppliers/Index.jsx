@@ -44,7 +44,7 @@ export default function SuppliersIndex({ suppliers }) {
 
     const { data, setData, post, put, reset, processing, errors } = useForm({
         name: '',
-        contact_person: '',
+        contact_name: '',
         phone: '',
         email: '',
         address: '',
@@ -62,7 +62,7 @@ export default function SuppliersIndex({ suppliers }) {
         setEditingSupplier(supplier);
         setData({
             name: supplier.name,
-            contact_person: supplier.contact_person || '',
+            contact_name: supplier.contact_name || '',
             phone: supplier.phone || '',
             email: supplier.email || '',
             address: supplier.address || '',
@@ -100,7 +100,11 @@ export default function SuppliersIndex({ suppliers }) {
 
     const confirmDelete = () => {
         router.delete(route('suppliers.destroy', supplierToDelete.id), {
-            onSuccess: () => toast.success(t('Fournisseur supprimé avec succès')),
+            onSuccess: () => {
+                toast.success(t('Fournisseur supprimé avec succès'));
+                setDeleteDialogOpen(false);
+                setSupplierToDelete(null);
+            },
             onError: () => toast.error(t('Erreur: ce fournisseur a des produits associés')),
         });
     };
@@ -127,9 +131,9 @@ export default function SuppliersIndex({ suppliers }) {
                         <Typography variant="body2" fontWeight={500}>
                             {params.value}
                         </Typography>
-                        {params.row.contact_person && (
+                        {params.row.contact_name && (
                             <Typography variant="caption" color="text.secondary">
-                                {params.row.contact_person}
+                                {params.row.contact_name}
                             </Typography>
                         )}
                     </Box>
@@ -299,8 +303,10 @@ export default function SuppliersIndex({ suppliers }) {
                             />
                             <TextField
                                 label={t('Personne de contact')}
-                                value={data.contact_person}
-                                onChange={(e) => setData('contact_person', e.target.value)}
+                                value={data.contact_name}
+                                onChange={(e) => setData('contact_name', e.target.value)}
+                                error={!!errors.contact_name}
+                                helperText={errors.contact_name}
                                 fullWidth
                             />
                             <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 }}>

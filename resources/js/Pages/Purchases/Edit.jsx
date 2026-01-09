@@ -113,8 +113,9 @@ export default function PurchasesEdit({ order, suppliers, products }) {
             onSuccess: () => {
                 toast.success(t('Commande mise à jour'));
             },
-            onError: () => {
-                toast.error(t('Erreur lors de la mise à jour'));
+            onError: (errors) => {
+                const firstError = Object.values(errors)[0];
+                toast.error(Array.isArray(firstError) ? firstError[0] : firstError || t('Erreur lors de la mise à jour'));
             },
         });
     };

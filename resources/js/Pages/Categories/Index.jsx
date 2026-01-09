@@ -86,7 +86,11 @@ export default function CategoriesIndex({ categories }) {
 
     const confirmDelete = () => {
         router.delete(route('categories.destroy', categoryToDelete.id), {
-            onSuccess: () => toast.success(t('Catégorie supprimée avec succès')),
+            onSuccess: () => {
+                toast.success(t('Catégorie supprimée avec succès'));
+                setDeleteDialogOpen(false);
+                setCategoryToDelete(null);
+            },
             onError: () => toast.error(t('Erreur: cette catégorie contient des produits')),
         });
     };

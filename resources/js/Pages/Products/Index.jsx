@@ -75,7 +75,7 @@ export default function ProductsIndex({ products, categories, suppliers, filters
             options: [
                 { value: 'low', label: t('Stock bas') },
                 { value: 'out', label: t('Rupture') },
-                { value: 'ok', label: t('En stock') },
+                { value: 'in', label: t('En stock') },
             ],
         },
     ], [categories, suppliers, t, locale]);
@@ -84,7 +84,7 @@ export default function ProductsIndex({ products, categories, suppliers, filters
         setPaginationModel(model);
         router.get(
             route('products.index'),
-            { page: model.page + 1, per_page: model.pageSize },
+            { ...filters, page: model.page + 1, per_page: model.pageSize },
             { preserveState: true, preserveScroll: true }
         );
     };
@@ -94,7 +94,7 @@ export default function ProductsIndex({ products, categories, suppliers, filters
             const { field, sort } = sortModel[0];
             router.get(
                 route('products.index'),
-                { sort: field, direction: sort },
+                { ...filters, sort: field, direction: sort, page: 1 },
                 { preserveState: true, preserveScroll: true }
             );
         }
@@ -107,7 +107,11 @@ export default function ProductsIndex({ products, categories, suppliers, filters
 
     const confirmDelete = () => {
         router.delete(route('products.destroy', selectedProduct.id), {
-            onSuccess: () => toast.success(t('Produit supprimé avec succès')),
+            onSuccess: () => {
+                toast.success(t('Produit supprimé avec succès'));
+                setDeleteDialogOpen(false);
+                setSelectedProduct(null);
+            },
             onError: () => toast.error(t('Erreur lors de la suppression')),
         });
     };

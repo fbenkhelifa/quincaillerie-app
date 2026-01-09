@@ -145,7 +145,11 @@ export default function WorkersIndex({ workers, filters }) {
 
     const confirmDelete = () => {
         router.delete(route('workers.destroy', workerToDelete.id), {
-            onSuccess: () => toast.success(t('Employé supprimé avec succès')),
+            onSuccess: () => {
+                toast.success(t('Employé supprimé avec succès'));
+                setDeleteDialogOpen(false);
+                setWorkerToDelete(null);
+            },
             onError: () => toast.error(t('Erreur lors de la suppression')),
         });
     };

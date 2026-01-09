@@ -70,13 +70,14 @@ class PurchaseOrderItem extends Model
         $this->quantity_received += $quantityToReceive;
         $this->save();
 
-        // Update product stock
+        // Update product stock - pass null for bill_id since this is from a purchase order
         $this->product->adjustStock(
             $quantityToReceive,
             'purchase',
             $userId ?? auth()->id(),
-            $this->purchaseOrder->id,
-            'Réception commande - ' . $this->purchaseOrder->po_number
+            null,
+            'Réception commande - ' . $this->purchaseOrder->po_number,
+            'PO#' . $this->purchaseOrder->id
         );
     }
 }

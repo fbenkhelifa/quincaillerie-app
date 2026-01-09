@@ -109,7 +109,14 @@ class Product extends Model
     public function adjustStock(float $change, string $type, ?int $userId = null, ?int $billId = null, ?string $reason = null, ?string $notes = null): InventoryMovement
     {
         $quantityBefore = $this->quantity;
-        $this->quantity += $change;
+        $newQuantity = $this->quantity + $change;
+        
+        // Prevent negative stock - clamp to zero minimum
+        if ($newQuantity < 0) {
+            $newQuantity = 0;
+        }
+        
+        $this->quantity = $newQuantity;
         $this->save();
 
         return $this->inventoryMovements()->create([

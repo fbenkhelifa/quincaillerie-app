@@ -23,14 +23,23 @@ class SettingsController extends Controller
     {
         $validated = $request->validate([
             'store_name' => 'required|string|max:255',
+            'store_name_ar' => 'nullable|string|max:255',
             'owner_name' => 'nullable|string|max:255',
+            'owner_name_ar' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:20',
+            'email' => 'nullable|email|max:255',
             'address' => 'nullable|string',
+            'address_ar' => 'nullable|string',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'default_locale' => 'required|in:fr,ar',
-            'default_theme' => 'required|in:light,dark',
-            'currency' => 'required|string|max:10',
+            'default_locale' => 'nullable|in:fr,ar',
+            'default_theme' => 'nullable|in:light,dark',
+            'currency' => 'nullable|string|max:10',
             'tax_id' => 'nullable|string|max:50',
+            'rc_number' => 'nullable|string|max:50',
+            'ai_number' => 'nullable|string|max:50',
+            'nis_number' => 'nullable|string|max:50',
+            'invoice_footer' => 'nullable|string|max:500',
+            'invoice_footer_ar' => 'nullable|string|max:500',
         ]);
 
         $settings = Setting::instance();

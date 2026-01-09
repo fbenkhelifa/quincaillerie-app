@@ -290,10 +290,11 @@ export default function ReplenishmentIndex({ suggestions, suppliers, filters, st
         router.post(route('replenishment.recompute'), { sync: true }, {
             onSuccess: () => {
                 toast.success(t('Suggestions recalculées'));
-                setRecomputing(false);
             },
             onError: () => {
                 toast.error(t('Erreur lors du recalcul'));
+            },
+            onFinish: () => {
                 setRecomputing(false);
             },
         });
@@ -305,7 +306,16 @@ export default function ReplenishmentIndex({ suggestions, suppliers, filters, st
             return;
         }
 
-        router.post(route('replenishment.approve'), { suggestion_ids: selectedIds });
+        router.post(route('replenishment.approve'), { suggestion_ids: selectedIds }, {
+            onSuccess: () => {
+                toast.success(t('Redirection vers création de commande...'));
+                setSelectedIds([]);
+            },
+            onError: (errors) => {
+                const firstError = Object.values(errors)[0];
+                toast.error(Array.isArray(firstError) ? firstError[0] : firstError || t('Erreur lors de l\'approbation'));
+            },
+        });
     };
 
     const handleDismiss = () => {
@@ -327,6 +337,9 @@ export default function ReplenishmentIndex({ suggestions, suppliers, filters, st
 
         try {
             const response = await fetch(route('replenishment.product.forecast', productId));
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
             const data = await response.json();
             setDetailDialog({ open: true, product: data.product, loading: false, data });
         } catch (error) {
@@ -358,6 +371,7 @@ export default function ReplenishmentIndex({ suggestions, suppliers, filters, st
             width: 110,
             align: 'center',
             headerAlign: 'center',
+            valueGetter: (value, row) => row.product?.quantity ?? 0,
             renderCell: (params) => (
                 <Chip
                     label={params.value}
@@ -723,8 +737,17 @@ export default function ReplenishmentIndex({ suggestions, suppliers, filters, st
                             color="success"
                             startIcon={<CartIcon />}
                             onClick={() => {
+                                setDetailDialog({ open: false, product: null, loading: false, data: null });
                                 router.post(route('replenishment.approve'), {
                                     suggestion_ids: [detailDialog.data.suggestion.id],
+                                }, {
+                                    onSuccess: () => {
+                                        toast.success(t('Redirection vers création de commande...'));
+                                    },
+                                    onError: (errors) => {
+                                        const firstError = Object.values(errors)[0];
+                                        toast.error(Array.isArray(firstError) ? firstError[0] : firstError || t('Erreur'));
+                                    },
                                 });
                             }}
                         >

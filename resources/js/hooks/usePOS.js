@@ -60,6 +60,9 @@ export function useBarcodeScanner({ onScan, onError, enabled = true }) {
                     const response = await fetch(
                         route('products.barcode-lookup') + `?barcode=${encodeURIComponent(query)}`
                     );
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
                     const data = await response.json();
 
                     if (data.exact && data.product) {
@@ -311,6 +314,7 @@ export function usePOSCart(initialItems = []) {
     // Increment quantity
     const incrementQuantity = useCallback((index) => {
         setItems((prev) => {
+            if (index < 0 || index >= prev.length) return prev;
             const newItems = [...prev];
             newItems[index] = {
                 ...newItems[index],
@@ -325,8 +329,10 @@ export function usePOSCart(initialItems = []) {
     const decrementQuantity = useCallback((index) => {
         setItems((prev) => {
             const item = prev[index];
+            if (!item) return prev;
             if (item.quantity <= 1) {
                 POSSounds.remove();
+                setSelectedIndex(-1);
                 return prev.filter((_, i) => i !== index);
             }
             const newItems = [...prev];
@@ -365,7 +371,9 @@ export function usePOSCart(initialItems = []) {
         items.forEach((item) => {
             productCounts[item.product_id] = (productCounts[item.product_id] || 0) + 1;
         });
-        return Object.keys(productCounts).filter((id) => productCounts[id] > 1);
+        return Object.keys(productCounts)
+            .filter((id) => productCounts[id] > 1)
+            .map(Number);
     }, [items]);
 
     // Items with low stock warning

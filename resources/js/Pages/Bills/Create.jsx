@@ -174,7 +174,13 @@ export default function BillsCreate({ workers, storeSettings }) {
                 if (errors.error) {
                     toast.error(errors.error);
                 } else {
-                    toast.error(t('Erreur lors de la création de la facture'));
+                    // Show first validation error or generic message
+                    const firstError = Object.values(errors)[0];
+                    toast.error(
+                        Array.isArray(firstError) 
+                            ? firstError[0] 
+                            : firstError || t('Erreur lors de la création de la facture')
+                    );
                 }
             },
         });

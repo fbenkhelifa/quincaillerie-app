@@ -36,12 +36,6 @@ import toast from 'react-hot-toast';
 export default function PurchasesCreate({ suppliers, products, selectedSupplierId, prefillItems, nextPoNumber }) {
     const { t, locale } = useContext(AppContext);
     
-    // Debug: Log on mount
-    console.log('PurchasesCreate mounted!');
-    console.log('Suppliers:', suppliers?.length);
-    console.log('Products:', products?.length);
-    console.log('prefillItems:', prefillItems);
-    
     const [selectedSupplier, setSelectedSupplier] = useState(
         suppliers.find(s => s.id === parseInt(selectedSupplierId)) || null
     );
@@ -110,31 +104,20 @@ export default function PurchasesCreate({ suppliers, products, selectedSupplierI
     const handleSubmit = (e) => {
         if (e) e.preventDefault();
         
-        console.log('=== FORM SUBMIT TRIGGERED ===');
-        console.log('Processing:', processing);
-        console.log('Items count:', data.items.length);
-        console.log('Items:', JSON.stringify(data.items));
-        console.log('Full data:', JSON.stringify(data));
-        
         if (data.items.length === 0) {
             toast.error(t('Ajoutez au moins un article'));
             return;
         }
 
-        const url = route('purchases.store');
-        console.log('Posting to:', url);
-        
-        post(url, {
+        post(route('purchases.store'), {
             preserveScroll: true,
             onSuccess: () => {
-                console.log('SUCCESS!');
                 toast.success(t('Commande créée avec succès'));
             },
             onError: (errors) => {
-                console.error('Validation errors:', errors);
                 // Show first error message if available
                 const firstError = Object.values(errors)[0];
-                toast.error(firstError || t('Erreur lors de la création'));
+                toast.error(Array.isArray(firstError) ? firstError[0] : firstError || t('Erreur lors de la création'));
             },
         });
     };
@@ -404,13 +387,6 @@ export default function PurchasesCreate({ suppliers, products, selectedSupplierI
                                     size="large"
                                     startIcon={<SaveIcon />}
                                     disabled={processing || data.items.length === 0}
-                                    onClick={(e) => {
-                                        console.log('Button clicked!');
-                                        console.log('Processing:', processing);
-                                        console.log('Items length:', data.items.length);
-                                        console.log('Button disabled?', processing || data.items.length === 0);
-                                        handleSubmit(e);
-                                    }}
                                 >
                                     {processing ? t('Création en cours...') : t('Créer la commande')}
                                 </Button>
