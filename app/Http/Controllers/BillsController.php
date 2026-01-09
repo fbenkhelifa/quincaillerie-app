@@ -323,14 +323,21 @@ class BillsController extends Controller
 
         $isRtl = $lang === 'ar';
         
-        $pdf = Pdf::loadView('bills.invoice', [
+        // Use A4-optimized template with strict page sizing
+        $pdf = Pdf::loadView('bills.invoice-a4', [
             'bill' => $bill,
             'settings' => $settings,
             'lang' => $lang,
             'isRtl' => $isRtl,
         ]);
 
-        $pdf->setPaper('A4');
+        // Configure for exact A4 dimensions (210mm × 297mm)
+        $pdf->setPaper('A4', 'portrait');
+        
+        // DomPDF options for better rendering
+        $pdf->setOption('isRemoteEnabled', true);
+        $pdf->setOption('isHtml5ParserEnabled', true);
+        $pdf->setOption('isFontSubsettingEnabled', true);
         
         return $pdf->download("facture-{$bill->bill_number}.pdf");
     }
