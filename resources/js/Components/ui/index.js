@@ -9,6 +9,7 @@ export { default as StatCard, MiniSparkline, TrendBadge } from './StatCard';
 
 // Data Display
 export { default as DataTable } from './DataTable';
+export { default as ProDataTable } from './ProDataTable';
 export { default as FilterBar } from './FilterBar';
 
 // Forms

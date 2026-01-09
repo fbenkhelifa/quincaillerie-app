@@ -7,21 +7,21 @@
 
 // Color Palette
 export const palette = {
-  // Primary - Professional blue with modern touch
+  // Primary - Premium indigo (Stripe-like)
   primary: {
-    50: '#E3F2FD',
-    100: '#BBDEFB',
-    200: '#90CAF9',
-    300: '#64B5F6',
-    400: '#42A5F5',
-    500: '#2196F3',
-    600: '#1E88E5',
-    700: '#1976D2',
-    800: '#1565C0',
-    900: '#0D47A1',
-    main: '#2563EB',
-    light: '#60A5FA',
-    dark: '#1D4ED8',
+    50: '#EEF2FF',
+    100: '#E0E7FF',
+    200: '#C7D2FE',
+    300: '#A5B4FC',
+    400: '#818CF8',
+    500: '#6366F1',
+    600: '#4F46E5',
+    700: '#4338CA',
+    800: '#3730A3',
+    900: '#312E81',
+    main: '#4F46E5',
+    light: '#818CF8',
+    dark: '#3730A3',
     contrastText: '#FFFFFF',
   },
 
