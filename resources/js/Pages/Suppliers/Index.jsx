@@ -39,6 +39,9 @@ export default function SuppliersIndex({ suppliers }) {
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [supplierToDelete, setSupplierToDelete] = useState(null);
 
+    // Extract data from paginated response or use array directly
+    const suppliersData = Array.isArray(suppliers) ? suppliers : (suppliers?.data || []);
+
     const { data, setData, post, put, reset, processing, errors } = useForm({
         name: '',
         contact_person: '',
@@ -240,9 +243,9 @@ export default function SuppliersIndex({ suppliers }) {
 
             {/* Data Table or Empty State */}
             <Paper sx={{ overflow: 'hidden' }}>
-                {suppliers?.length > 0 ? (
+                {suppliersData?.length > 0 ? (
                     <DataGrid
-                        rows={suppliers}
+                        rows={suppliersData}
                         columns={columns}
                         pageSizeOptions={[10, 25, 50]}
                         initialState={{

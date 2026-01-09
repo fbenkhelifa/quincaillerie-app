@@ -62,7 +62,7 @@ import {
   Tune as TuneIcon,
   Save as SaveIcon,
   Settings as SettingsIcon,
-  ArrowUpDown as SortIcon,
+  SwapVert as SortIcon,
 } from '@mui/icons-material';
 import { EmptyState } from './index';
 import { TableSkeleton } from './LoadingState';

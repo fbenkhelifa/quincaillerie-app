@@ -24,11 +24,11 @@ const KPI_CONFIG = {
         formatType: 'currency',
         titleKey: 'Chiffre d\'affaires',
     },
-    bills_count: {
+    orders: {
         icon: ReceiptIcon,
         color: 'primary',
         formatType: 'number',
-        titleKey: 'Factures',
+        titleKey: 'Commandes',
     },
     avg_basket: {
         icon: CartIcon,
@@ -36,29 +36,41 @@ const KPI_CONFIG = {
         formatType: 'currency',
         titleKey: 'Panier moyen',
     },
-    items_sold: {
-        icon: InventoryIcon,
-        color: 'secondary',
-        formatType: 'number',
-        titleKey: 'Articles vendus',
+    gross_profit: {
+        icon: ProfitIcon,
+        color: 'success',
+        formatType: 'currency',
+        titleKey: 'Marge brute',
     },
-    low_stock: {
+    stockout_risk: {
         icon: WarningIcon,
         color: 'warning',
         formatType: 'number',
-        titleKey: 'Stock bas',
+        titleKey: 'Risque rupture',
     },
-    gross_margin: {
-        icon: ProfitIcon,
-        color: 'success',
-        formatType: 'percent',
-        titleKey: 'Marge brute',
+    alerts: {
+        icon: InventoryIcon,
+        color: 'error',
+        formatType: 'number',
+        titleKey: 'Alertes critiques',
     },
 };
 
-export default function DashboardKPIGrid({ kpis = [], loading = false }) {
+export default function DashboardKPIGrid({ kpis = {}, loading = false }) {
     const { t, locale } = useContext(AppContext);
     const theme = useTheme();
+
+    // Convert kpis object to array format for rendering
+    const kpisArray = Array.isArray(kpis) 
+        ? kpis 
+        : Object.entries(kpis).map(([key, data]) => ({
+            key,
+            value: data.value,
+            trend_percent: data.change,
+            comparison_label: data.previous !== null ? `vs ${data.previous}` : null,
+            format: data.format,
+            label: data.label,
+        }));
 
     const formatValue = (value, formatType) => {
         if (value === null || value === undefined) return '-';
@@ -92,12 +104,12 @@ export default function DashboardKPIGrid({ kpis = [], loading = false }) {
 
     return (
         <Grid container spacing={2} sx={{ mb: 3 }}>
-            {kpis.map((kpi, index) => {
+            {kpisArray.map((kpi, index) => {
                 const config = KPI_CONFIG[kpi.key] || {
                     icon: TrendingUpIcon,
                     color: 'primary',
-                    formatType: 'number',
-                    titleKey: kpi.label,
+                    formatType: kpi.format || 'number',
+                    titleKey: kpi.label || kpi.key,
                 };
                 const IconComponent = config.icon;
 

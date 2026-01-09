@@ -56,7 +56,7 @@ export default function Dashboard({
     const [loading, setLoading] = useState(false);
     const [activeTab, setActiveTab] = useState(0);
 
-    const { kpis = [], charts = {}, recommended_actions = {}, meta = {} } = dashboardData;
+    const { kpis = {}, charts = {}, recommended_actions = {}, meta = {} } = dashboardData;
 
     const formatCurrency = useCallback((value) => {
         return new Intl.NumberFormat(locale === 'ar' ? 'ar-DZ' : 'fr-DZ', {
@@ -75,7 +75,7 @@ export default function Dashboard({
     }, []);
 
     // Determine if we have data
-    const hasData = kpis.length > 0 || Object.keys(charts).length > 0;
+    const hasData = Object.keys(kpis).length > 0 || Object.keys(charts).length > 0;
 
     return (
         <Layout

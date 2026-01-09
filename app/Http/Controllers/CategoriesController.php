@@ -21,7 +21,7 @@ class CategoriesController extends Controller
             });
         }
 
-        $categories = $query->orderBy('sort_order')->orderBy('name')->paginate(25)->withQueryString();
+        $categories = $query->orderBy('sort_order')->orderBy('name')->get();
 
         return Inertia::render('Categories/Index', [
             'categories' => $categories,

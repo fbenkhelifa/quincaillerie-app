@@ -33,6 +33,9 @@ export default function CategoriesIndex({ categories }) {
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [categoryToDelete, setCategoryToDelete] = useState(null);
 
+    // Extract data from paginated response or use array directly
+    const categoriesData = Array.isArray(categories) ? categories : (categories?.data || []);
+
     const { data, setData, post, put, reset, processing, errors } = useForm({
         name: '',
         name_ar: '',
@@ -197,9 +200,9 @@ export default function CategoriesIndex({ categories }) {
 
             {/* Data Table or Empty State */}
             <Paper sx={{ overflow: 'hidden' }}>
-                {categories?.length > 0 ? (
+                {categoriesData?.length > 0 ? (
                     <DataGrid
-                        rows={categories}
+                        rows={categoriesData}
                         columns={columns}
                         pageSizeOptions={[10, 25, 50]}
                         initialState={{

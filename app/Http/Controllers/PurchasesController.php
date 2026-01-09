@@ -368,13 +368,22 @@ class PurchasesController extends Controller
 
         $purchase->load(['supplier', 'items.product', 'user']);
 
-        $settings = \App\Models\Setting::getAllCached();
+        $settings = \App\Models\Setting::instance()->toArray();
 
-        $pdf = Pdf::loadView('pdf.purchase-order', [
+        // Use A4-optimized template with strict page sizing
+        $pdf = Pdf::loadView('pdf.purchase-order-a4', [
             'order' => $purchase,
             'settings' => $settings,
             'lang' => $lang,
         ]);
+
+        // Configure for exact A4 dimensions (210mm × 297mm)
+        $pdf->setPaper('A4', 'portrait');
+        
+        // DomPDF options for better rendering
+        $pdf->setOption('isRemoteEnabled', true);
+        $pdf->setOption('isHtml5ParserEnabled', true);
+        $pdf->setOption('isFontSubsettingEnabled', true);
 
         $filename = "PO-{$purchase->po_number}.pdf";
 

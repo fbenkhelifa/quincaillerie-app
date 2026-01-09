@@ -624,8 +624,14 @@ class DashboardAnalyticsService
      */
     public static function invalidateCache(): void
     {
-        Cache::tags(['dashboard'])->flush();
-        // Also clear specific keys if tags not supported
+        // Clear specific keys (works with all cache drivers)
         Cache::forget('dashboard_filter_options');
+        
+        // Clear dashboard data keys with pattern
+        $cacheKeys = Cache::get('dashboard_cache_keys', []);
+        foreach ($cacheKeys as $key) {
+            Cache::forget($key);
+        }
+        Cache::forget('dashboard_cache_keys');
     }
 }

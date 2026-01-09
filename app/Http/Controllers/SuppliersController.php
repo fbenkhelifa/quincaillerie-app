@@ -22,7 +22,7 @@ class SuppliersController extends Controller
             });
         }
 
-        $suppliers = $query->orderBy('name')->paginate(25)->withQueryString();
+        $suppliers = $query->orderBy('name')->get();
 
         return Inertia::render('Suppliers/Index', [
             'suppliers' => $suppliers,

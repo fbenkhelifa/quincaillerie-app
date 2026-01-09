@@ -257,7 +257,7 @@ export default function DashboardFilterBar({
                             value={filters.worker_id}
                             onChange={(e) => handleFilterChange('worker_id', e.target.value)}
                         >
-                            <MenuItem value="">{t('Tous')}</MenuItem>
+                            <MenuItem key="all" value="">{t('Tous')}</MenuItem>
                             {filterOptions.workers?.map((worker) => (
                                 <MenuItem key={worker.value} value={worker.value}>
                                     {worker.label}
@@ -276,7 +276,7 @@ export default function DashboardFilterBar({
                             value={filters.payment_method}
                             onChange={(e) => handleFilterChange('payment_method', e.target.value)}
                         >
-                            <MenuItem value="">{t('Tous')}</MenuItem>
+                            <MenuItem key="all" value="">{t('Tous')}</MenuItem>
                             {filterOptions.payment_methods?.map((method) => (
                                 <MenuItem key={method.value} value={method.value}>
                                     {method.label}
@@ -295,7 +295,7 @@ export default function DashboardFilterBar({
                             value={filters.category_id}
                             onChange={(e) => handleFilterChange('category_id', e.target.value)}
                         >
-                            <MenuItem value="">{t('Toutes')}</MenuItem>
+                            <MenuItem key="all" value="">{t('Toutes')}</MenuItem>
                             {filterOptions.categories?.map((category) => (
                                 <MenuItem key={category.value} value={category.value}>
                                     {category.label}

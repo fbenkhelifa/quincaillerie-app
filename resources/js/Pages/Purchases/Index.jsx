@@ -252,10 +252,11 @@ export default function PurchasesIndex({ orders, suppliers, filters, stats }) {
 
                 {/* Filters */}
                 <FilterBar
-                    filters={filterConfig}
-                    values={filters}
-                    route="purchases.index"
+                    filterConfig={filterConfig}
+                    filters={filters}
+                    routeName="purchases.index"
                     searchPlaceholder={t('Rechercher par N° ou fournisseur...')}
+                    showDateRange={true}
                 />
 
                 {/* Data Grid */}
