@@ -199,7 +199,7 @@ export default function Inventory({
                         value={formatCurrency(valuation.retail_value)}
                         icon={<TurnoverIcon sx={{ fontSize: 28 }} />}
                         color="success"
-                        subtitle={t('Marge potentielle')}: {formatCurrency(valuation.potential_margin)}
+                        subtitle={`${t('Marge potentielle')}: ${formatCurrency(valuation.potential_margin)}`}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} lg={3}>

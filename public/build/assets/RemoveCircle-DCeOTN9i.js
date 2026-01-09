@@ -1,0 +1,1 @@
+import{j as o}from"./app-BZNp-1Wc.js";import{c as e}from"./app-CdAkH9DP.js";const s=e(o.jsx("path",{d:"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m5 11H7v-2h10z"}),"RemoveCircle");export{s as R};

@@ -1,8 +1,25 @@
-import { useContext } from 'react';
-import { Head, Link } from '@inertiajs/react';
+/**
+ * Dashboard - Premium Analytics Cockpit
+ * ======================================
+ * Comprehensive analytics dashboard with KPIs, charts, and actionable insights.
+ */
+
+import { useContext, useState, useCallback } from 'react';
+import { Head, Link, router } from '@inertiajs/react';
 import Layout from '@/Layouts/Layout';
-import { AppContext } from '../app';
-import { StatCard, EmptyState, PageHeader } from '@/Components/ui';
+import { AppContext } from '@/app';
+import { EmptyState } from '@/Components/ui';
+import {
+    DashboardFilterBar,
+    DashboardKPIGrid,
+    RecommendedActionsPanel,
+    RevenueTimelineChart,
+    PaymentMethodsChart,
+    TopProductsChart,
+    StockRiskChart,
+    MovementsTimelineChart,
+    AlertsSeverityChart,
+} from '@/Components/Dashboard';
 import {
     Box,
     Grid,
@@ -10,38 +27,55 @@ import {
     Typography,
     Card,
     CardContent,
-    List,
-    ListItem,
-    ListItemText,
-    ListItemAvatar,
-    Avatar,
-    Chip,
-    Divider,
     Button,
+    Tabs,
+    Tab,
+    Chip,
     alpha,
     useTheme,
+    useMediaQuery,
+    Fade,
 } from '@mui/material';
 import {
-    Inventory as InventoryIcon,
-    Warning as WarningIcon,
-    TrendingUp as TrendingUpIcon,
-    Receipt as ReceiptIcon,
-    AttachMoney as MoneyIcon,
-    LocalShipping as ShippingIcon,
     Add as AddIcon,
-    ArrowForward as ArrowForwardIcon,
+    Receipt as ReceiptIcon,
+    TrendingUp as TrendingUpIcon,
+    Inventory as InventoryIcon,
+    Speed as SpeedIcon,
+    Cached as CachedIcon,
 } from '@mui/icons-material';
 
-export default function Dashboard({ stats, recentBills, lowStockProducts, recentMovements }) {
+export default function Dashboard({
+    dashboardData = {},
+    filterOptions = {},
+    currentFilters = {},
+}) {
     const { t, locale } = useContext(AppContext);
     const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const [loading, setLoading] = useState(false);
+    const [activeTab, setActiveTab] = useState(0);
 
-    const formatCurrency = (value) => {
+    const { kpis = [], charts = {}, recommended_actions = {}, meta = {} } = dashboardData;
+
+    const formatCurrency = useCallback((value) => {
         return new Intl.NumberFormat(locale === 'ar' ? 'ar-DZ' : 'fr-DZ', {
             style: 'decimal',
-            minimumFractionDigits: 2,
-        }).format(value) + ' DA';
-    };
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+        }).format(value || 0) + ' DA';
+    }, [locale]);
+
+    const handleRefresh = useCallback(() => {
+        setLoading(true);
+        router.reload({
+            preserveScroll: true,
+            onFinish: () => setLoading(false),
+        });
+    }, []);
+
+    // Determine if we have data
+    const hasData = kpis.length > 0 || Object.keys(charts).length > 0;
 
     return (
         <Layout
@@ -50,14 +84,14 @@ export default function Dashboard({ stats, recentBills, lowStockProducts, recent
         >
             <Head title={t('Tableau de bord')} />
 
-            {/* Quick Actions */}
-            <Box sx={{ mb: 4, display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+            {/* Quick Actions Bar */}
+            <Box sx={{ mb: 3, display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center' }}>
                 <Button
                     component={Link}
                     href={route('products.create')}
                     variant="contained"
                     startIcon={<AddIcon />}
-                    size="large"
+                    size={isMobile ? 'medium' : 'large'}
                 >
                     {t('Nouveau produit')}
                 </Button>
@@ -66,249 +100,276 @@ export default function Dashboard({ stats, recentBills, lowStockProducts, recent
                     href={route('bills.create')}
                     variant="outlined"
                     startIcon={<ReceiptIcon />}
-                    size="large"
+                    size={isMobile ? 'medium' : 'large'}
                 >
                     {t('Nouvelle facture')}
                 </Button>
+
+                <Box sx={{ flex: 1 }} />
+
+                {/* Cache indicator */}
+                {meta.cached_at && (
+                    <Chip
+                        icon={<CachedIcon sx={{ fontSize: 16 }} />}
+                        label={t('Données en cache')}
+                        size="small"
+                        variant="outlined"
+                        sx={{ opacity: 0.7 }}
+                    />
+                )}
             </Box>
 
-            {/* Stats Grid */}
-            <Grid container spacing={3} sx={{ mb: 4 }}>
-                <Grid item xs={12} sm={6} lg={3}>
-                    <StatCard
-                        title={t('Total produits')}
-                        value={stats.total_products?.toLocaleString() || '0'}
-                        icon={<InventoryIcon sx={{ fontSize: 28 }} />}
-                        color="primary"
-                        subtitle={t('articles en stock')}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6} lg={3}>
-                    <StatCard
-                        title={t('Stock bas')}
-                        value={stats.low_stock_count || '0'}
-                        icon={<WarningIcon sx={{ fontSize: 28 }} />}
-                        color="warning"
-                        subtitle={`${stats.out_of_stock_count || 0} ${t('en rupture')}`}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6} lg={3}>
-                    <StatCard
-                        title={t("Ventes du jour")}
-                        value={formatCurrency(stats.today_sales || 0)}
-                        icon={<TrendingUpIcon sx={{ fontSize: 28 }} />}
-                        color="success"
-                        subtitle={`${stats.today_bills_count || 0} ${t('factures')}`}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6} lg={3}>
-                    <StatCard
-                        title={t('Valeur stock')}
-                        value={formatCurrency(stats.inventory_value || 0)}
-                        icon={<MoneyIcon sx={{ fontSize: 28 }} />}
-                        color="info"
-                        subtitle={t('valeur totale')}
-                    />
-                </Grid>
-            </Grid>
+            {/* Global Filter Bar */}
+            <DashboardFilterBar
+                currentFilters={currentFilters}
+                filterOptions={filterOptions}
+                onRefresh={handleRefresh}
+                loading={loading}
+            />
 
-            <Grid container spacing={3}>
-                {/* Low Stock Products */}
-                <Grid item xs={12} lg={6}>
-                    <Card sx={{ height: '100%' }}>
-                        <CardContent>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                                <Typography variant="h6" fontWeight={600}>
-                                    {t('Stock bas')}
-                                </Typography>
-                                <Button
-                                    component={Link}
-                                    href={route('products.index') + '?stock_status=low'}
-                                    size="small"
-                                    endIcon={<ArrowForwardIcon />}
+            {!hasData ? (
+                <EmptyState
+                    type="empty"
+                    title={t('Aucune donnée disponible')}
+                    description={t('Commencez par créer des factures pour voir les analytics')}
+                    action={{
+                        label: t('Créer une facture'),
+                        href: route('bills.create'),
+                    }}
+                />
+            ) : (
+                <Fade in timeout={300}>
+                    <Box>
+                        {/* KPI Cards Grid */}
+                        <DashboardKPIGrid kpis={kpis} loading={loading} />
+
+                        {/* Charts Section with Tabs */}
+                        <Paper
+                            elevation={0}
+                            sx={{
+                                mb: 3,
+                                borderRadius: 2,
+                                border: `1px solid ${theme.palette.divider}`,
+                                overflow: 'hidden',
+                            }}
+                        >
+                            <Box sx={{ borderBottom: 1, borderColor: 'divider', px: 2 }}>
+                                <Tabs
+                                    value={activeTab}
+                                    onChange={(_, v) => setActiveTab(v)}
+                                    variant={isMobile ? 'scrollable' : 'standard'}
+                                    scrollButtons="auto"
                                 >
-                                    {t('Voir tout')}
-                                </Button>
+                                    <Tab
+                                        icon={<TrendingUpIcon sx={{ fontSize: 18 }} />}
+                                        iconPosition="start"
+                                        label={t('Ventes')}
+                                    />
+                                    <Tab
+                                        icon={<InventoryIcon sx={{ fontSize: 18 }} />}
+                                        iconPosition="start"
+                                        label={t('Stock')}
+                                    />
+                                    <Tab
+                                        icon={<SpeedIcon sx={{ fontSize: 18 }} />}
+                                        iconPosition="start"
+                                        label={t('Performance')}
+                                    />
+                                </Tabs>
                             </Box>
-                            
-                            {lowStockProducts?.length > 0 ? (
-                                <List disablePadding>
-                                    {lowStockProducts.map((product, index) => (
-                                        <ListItem
-                                            key={product.id}
-                                            sx={{
-                                                px: 0,
-                                                borderBottom: index < lowStockProducts.length - 1 ? 1 : 0,
-                                                borderColor: 'divider',
-                                            }}
-                                            secondaryAction={
-                                                <Chip
-                                                    label={`${product.quantity} ${product.unit}`}
-                                                    size="small"
-                                                    color={product.quantity <= 0 ? 'error' : 'warning'}
-                                                />
-                                            }
-                                        >
-                                            <ListItemAvatar>
-                                                <Avatar
-                                                    sx={{
-                                                        bgcolor: product.quantity <= 0
-                                                            ? alpha(theme.palette.error.main, 0.1)
-                                                            : alpha(theme.palette.warning.main, 0.1),
-                                                    }}
-                                                >
-                                                    <WarningIcon
-                                                        sx={{
-                                                            color: product.quantity <= 0 ? 'error.main' : 'warning.main',
-                                                            fontSize: 20,
-                                                        }}
-                                                    />
-                                                </Avatar>
-                                            </ListItemAvatar>
-                                            <ListItemText
-                                                primary={product.name}
-                                                secondary={product.category || '-'}
-                                                primaryTypographyProps={{ fontWeight: 500 }}
-                                            />
-                                        </ListItem>
-                                    ))}
-                                </List>
-                            ) : (
-                                <EmptyState
-                                    type="empty"
-                                    title={t('Aucun produit en stock bas')}
-                                    description={t('Tous les produits ont un niveau de stock suffisant')}
-                                    size="small"
-                                />
-                            )}
-                        </CardContent>
-                    </Card>
-                </Grid>
 
-                {/* Recent Bills */}
-                <Grid item xs={12} lg={6}>
-                    <Card sx={{ height: '100%' }}>
-                        <CardContent>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                                <Typography variant="h6" fontWeight={600}>
-                                    {t('Dernières factures')}
-                                </Typography>
-                                <Button
-                                    component={Link}
-                                    href={route('bills.index')}
-                                    size="small"
-                                    endIcon={<ArrowForwardIcon />}
-                                >
-                                    {t('Voir tout')}
-                                </Button>
-                            </Box>
-                            
-                            {recentBills?.length > 0 ? (
-                                <List disablePadding>
-                                    {recentBills.map((bill, index) => (
-                                        <ListItem
-                                            key={bill.id}
-                                            sx={{
-                                                px: 0,
-                                                borderBottom: index < recentBills.length - 1 ? 1 : 0,
-                                                borderColor: 'divider',
-                                            }}
-                                            secondaryAction={
-                                                <Typography variant="body2" fontWeight={600} color="success.main">
-                                                    {formatCurrency(bill.total)}
-                                                </Typography>
-                                            }
-                                        >
-                                            <ListItemAvatar>
-                                                <Avatar sx={{ bgcolor: alpha(theme.palette.success.main, 0.1) }}>
-                                                    <ReceiptIcon sx={{ color: 'success.main', fontSize: 20 }} />
-                                                </Avatar>
-                                            </ListItemAvatar>
-                                            <ListItemText
-                                                primary={bill.bill_number}
-                                                secondary={`${bill.worker_name || '-'} • ${bill.created_at}`}
-                                                primaryTypographyProps={{ fontWeight: 500 }}
+                            <Box sx={{ p: 3 }}>
+                                {/* Sales Tab */}
+                                {activeTab === 0 && (
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={12} lg={8}>
+                                            <RevenueTimelineChart
+                                                data={charts.revenue_timeline || []}
+                                                loading={loading}
                                             />
-                                        </ListItem>
-                                    ))}
-                                </List>
-                            ) : (
-                                <EmptyState
-                                    type="empty"
-                                    title={t('Aucune facture récente')}
-                                    description={t('Créez votre première facture pour la voir apparaître ici')}
-                                    size="small"
-                                />
-                            )}
-                        </CardContent>
-                    </Card>
-                </Grid>
+                                        </Grid>
+                                        <Grid item xs={12} lg={4}>
+                                            <PaymentMethodsChart
+                                                data={charts.payment_methods || []}
+                                                loading={loading}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <TopProductsChart
+                                                data={charts.top_products || []}
+                                                loading={loading}
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                )}
 
-                {/* Recent Movements */}
-                <Grid item xs={12}>
-                    <Card>
-                        <CardContent>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                                <Typography variant="h6" fontWeight={600}>
-                                    {t('Derniers mouvements de stock')}
-                                </Typography>
-                            </Box>
-                            
-                            {recentMovements?.length > 0 ? (
-                                <List disablePadding>
-                                    {recentMovements.map((movement, index) => (
-                                        <ListItem
-                                            key={movement.id}
-                                            sx={{
-                                                px: 0,
-                                                borderBottom: index < recentMovements.length - 1 ? 1 : 0,
-                                                borderColor: 'divider',
-                                            }}
-                                        >
-                                            <ListItemAvatar>
-                                                <Avatar
-                                                    sx={{
-                                                        bgcolor: movement.quantity_change > 0
-                                                            ? alpha(theme.palette.success.main, 0.1)
-                                                            : alpha(theme.palette.error.main, 0.1),
-                                                    }}
-                                                >
-                                                    <Typography
-                                                        fontWeight={600}
-                                                        sx={{
-                                                            color: movement.quantity_change > 0 ? 'success.main' : 'error.main',
-                                                            fontSize: '0.875rem',
-                                                        }}
-                                                    >
-                                                        {movement.quantity_change > 0 ? '+' : '−'}
+                                {/* Stock Tab */}
+                                {activeTab === 1 && (
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={12} lg={6}>
+                                            <StockRiskChart
+                                                data={charts.stock_risk || []}
+                                                loading={loading}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} lg={6}>
+                                            <MovementsTimelineChart
+                                                data={charts.movements_timeline || []}
+                                                loading={loading}
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                )}
+
+                                {/* Performance Tab */}
+                                {activeTab === 2 && (
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={12} lg={8}>
+                                            <AlertsSeverityChart
+                                                data={charts.alerts_severity || []}
+                                                loading={loading}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} lg={4}>
+                                            <Card sx={{ height: '100%' }}>
+                                                <CardContent>
+                                                    <Typography variant="h6" fontWeight={600} mb={2}>
+                                                        {t('Résumé de la période')}
                                                     </Typography>
-                                                </Avatar>
-                                            </ListItemAvatar>
-                                            <ListItemText
-                                                primary={movement.product_name}
-                                                secondary={`${movement.type_label} • ${movement.user_name || '-'} • ${movement.created_at}`}
-                                                primaryTypographyProps={{ fontWeight: 500 }}
-                                            />
-                                            <Chip
-                                                label={`${movement.quantity_change > 0 ? '+' : ''}${movement.quantity_change}`}
-                                                size="small"
-                                                color={movement.quantity_change > 0 ? 'success' : 'error'}
-                                            />
-                                        </ListItem>
-                                    ))}
-                                </List>
-                            ) : (
-                                <EmptyState
-                                    type="empty"
-                                    title={t('Aucun mouvement récent')}
-                                    description={t('Les mouvements de stock apparaîtront ici')}
-                                    size="small"
+                                                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                                                        <SummaryItem
+                                                            label={t('Période analysée')}
+                                                            value={`${currentFilters.start_date || '-'} → ${currentFilters.end_date || '-'}`}
+                                                        />
+                                                        <SummaryItem
+                                                            label={t('Chiffre d\'affaires')}
+                                                            value={formatCurrency(kpis.find(k => k.key === 'revenue')?.value)}
+                                                            color="success.main"
+                                                        />
+                                                        <SummaryItem
+                                                            label={t('Nombre de factures')}
+                                                            value={kpis.find(k => k.key === 'bills_count')?.value || 0}
+                                                        />
+                                                        <SummaryItem
+                                                            label={t('Articles en rupture')}
+                                                            value={kpis.find(k => k.key === 'low_stock')?.value || 0}
+                                                            color={kpis.find(k => k.key === 'low_stock')?.value > 0 ? 'warning.main' : 'text.primary'}
+                                                        />
+                                                    </Box>
+                                                </CardContent>
+                                            </Card>
+                                        </Grid>
+                                    </Grid>
+                                )}
+                            </Box>
+                        </Paper>
+
+                        {/* Recommended Actions Panel */}
+                        <Grid container spacing={3}>
+                            <Grid item xs={12} lg={8}>
+                                <RecommendedActionsPanel
+                                    reorderSuggestions={recommended_actions.reorder_suggestions || []}
+                                    alerts={recommended_actions.alerts || []}
+                                    deadStock={recommended_actions.dead_stock || []}
+                                    loading={loading}
                                 />
-                            )}
-                        </CardContent>
-                    </Card>
-                </Grid>
-            </Grid>
+                            </Grid>
+
+                            {/* Quick Links */}
+                            <Grid item xs={12} lg={4}>
+                                <Card>
+                                    <CardContent>
+                                        <Typography variant="h6" fontWeight={600} mb={2}>
+                                            {t('Accès rapide')}
+                                        </Typography>
+                                        <Grid container spacing={1}>
+                                            <Grid item xs={6}>
+                                                <QuickLinkButton
+                                                    href={route('analytics.sales')}
+                                                    icon={<TrendingUpIcon />}
+                                                    label={t('Analytics ventes')}
+                                                    color="primary"
+                                                />
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <QuickLinkButton
+                                                    href={route('analytics.inventory')}
+                                                    icon={<InventoryIcon />}
+                                                    label={t('Analytics stock')}
+                                                    color="info"
+                                                />
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <QuickLinkButton
+                                                    href={route('replenishment.index')}
+                                                    icon={<SpeedIcon />}
+                                                    label={t('Réapprovisionnement')}
+                                                    color="warning"
+                                                />
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <QuickLinkButton
+                                                    href={route('findings.index')}
+                                                    icon={<SpeedIcon />}
+                                                    label={t('Anomalies')}
+                                                    color="error"
+                                                />
+                                            </Grid>
+                                        </Grid>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                </Fade>
+            )}
         </Layout>
+    );
+}
+
+/**
+ * Summary Item Component
+ */
+function SummaryItem({ label, value, color = 'text.primary' }) {
+    return (
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Typography variant="body2" color="text.secondary">
+                {label}
+            </Typography>
+            <Typography variant="body2" fontWeight={600} color={color}>
+                {value}
+            </Typography>
+        </Box>
+    );
+}
+
+/**
+ * Quick Link Button Component
+ */
+function QuickLinkButton({ href, icon, label, color = 'primary' }) {
+    const theme = useTheme();
+    const colorValue = theme.palette[color]?.main || color;
+
+    return (
+        <Button
+            component={Link}
+            href={href}
+            fullWidth
+            sx={{
+                flexDirection: 'column',
+                py: 2,
+                gap: 1,
+                bgcolor: alpha(colorValue, 0.1),
+                color: colorValue,
+                '&:hover': {
+                    bgcolor: alpha(colorValue, 0.2),
+                },
+            }}
+        >
+            {icon}
+            <Typography variant="caption" fontWeight={500} textAlign="center">
+                {label}
+            </Typography>
+        </Button>
     );
 }

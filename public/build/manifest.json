@@ -1,199 +1,570 @@
 {
-  "_Add-D8atyPup.js": {
-    "file": "assets/Add-D8atyPup.js",
-    "name": "Add",
+  "_AccessTime-Bx2des1e.js": {
+    "file": "assets/AccessTime-Bx2des1e.js",
+    "name": "AccessTime",
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js"
+      "_app-CdAkH9DP.js"
     ]
   },
-  "_ArrowBack-BnrSNxU1.js": {
-    "file": "assets/ArrowBack-BnrSNxU1.js",
+  "_Alert-CcnEjiVb.js": {
+    "file": "assets/Alert-CcnEjiVb.js",
+    "name": "Alert",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js",
+      "_Close-l13Y9WQO.js",
+      "_AppShell-BhxxZHCM.js"
+    ]
+  },
+  "_AppShell-BhxxZHCM.js": {
+    "file": "assets/AppShell-BhxxZHCM.js",
+    "name": "AppShell",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_ArrowBack-BfZ7CDvX.js": {
+    "file": "assets/ArrowBack-BfZ7CDvX.js",
     "name": "ArrowBack",
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js"
+      "_app-CdAkH9DP.js"
     ]
   },
-  "_CheckBoxOutlineBlank-DdaPN_uO.js": {
-    "file": "assets/CheckBoxOutlineBlank-DdaPN_uO.js",
+  "_Autocomplete-dubXATxu.js": {
+    "file": "assets/Autocomplete-dubXATxu.js",
+    "name": "Autocomplete",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js",
+      "_TextField-CDuld0po.js",
+      "_Close-l13Y9WQO.js",
+      "_usePreviousProps-DavtfK7q.js",
+      "_AppShell-BhxxZHCM.js",
+      "_Chip-BrF_o1Vz.js"
+    ]
+  },
+  "_Badge-BUHywOej.js": {
+    "file": "assets/Badge-BUHywOej.js",
+    "name": "Badge",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js",
+      "_usePreviousProps-DavtfK7q.js"
+    ]
+  },
+  "_BarChart-BB_X34wT.js": {
+    "file": "assets/BarChart-BB_X34wT.js",
+    "name": "BarChart",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_ButtonGroup-CUbFdZvD.js": {
+    "file": "assets/ButtonGroup-CUbFdZvD.js",
+    "name": "ButtonGroup",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js",
+      "_getValidReactChildren-CgDcf45g.js"
+    ]
+  },
+  "_Cancel-BchlFJ6U.js": {
+    "file": "assets/Cancel-BchlFJ6U.js",
+    "name": "Cancel",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_CardContent-CiTM5mhj.js": {
+    "file": "assets/CardContent-CiTM5mhj.js",
+    "name": "CardContent",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_CardHeader-CgLvl55C.js": {
+    "file": "assets/CardHeader-CgLvl55C.js",
+    "name": "CardHeader",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_Charts-BxRQ9khW.js": {
+    "file": "assets/Charts-BxRQ9khW.js",
+    "name": "Charts",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_CheckBoxOutlineBlank-DjdbTQLr.js": {
+    "file": "assets/CheckBoxOutlineBlank-DjdbTQLr.js",
     "name": "CheckBoxOutlineBlank",
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js"
+      "_app-CdAkH9DP.js"
     ]
   },
-  "_CloudUpload-DznlwJ0c.js": {
-    "file": "assets/CloudUpload-DznlwJ0c.js",
+  "_CheckCircle-B1HoWYsw.js": {
+    "file": "assets/CheckCircle-B1HoWYsw.js",
+    "name": "CheckCircle",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_Checkbox-D_ByuM62.js": {
+    "file": "assets/Checkbox-D_ByuM62.js",
+    "name": "Checkbox",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js",
+      "_SwitchBase-v4iPr3ip.js"
+    ]
+  },
+  "_Chip-BrF_o1Vz.js": {
+    "file": "assets/Chip-BrF_o1Vz.js",
+    "name": "Chip",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_Clear-BvjZlhAk.js": {
+    "file": "assets/Clear-BvjZlhAk.js",
+    "name": "Clear",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_ClickAwayListener-D8c1aD_d.js": {
+    "file": "assets/ClickAwayListener-D8c1aD_d.js",
+    "name": "ClickAwayListener",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_Close-BRqnPnut.js": {
+    "file": "assets/Close-BRqnPnut.js",
+    "name": "Close",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_Close-l13Y9WQO.js": {
+    "file": "assets/Close-l13Y9WQO.js",
+    "name": "Close",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_CloudUpload-B1CtYeE9.js": {
+    "file": "assets/CloudUpload-B1CtYeE9.js",
     "name": "CloudUpload",
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js"
+      "_app-CdAkH9DP.js"
     ]
   },
-  "_ConfirmDialog-DfQDxvSV.js": {
-    "file": "assets/ConfirmDialog-DfQDxvSV.js",
+  "_Collapse-BLX3Syjq.js": {
+    "file": "assets/Collapse-BLX3Syjq.js",
+    "name": "Collapse",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_ConfirmDialog-DMfhMbWL.js": {
+    "file": "assets/ConfirmDialog-DMfhMbWL.js",
     "name": "ConfirmDialog",
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js",
-      "_DialogContent-D1aNQfGN.js",
-      "_Warning-C6-2R4Dj.js"
+      "_app-CdAkH9DP.js",
+      "_CheckCircle-B1HoWYsw.js",
+      "_Info-NPSlcj5z.js",
+      "_Delete-C4JnUjqK.js",
+      "_Error-CuHQMt6U.js",
+      "_Warning-D4Q5C4xN.js",
+      "_DialogTitle-YisWslj8.js"
     ]
   },
-  "_Container-8zgZzNGg.js": {
-    "file": "assets/Container-8zgZzNGg.js",
+  "_Container-DcqmhPBj.js": {
+    "file": "assets/Container-DcqmhPBj.js",
     "name": "Container",
     "imports": [
-      "_app-0Z2KpI1l.js",
+      "_app-CdAkH9DP.js",
       "resources/js/app.jsx"
     ]
   },
-  "_Delete-CYRmDn9v.js": {
-    "file": "assets/Delete-CYRmDn9v.js",
+  "_DataGrid-COmlJ6N7.js": {
+    "file": "assets/DataGrid-COmlJ6N7.js",
+    "name": "DataGrid",
+    "imports": [
+      "resources/js/app.jsx",
+      "_AppShell-BhxxZHCM.js",
+      "_index-Gl8RsDBU.js",
+      "_app-CdAkH9DP.js",
+      "_Autocomplete-dubXATxu.js",
+      "_ClickAwayListener-D8c1aD_d.js",
+      "_Chip-BrF_o1Vz.js",
+      "_TextField-CDuld0po.js",
+      "_InputAdornment-BwxOYrCK.js",
+      "_Checkbox-D_ByuM62.js",
+      "_Badge-BUHywOej.js",
+      "_FormControlLabel-CZ8HT0Cs.js",
+      "_TablePagination-DWxvqGVM.js",
+      "_LinearProgress-BHZEwKVf.js"
+    ]
+  },
+  "_DateRange-CMKyWHBt.js": {
+    "file": "assets/DateRange-CMKyWHBt.js",
+    "name": "DateRange",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_Delete-C4JnUjqK.js": {
+    "file": "assets/Delete-C4JnUjqK.js",
     "name": "Delete",
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js"
+      "_app-CdAkH9DP.js"
     ]
   },
-  "_DialogContent-D1aNQfGN.js": {
-    "file": "assets/DialogContent-D1aNQfGN.js",
-    "name": "DialogContent",
+  "_DialogTitle-YisWslj8.js": {
+    "file": "assets/DialogTitle-YisWslj8.js",
+    "name": "DialogTitle",
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js"
+      "_app-CdAkH9DP.js"
     ]
   },
-  "_FormControlLabel-LS7wJhWP.js": {
-    "file": "assets/FormControlLabel-LS7wJhWP.js",
+  "_Download-BWaMSUjn.js": {
+    "file": "assets/Download-BWaMSUjn.js",
+    "name": "Download",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_Edit-CwBov9dH.js": {
+    "file": "assets/Edit-CwBov9dH.js",
+    "name": "Edit",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_EmptyState-chANGCuY.js": {
+    "file": "assets/EmptyState-chANGCuY.js",
+    "name": "EmptyState",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js",
+      "_FilterList-C2S-JFgd.js",
+      "_AppShell-BhxxZHCM.js"
+    ]
+  },
+  "_Error-CuHQMt6U.js": {
+    "file": "assets/Error-CuHQMt6U.js",
+    "name": "Error",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_ExpandMore-vIzj5Asy.js": {
+    "file": "assets/ExpandMore-vIzj5Asy.js",
+    "name": "ExpandMore",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_FilterBar-C0fBbb2K.js": {
+    "file": "assets/FilterBar-C0fBbb2K.js",
+    "name": "FilterBar",
+    "imports": [
+      "resources/js/app.jsx",
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_TextField-CDuld0po.js",
+      "_InputAdornment-BwxOYrCK.js",
+      "_Clear-BvjZlhAk.js",
+      "_Chip-BrF_o1Vz.js",
+      "_ExpandMore-vIzj5Asy.js",
+      "_FilterList-C2S-JFgd.js",
+      "_Collapse-BLX3Syjq.js",
+      "_Grid-BR5_o-YL.js",
+      "_DataGrid-COmlJ6N7.js",
+      "_DialogTitle-YisWslj8.js",
+      "_Badge-BUHywOej.js",
+      "_Delete-C4JnUjqK.js"
+    ]
+  },
+  "_FilterList-C2S-JFgd.js": {
+    "file": "assets/FilterList-C2S-JFgd.js",
+    "name": "FilterList",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_FormControlLabel-CZ8HT0Cs.js": {
+    "file": "assets/FormControlLabel-CZ8HT0Cs.js",
     "name": "FormControlLabel",
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js",
-      "_TextField-NSCvulBS.js"
+      "_app-CdAkH9DP.js"
     ]
   },
-  "_Grid-O3zKT5UJ.js": {
-    "file": "assets/Grid-O3zKT5UJ.js",
+  "_Grid-BR5_o-YL.js": {
+    "file": "assets/Grid-BR5_o-YL.js",
     "name": "Grid",
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js"
+      "_app-CdAkH9DP.js"
     ]
   },
-  "_InputAdornment-DtkpSnBA.js": {
-    "file": "assets/InputAdornment-DtkpSnBA.js",
+  "_Info-NPSlcj5z.js": {
+    "file": "assets/Info-NPSlcj5z.js",
+    "name": "Info",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_InputAdornment-BwxOYrCK.js": {
+    "file": "assets/InputAdornment-BwxOYrCK.js",
     "name": "InputAdornment",
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js",
-      "_TextField-NSCvulBS.js"
+      "_app-CdAkH9DP.js"
     ]
   },
-  "_Layout-DQRu1Ffm.js": {
-    "file": "assets/Layout-DQRu1Ffm.js",
-    "name": "Layout",
+  "_KeyboardArrowRight-DfzUdcek.js": {
+    "file": "assets/KeyboardArrowRight-DfzUdcek.js",
+    "name": "KeyboardArrowRight",
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js"
+      "_app-CdAkH9DP.js"
     ]
   },
-  "_PictureAsPdf-CCwRW6tS.js": {
-    "file": "assets/PictureAsPdf-CCwRW6tS.js",
+  "_LinearProgress-BHZEwKVf.js": {
+    "file": "assets/LinearProgress-BHZEwKVf.js",
+    "name": "LinearProgress",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_ListItemAvatar-DdLb1h33.js": {
+    "file": "assets/ListItemAvatar-DdLb1h33.js",
+    "name": "ListItemAvatar",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_NotificationsActive-CaZy0OdR.js": {
+    "file": "assets/NotificationsActive-CaZy0OdR.js",
+    "name": "NotificationsActive",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_Person-CxFAFChu.js": {
+    "file": "assets/Person-CxFAFChu.js",
+    "name": "Person",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_PictureAsPdf-Cax_hLq-.js": {
+    "file": "assets/PictureAsPdf-Cax_hLq-.js",
     "name": "PictureAsPdf",
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js"
+      "_app-CdAkH9DP.js"
     ]
   },
-  "_Save-sfi3xPC3.js": {
-    "file": "assets/Save-sfi3xPC3.js",
+  "_PriorityHigh-BkCWAnjl.js": {
+    "file": "assets/PriorityHigh-BkCWAnjl.js",
+    "name": "PriorityHigh",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_Refresh-CI4p5Emt.js": {
+    "file": "assets/Refresh-CI4p5Emt.js",
+    "name": "Refresh",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_RemoveCircle-DCeOTN9i.js": {
+    "file": "assets/RemoveCircle-DCeOTN9i.js",
+    "name": "RemoveCircle",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_Save-C_7Q9U14.js": {
+    "file": "assets/Save-C_7Q9U14.js",
     "name": "Save",
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js"
+      "_app-CdAkH9DP.js"
     ]
   },
-  "_Search-BAgLG2AU.js": {
-    "file": "assets/Search-BAgLG2AU.js",
-    "name": "Search",
+  "_Schedule-kWPrd0Wj.js": {
+    "file": "assets/Schedule-kWPrd0Wj.js",
+    "name": "Schedule",
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js",
-      "_Layout-DQRu1Ffm.js",
-      "_TableCell-BQJFIH9i.js",
-      "_TextField-NSCvulBS.js",
-      "_InputAdornment-DtkpSnBA.js",
-      "_DialogContent-D1aNQfGN.js"
+      "_app-CdAkH9DP.js"
     ]
   },
-  "_Switch-CuRryv0i.js": {
-    "file": "assets/Switch-CuRryv0i.js",
+  "_Send-BRaVUMuv.js": {
+    "file": "assets/Send-BRaVUMuv.js",
+    "name": "Send",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_StatCard-CjSHW2_h.js": {
+    "file": "assets/StatCard-CjSHW2_h.js",
+    "name": "StatCard",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js",
+      "_CardContent-CiTM5mhj.js",
+      "_AppShell-BhxxZHCM.js"
+    ]
+  },
+  "_Switch-DGVhPnwd.js": {
+    "file": "assets/Switch-DGVhPnwd.js",
     "name": "Switch",
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js",
-      "_SwitchBase-IMXq3F-G.js"
+      "_app-CdAkH9DP.js",
+      "_SwitchBase-v4iPr3ip.js"
     ]
   },
-  "_SwitchBase-IMXq3F-G.js": {
-    "file": "assets/SwitchBase-IMXq3F-G.js",
+  "_SwitchBase-v4iPr3ip.js": {
+    "file": "assets/SwitchBase-v4iPr3ip.js",
     "name": "SwitchBase",
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js",
-      "_TextField-NSCvulBS.js"
+      "_app-CdAkH9DP.js"
     ]
   },
-  "_TableCell-BQJFIH9i.js": {
-    "file": "assets/TableCell-BQJFIH9i.js",
+  "_TableCell-BP3TP_aI.js": {
+    "file": "assets/TableCell-BP3TP_aI.js",
     "name": "TableCell",
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js"
+      "_app-CdAkH9DP.js"
     ]
   },
-  "_TableContainer-M4EM3-sb.js": {
-    "file": "assets/TableContainer-M4EM3-sb.js",
+  "_TableContainer-HjEidATc.js": {
+    "file": "assets/TableContainer-HjEidATc.js",
     "name": "TableContainer",
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js"
+      "_app-CdAkH9DP.js"
     ]
   },
-  "_TableRow-CnSUDeKE.js": {
-    "file": "assets/TableRow-CnSUDeKE.js",
+  "_TablePagination-DWxvqGVM.js": {
+    "file": "assets/TablePagination-DWxvqGVM.js",
+    "name": "TablePagination",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js",
+      "_KeyboardArrowRight-DfzUdcek.js",
+      "_AppShell-BhxxZHCM.js",
+      "_TableCell-BP3TP_aI.js",
+      "_TextField-CDuld0po.js"
+    ]
+  },
+  "_TableRow-DgC751_7.js": {
+    "file": "assets/TableRow-DgC751_7.js",
     "name": "TableRow",
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js",
-      "_TableCell-BQJFIH9i.js"
+      "_app-CdAkH9DP.js",
+      "_TableCell-BP3TP_aI.js"
     ]
   },
-  "_TextField-NSCvulBS.js": {
-    "file": "assets/TextField-NSCvulBS.js",
+  "_TextField-CDuld0po.js": {
+    "file": "assets/TextField-CDuld0po.js",
     "name": "TextField",
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js"
+      "_app-CdAkH9DP.js"
     ]
   },
-  "_Warning-C6-2R4Dj.js": {
-    "file": "assets/Warning-C6-2R4Dj.js",
+  "_Timeline-CBk5IFne.js": {
+    "file": "assets/Timeline-CBk5IFne.js",
+    "name": "Timeline",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_ToggleButtonGroup-DfQrYhSV.js": {
+    "file": "assets/ToggleButtonGroup-DfQrYhSV.js",
+    "name": "ToggleButtonGroup",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js",
+      "_getValidReactChildren-CgDcf45g.js"
+    ]
+  },
+  "_Visibility-BILgjFf9.js": {
+    "file": "assets/Visibility-BILgjFf9.js",
+    "name": "Visibility",
+    "imports": [
+      "resources/js/app.jsx",
+      "_app-CdAkH9DP.js"
+    ]
+  },
+  "_Warning-D4Q5C4xN.js": {
+    "file": "assets/Warning-D4Q5C4xN.js",
     "name": "Warning",
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js"
+      "_app-CdAkH9DP.js"
     ]
   },
-  "_app-0Z2KpI1l.js": {
-    "file": "assets/app-0Z2KpI1l.js",
+  "_app-CdAkH9DP.js": {
+    "file": "assets/app-CdAkH9DP.js",
     "name": "app",
     "imports": [
       "resources/js/app.jsx"
     ],
     "dynamicImports": [
+      "resources/js/Pages/Analytics/Inventory.jsx",
+      "resources/js/Pages/Analytics/Sales.jsx",
+      "resources/js/Pages/AuditLog/Index.jsx",
       "resources/js/Pages/Auth/Login.jsx",
       "resources/js/Pages/Auth/Register.jsx",
       "resources/js/Pages/Bills/Create.jsx",
@@ -202,604 +573,1121 @@
       "resources/js/Pages/Bills/Show.jsx",
       "resources/js/Pages/Categories/Index.jsx",
       "resources/js/Pages/Dashboard.jsx",
+      "resources/js/Pages/Findings/Index.jsx",
+      "resources/js/Pages/Notifications/Index.jsx",
+      "resources/js/Pages/Ops/Status.jsx",
       "resources/js/Pages/Products/Create.jsx",
       "resources/js/Pages/Products/Edit.jsx",
       "resources/js/Pages/Products/Index.jsx",
+      "resources/js/Pages/Purchases/Create.jsx",
+      "resources/js/Pages/Purchases/Edit.jsx",
+      "resources/js/Pages/Purchases/Index.jsx",
+      "resources/js/Pages/Purchases/Receive.jsx",
+      "resources/js/Pages/Purchases/Show.jsx",
+      "resources/js/Pages/Replenishment/Index.jsx",
       "resources/js/Pages/Settings/Index.jsx",
       "resources/js/Pages/Suppliers/Index.jsx",
       "resources/js/Pages/Workers/Index.jsx"
     ]
   },
-  "_getValidReactChildren-BRWoYq41.js": {
-    "file": "assets/getValidReactChildren-BRWoYq41.js",
+  "_getValidReactChildren-CgDcf45g.js": {
+    "file": "assets/getValidReactChildren-CgDcf45g.js",
     "name": "getValidReactChildren",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
-  "_index-C7P0P4Sa.js": {
-    "file": "assets/index-C7P0P4Sa.js",
+  "_index-Gl8RsDBU.js": {
+    "file": "assets/index-Gl8RsDBU.js",
     "name": "index",
     "imports": [
-      "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js",
-      "_TextField-NSCvulBS.js",
-      "_Layout-DQRu1Ffm.js",
-      "_SwitchBase-IMXq3F-G.js"
+      "resources/js/app.jsx"
     ]
   },
-  "node_modules/@fontsource/roboto/files/roboto-cyrillic-300-normal.woff": {
-    "file": "assets/roboto-cyrillic-300-normal-D568C3aM.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-300-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-cyrillic-300-normal.woff2": {
-    "file": "assets/roboto-cyrillic-300-normal-BoeCr7ev.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-300-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-cyrillic-400-normal.woff": {
-    "file": "assets/roboto-cyrillic-400-normal-DZJji7Rx.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-400-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-cyrillic-400-normal.woff2": {
-    "file": "assets/roboto-cyrillic-400-normal-DAIM1_dR.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-400-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-cyrillic-500-normal.woff": {
-    "file": "assets/roboto-cyrillic-500-normal-BI4HuXre.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-500-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-cyrillic-500-normal.woff2": {
-    "file": "assets/roboto-cyrillic-500-normal-hCeO1jFL.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-500-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-cyrillic-700-normal.woff": {
-    "file": "assets/roboto-cyrillic-700-normal-KqaQ5bNp.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-700-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-cyrillic-700-normal.woff2": {
-    "file": "assets/roboto-cyrillic-700-normal-BiSG5NnW.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-700-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-300-normal.woff": {
-    "file": "assets/roboto-cyrillic-ext-300-normal-DQdcc27I.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-300-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-300-normal.woff2": {
-    "file": "assets/roboto-cyrillic-ext-300-normal-CUPJdUZp.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-300-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-400-normal.woff": {
-    "file": "assets/roboto-cyrillic-ext-400-normal-DtZHuW6i.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-400-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-400-normal.woff2": {
-    "file": "assets/roboto-cyrillic-ext-400-normal-DzMWdK87.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-400-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-500-normal.woff": {
-    "file": "assets/roboto-cyrillic-ext-500-normal-C927yMrb.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-500-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-500-normal.woff2": {
-    "file": "assets/roboto-cyrillic-ext-500-normal-B7rQpwPu.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-500-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-700-normal.woff": {
-    "file": "assets/roboto-cyrillic-ext-700-normal-BuQgZIrO.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-700-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-700-normal.woff2": {
-    "file": "assets/roboto-cyrillic-ext-700-normal-UFn0vR9r.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-cyrillic-ext-700-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-greek-300-normal.woff": {
-    "file": "assets/roboto-greek-300-normal-CTj2MfNN.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-greek-300-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-greek-300-normal.woff2": {
-    "file": "assets/roboto-greek-300-normal-Cnub06j7.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-greek-300-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-greek-400-normal.woff": {
-    "file": "assets/roboto-greek-400-normal-CcizSnRP.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-greek-400-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-greek-400-normal.woff2": {
-    "file": "assets/roboto-greek-400-normal-jFM2czAU.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-greek-400-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-greek-500-normal.woff": {
-    "file": "assets/roboto-greek-500-normal-BLLWU9W-.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-greek-500-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-greek-500-normal.woff2": {
-    "file": "assets/roboto-greek-500-normal-BJMS0heP.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-greek-500-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-greek-700-normal.woff": {
-    "file": "assets/roboto-greek-700-normal-D3kmAf0K.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-greek-700-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-greek-700-normal.woff2": {
-    "file": "assets/roboto-greek-700-normal-BcGn9doz.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-greek-700-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-greek-ext-300-normal.woff": {
-    "file": "assets/roboto-greek-ext-300-normal-4A1Qb8eJ.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-greek-ext-300-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-greek-ext-300-normal.woff2": {
-    "file": "assets/roboto-greek-ext-300-normal-BsUvD7IV.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-greek-ext-300-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-greek-ext-400-normal.woff": {
-    "file": "assets/roboto-greek-ext-400-normal-E4A3zSa0.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-greek-ext-400-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-greek-ext-400-normal.woff2": {
-    "file": "assets/roboto-greek-ext-400-normal-LMQUMKXc.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-greek-ext-400-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-greek-ext-500-normal.woff": {
-    "file": "assets/roboto-greek-ext-500-normal-BoWv1jNG.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-greek-ext-500-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-greek-ext-500-normal.woff2": {
-    "file": "assets/roboto-greek-ext-500-normal-CGTRT-go.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-greek-ext-500-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-greek-ext-700-normal.woff": {
-    "file": "assets/roboto-greek-ext-700-normal-DAFKdZbJ.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-greek-ext-700-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-greek-ext-700-normal.woff2": {
-    "file": "assets/roboto-greek-ext-700-normal-CzvIc217.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-greek-ext-700-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-latin-300-normal.woff": {
-    "file": "assets/roboto-latin-300-normal-KByCBsad.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-latin-300-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-latin-300-normal.woff2": {
-    "file": "assets/roboto-latin-300-normal-CztWkFGs.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-latin-300-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff": {
-    "file": "assets/roboto-latin-400-normal-068yxgMN.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff2": {
-    "file": "assets/roboto-latin-400-normal-CNwBRw8h.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-latin-500-normal.woff": {
-    "file": "assets/roboto-latin-500-normal-CC5nhZkh.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-latin-500-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-latin-500-normal.woff2": {
-    "file": "assets/roboto-latin-500-normal-CkrA1NAy.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-latin-500-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff": {
-    "file": "assets/roboto-latin-700-normal-DUekQERp.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff2": {
-    "file": "assets/roboto-latin-700-normal-CXeAXeti.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-latin-ext-300-normal.woff": {
-    "file": "assets/roboto-latin-ext-300-normal-Tcf9y2tg.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-latin-ext-300-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-latin-ext-300-normal.woff2": {
-    "file": "assets/roboto-latin-ext-300-normal-BOz0oSmX.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-latin-ext-300-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-latin-ext-400-normal.woff": {
-    "file": "assets/roboto-latin-ext-400-normal-eTRLN0Nt.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-latin-ext-400-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-latin-ext-400-normal.woff2": {
-    "file": "assets/roboto-latin-ext-400-normal-ZYmyxeOy.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-latin-ext-400-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-latin-ext-500-normal.woff": {
-    "file": "assets/roboto-latin-ext-500-normal-FFcS8vBN.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-latin-ext-500-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-latin-ext-500-normal.woff2": {
-    "file": "assets/roboto-latin-ext-500-normal-C_ARlJGk.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-latin-ext-500-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-latin-ext-700-normal.woff": {
-    "file": "assets/roboto-latin-ext-700-normal-BS1OuQqR.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-latin-ext-700-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-latin-ext-700-normal.woff2": {
-    "file": "assets/roboto-latin-ext-700-normal-70GS1MYH.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-latin-ext-700-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-math-300-normal.woff": {
-    "file": "assets/roboto-math-300-normal-BU9CUCyj.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-math-300-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-math-300-normal.woff2": {
-    "file": "assets/roboto-math-300-normal-BMxwzQmU.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-math-300-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-math-400-normal.woff": {
-    "file": "assets/roboto-math-400-normal-rzxYvyVt.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-math-400-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-math-400-normal.woff2": {
-    "file": "assets/roboto-math-400-normal-B3wgz80t.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-math-400-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-math-500-normal.woff": {
-    "file": "assets/roboto-math-500-normal-DaFX-ZC8.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-math-500-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-math-500-normal.woff2": {
-    "file": "assets/roboto-math-500-normal-CFNaIMFC.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-math-500-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-math-700-normal.woff": {
-    "file": "assets/roboto-math-700-normal-pYD1nhov.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-math-700-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-math-700-normal.woff2": {
-    "file": "assets/roboto-math-700-normal-VUAI6Bz2.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-math-700-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-symbols-300-normal.woff": {
-    "file": "assets/roboto-symbols-300-normal-kyoSXp-d.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-symbols-300-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-symbols-300-normal.woff2": {
-    "file": "assets/roboto-symbols-300-normal-BtHl5mYl.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-symbols-300-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-symbols-400-normal.woff": {
-    "file": "assets/roboto-symbols-400-normal-Tzuungub.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-symbols-400-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-symbols-400-normal.woff2": {
-    "file": "assets/roboto-symbols-400-normal-fF1SLJBj.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-symbols-400-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-symbols-500-normal.woff": {
-    "file": "assets/roboto-symbols-500-normal-CAhAe-ik.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-symbols-500-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-symbols-500-normal.woff2": {
-    "file": "assets/roboto-symbols-500-normal-BXFTxrNR.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-symbols-500-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-symbols-700-normal.woff": {
-    "file": "assets/roboto-symbols-700-normal-CuuvBBxy.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-symbols-700-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-symbols-700-normal.woff2": {
-    "file": "assets/roboto-symbols-700-normal-rJi6RjIy.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-symbols-700-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-vietnamese-300-normal.woff": {
-    "file": "assets/roboto-vietnamese-300-normal-DXBG9gdz.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-vietnamese-300-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-vietnamese-300-normal.woff2": {
-    "file": "assets/roboto-vietnamese-300-normal-CNeuLW5X.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-vietnamese-300-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-vietnamese-400-normal.woff": {
-    "file": "assets/roboto-vietnamese-400-normal-DmXaN3yE.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-vietnamese-400-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-vietnamese-400-normal.woff2": {
-    "file": "assets/roboto-vietnamese-400-normal-CDDxGrUb.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-vietnamese-400-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-vietnamese-500-normal.woff": {
-    "file": "assets/roboto-vietnamese-500-normal-DW96CsrR.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-vietnamese-500-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-vietnamese-500-normal.woff2": {
-    "file": "assets/roboto-vietnamese-500-normal-HYpufUYk.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-vietnamese-500-normal.woff2"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-vietnamese-700-normal.woff": {
-    "file": "assets/roboto-vietnamese-700-normal-Dz0HwF-w.woff",
-    "src": "node_modules/@fontsource/roboto/files/roboto-vietnamese-700-normal.woff"
-  },
-  "node_modules/@fontsource/roboto/files/roboto-vietnamese-700-normal.woff2": {
-    "file": "assets/roboto-vietnamese-700-normal-iKxYNAzq.woff2",
-    "src": "node_modules/@fontsource/roboto/files/roboto-vietnamese-700-normal.woff2"
+  "_usePreviousProps-DavtfK7q.js": {
+    "file": "assets/usePreviousProps-DavtfK7q.js",
+    "name": "usePreviousProps",
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "node_modules/@fontsource/inter/files/inter-cyrillic-300-normal.woff": {
+    "file": "assets/inter-cyrillic-300-normal-LR1W_oT8.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-cyrillic-300-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-cyrillic-300-normal.woff2": {
+    "file": "assets/inter-cyrillic-300-normal-BnqRxXuy.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-cyrillic-300-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-cyrillic-400-normal.woff": {
+    "file": "assets/inter-cyrillic-400-normal-HOLc17fK.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-cyrillic-400-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-cyrillic-400-normal.woff2": {
+    "file": "assets/inter-cyrillic-400-normal-obahsSVq.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-cyrillic-400-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-cyrillic-500-normal.woff": {
+    "file": "assets/inter-cyrillic-500-normal-CxZf_p3X.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-cyrillic-500-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-cyrillic-500-normal.woff2": {
+    "file": "assets/inter-cyrillic-500-normal-BasfLYem.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-cyrillic-500-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-cyrillic-600-normal.woff": {
+    "file": "assets/inter-cyrillic-600-normal-4D_pXhcN.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-cyrillic-600-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-cyrillic-600-normal.woff2": {
+    "file": "assets/inter-cyrillic-600-normal-CWCymEST.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-cyrillic-600-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-cyrillic-700-normal.woff": {
+    "file": "assets/inter-cyrillic-700-normal-DrXBdSj3.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-cyrillic-700-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-cyrillic-700-normal.woff2": {
+    "file": "assets/inter-cyrillic-700-normal-CjBOestx.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-cyrillic-700-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-cyrillic-ext-300-normal.woff": {
+    "file": "assets/inter-cyrillic-ext-300-normal-RId2JxDB.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-cyrillic-ext-300-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-cyrillic-ext-300-normal.woff2": {
+    "file": "assets/inter-cyrillic-ext-300-normal-CgCALhwJ.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-cyrillic-ext-300-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-cyrillic-ext-400-normal.woff": {
+    "file": "assets/inter-cyrillic-ext-400-normal-DQukG94-.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-cyrillic-ext-400-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-cyrillic-ext-400-normal.woff2": {
+    "file": "assets/inter-cyrillic-ext-400-normal-BQZuk6qB.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-cyrillic-ext-400-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-cyrillic-ext-500-normal.woff": {
+    "file": "assets/inter-cyrillic-ext-500-normal-BmqWE9Dz.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-cyrillic-ext-500-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-cyrillic-ext-500-normal.woff2": {
+    "file": "assets/inter-cyrillic-ext-500-normal-B0yAr1jD.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-cyrillic-ext-500-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-cyrillic-ext-600-normal.woff": {
+    "file": "assets/inter-cyrillic-ext-600-normal-Bcila6Z-.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-cyrillic-ext-600-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-cyrillic-ext-600-normal.woff2": {
+    "file": "assets/inter-cyrillic-ext-600-normal-Dfes3d0z.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-cyrillic-ext-600-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-cyrillic-ext-700-normal.woff": {
+    "file": "assets/inter-cyrillic-ext-700-normal-LO58E6JB.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-cyrillic-ext-700-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-cyrillic-ext-700-normal.woff2": {
+    "file": "assets/inter-cyrillic-ext-700-normal-BjwYoWNd.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-cyrillic-ext-700-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-greek-300-normal.woff": {
+    "file": "assets/inter-greek-300-normal-BrhSP0vQ.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-greek-300-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-greek-300-normal.woff2": {
+    "file": "assets/inter-greek-300-normal-DmGD3g_f.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-greek-300-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-greek-400-normal.woff": {
+    "file": "assets/inter-greek-400-normal-q2sYcFCs.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-greek-400-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-greek-400-normal.woff2": {
+    "file": "assets/inter-greek-400-normal-B4URO6DV.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-greek-400-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-greek-500-normal.woff": {
+    "file": "assets/inter-greek-500-normal-Xzm54t5V.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-greek-500-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-greek-500-normal.woff2": {
+    "file": "assets/inter-greek-500-normal-BIZE56-Y.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-greek-500-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-greek-600-normal.woff": {
+    "file": "assets/inter-greek-600-normal-BZpKdvQh.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-greek-600-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-greek-600-normal.woff2": {
+    "file": "assets/inter-greek-600-normal-plRanbMR.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-greek-600-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-greek-700-normal.woff": {
+    "file": "assets/inter-greek-700-normal-BUv2fZ6O.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-greek-700-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-greek-700-normal.woff2": {
+    "file": "assets/inter-greek-700-normal-C3JjAnD8.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-greek-700-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-greek-ext-300-normal.woff": {
+    "file": "assets/inter-greek-ext-300-normal-DLbbeei1.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-greek-ext-300-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-greek-ext-300-normal.woff2": {
+    "file": "assets/inter-greek-ext-300-normal-l2DDyC6M.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-greek-ext-300-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-greek-ext-400-normal.woff": {
+    "file": "assets/inter-greek-ext-400-normal-KugGGMne.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-greek-ext-400-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-greek-ext-400-normal.woff2": {
+    "file": "assets/inter-greek-ext-400-normal-DGGRlc-M.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-greek-ext-400-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-greek-ext-500-normal.woff": {
+    "file": "assets/inter-greek-ext-500-normal-2j5mBUwD.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-greek-ext-500-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-greek-ext-500-normal.woff2": {
+    "file": "assets/inter-greek-ext-500-normal-C4iEst2y.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-greek-ext-500-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-greek-ext-600-normal.woff": {
+    "file": "assets/inter-greek-ext-600-normal-B8X0CLgF.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-greek-ext-600-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-greek-ext-600-normal.woff2": {
+    "file": "assets/inter-greek-ext-600-normal-DRtmH8MT.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-greek-ext-600-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-greek-ext-700-normal.woff": {
+    "file": "assets/inter-greek-ext-700-normal-BoQ6DsYi.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-greek-ext-700-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-greek-ext-700-normal.woff2": {
+    "file": "assets/inter-greek-ext-700-normal-qfdV9bQt.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-greek-ext-700-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-latin-300-normal.woff": {
+    "file": "assets/inter-latin-300-normal-i8F0SvXL.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-latin-300-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-latin-300-normal.woff2": {
+    "file": "assets/inter-latin-300-normal-BVlfKGgI.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-latin-300-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-latin-400-normal.woff": {
+    "file": "assets/inter-latin-400-normal-CyCys3Eg.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-latin-400-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2": {
+    "file": "assets/inter-latin-400-normal-C38fXH4l.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-latin-500-normal.woff": {
+    "file": "assets/inter-latin-500-normal-BL9OpVg8.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-latin-500-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2": {
+    "file": "assets/inter-latin-500-normal-Cerq10X2.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-latin-600-normal.woff": {
+    "file": "assets/inter-latin-600-normal-CiBQ2DWP.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-latin-600-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2": {
+    "file": "assets/inter-latin-600-normal-LgqL8muc.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-latin-700-normal.woff": {
+    "file": "assets/inter-latin-700-normal-BLAVimhd.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-latin-700-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2": {
+    "file": "assets/inter-latin-700-normal-Yt3aPRUw.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-latin-ext-300-normal.woff": {
+    "file": "assets/inter-latin-ext-300-normal-Dp1L8vcn.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-latin-ext-300-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-latin-ext-300-normal.woff2": {
+    "file": "assets/inter-latin-ext-300-normal-CPgO9Ksf.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-latin-ext-300-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-latin-ext-400-normal.woff": {
+    "file": "assets/inter-latin-ext-400-normal-77YHD8bZ.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-latin-ext-400-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-latin-ext-400-normal.woff2": {
+    "file": "assets/inter-latin-ext-400-normal-C1nco2VV.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-latin-ext-400-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-latin-ext-500-normal.woff": {
+    "file": "assets/inter-latin-ext-500-normal-BxGbmqWO.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-latin-ext-500-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-latin-ext-500-normal.woff2": {
+    "file": "assets/inter-latin-ext-500-normal-CV4jyFjo.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-latin-ext-500-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-latin-ext-600-normal.woff": {
+    "file": "assets/inter-latin-ext-600-normal-CIVaiw4L.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-latin-ext-600-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-latin-ext-600-normal.woff2": {
+    "file": "assets/inter-latin-ext-600-normal-D2bJ5OIk.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-latin-ext-600-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-latin-ext-700-normal.woff": {
+    "file": "assets/inter-latin-ext-700-normal-TidjK2hL.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-latin-ext-700-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-latin-ext-700-normal.woff2": {
+    "file": "assets/inter-latin-ext-700-normal-Ca8adRJv.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-latin-ext-700-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-vietnamese-300-normal.woff": {
+    "file": "assets/inter-vietnamese-300-normal-DDGmYYdT.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-vietnamese-300-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-vietnamese-300-normal.woff2": {
+    "file": "assets/inter-vietnamese-300-normal-Bdr24Bqb.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-vietnamese-300-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-vietnamese-400-normal.woff": {
+    "file": "assets/inter-vietnamese-400-normal-Bbgyi5SW.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-vietnamese-400-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-vietnamese-400-normal.woff2": {
+    "file": "assets/inter-vietnamese-400-normal-DMkecbls.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-vietnamese-400-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-vietnamese-500-normal.woff": {
+    "file": "assets/inter-vietnamese-500-normal-mJboJaSs.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-vietnamese-500-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-vietnamese-500-normal.woff2": {
+    "file": "assets/inter-vietnamese-500-normal-DOriooB6.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-vietnamese-500-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-vietnamese-600-normal.woff": {
+    "file": "assets/inter-vietnamese-600-normal-BuLX-rYi.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-vietnamese-600-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-vietnamese-600-normal.woff2": {
+    "file": "assets/inter-vietnamese-600-normal-Cc8MFFhd.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-vietnamese-600-normal.woff2"
+  },
+  "node_modules/@fontsource/inter/files/inter-vietnamese-700-normal.woff": {
+    "file": "assets/inter-vietnamese-700-normal-BZaoP0fm.woff",
+    "src": "node_modules/@fontsource/inter/files/inter-vietnamese-700-normal.woff"
+  },
+  "node_modules/@fontsource/inter/files/inter-vietnamese-700-normal.woff2": {
+    "file": "assets/inter-vietnamese-700-normal-DlLaEgI2.woff2",
+    "src": "node_modules/@fontsource/inter/files/inter-vietnamese-700-normal.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-GYCYX2KN.css",
+    "file": "assets/app-1AU97tvS.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
+  "resources/js/Pages/Analytics/Inventory.jsx": {
+    "file": "assets/Inventory-Cy6NweAm.js",
+    "name": "Inventory",
+    "src": "resources/js/Pages/Analytics/Inventory.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_StatCard-CjSHW2_h.js",
+      "_EmptyState-chANGCuY.js",
+      "_Charts-BxRQ9khW.js",
+      "_Refresh-CI4p5Emt.js",
+      "_Download-BWaMSUjn.js",
+      "_DateRange-CMKyWHBt.js",
+      "_TextField-CDuld0po.js",
+      "_Alert-CcnEjiVb.js",
+      "_AccessTime-Bx2des1e.js",
+      "_Grid-BR5_o-YL.js",
+      "_Warning-D4Q5C4xN.js",
+      "_CardContent-CiTM5mhj.js",
+      "_CardHeader-CgLvl55C.js",
+      "_TableContainer-HjEidATc.js",
+      "_TableRow-DgC751_7.js",
+      "_TableCell-BP3TP_aI.js",
+      "_Chip-BrF_o1Vz.js",
+      "_FilterList-C2S-JFgd.js",
+      "_Close-l13Y9WQO.js"
+    ]
+  },
+  "resources/js/Pages/Analytics/Sales.jsx": {
+    "file": "assets/Sales-COFLpKKo.js",
+    "name": "Sales",
+    "src": "resources/js/Pages/Analytics/Sales.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_StatCard-CjSHW2_h.js",
+      "_Charts-BxRQ9khW.js",
+      "_Refresh-CI4p5Emt.js",
+      "_Download-BWaMSUjn.js",
+      "_DateRange-CMKyWHBt.js",
+      "_TextField-CDuld0po.js",
+      "_ButtonGroup-CUbFdZvD.js",
+      "_Grid-BR5_o-YL.js",
+      "_RemoveCircle-DCeOTN9i.js",
+      "_CardContent-CiTM5mhj.js",
+      "_CardHeader-CgLvl55C.js",
+      "_BarChart-BB_X34wT.js",
+      "_Schedule-kWPrd0Wj.js",
+      "_Person-CxFAFChu.js",
+      "_Chip-BrF_o1Vz.js",
+      "_getValidReactChildren-CgDcf45g.js"
+    ]
+  },
+  "resources/js/Pages/AuditLog/Index.jsx": {
+    "file": "assets/Index-Qe-ySb7V.js",
+    "name": "Index",
+    "src": "resources/js/Pages/AuditLog/Index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_StatCard-CjSHW2_h.js",
+      "_EmptyState-chANGCuY.js",
+      "_Charts-BxRQ9khW.js",
+      "_Download-BWaMSUjn.js",
+      "_Grid-BR5_o-YL.js",
+      "_DateRange-CMKyWHBt.js",
+      "_Edit-CwBov9dH.js",
+      "_TextField-CDuld0po.js",
+      "_InputAdornment-BwxOYrCK.js",
+      "_CardContent-CiTM5mhj.js",
+      "_TableContainer-HjEidATc.js",
+      "_TableRow-DgC751_7.js",
+      "_TableCell-BP3TP_aI.js",
+      "_Chip-BrF_o1Vz.js",
+      "_Visibility-BILgjFf9.js",
+      "_TablePagination-DWxvqGVM.js",
+      "_CardHeader-CgLvl55C.js",
+      "_ListItemAvatar-DdLb1h33.js",
+      "_DialogTitle-YisWslj8.js",
+      "_Send-BRaVUMuv.js",
+      "_Cancel-BchlFJ6U.js",
+      "_Delete-C4JnUjqK.js",
+      "_FilterList-C2S-JFgd.js",
+      "_KeyboardArrowRight-DfzUdcek.js"
+    ]
+  },
   "resources/js/Pages/Auth/Login.jsx": {
-    "file": "assets/Login-BFeMsU--.js",
+    "file": "assets/Login-Dkx6587U.js",
     "name": "Login",
     "src": "resources/js/Pages/Auth/Login.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js",
-      "_Container-8zgZzNGg.js",
-      "_TextField-NSCvulBS.js"
+      "_app-CdAkH9DP.js",
+      "_Container-DcqmhPBj.js",
+      "_TextField-CDuld0po.js"
     ]
   },
   "resources/js/Pages/Auth/Register.jsx": {
-    "file": "assets/Register-BYkQGDTx.js",
+    "file": "assets/Register-BU6hBm5l.js",
     "name": "Register",
     "src": "resources/js/Pages/Auth/Register.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_app-0Z2KpI1l.js",
-      "_Container-8zgZzNGg.js",
-      "_TextField-NSCvulBS.js"
+      "_app-CdAkH9DP.js",
+      "_Container-DcqmhPBj.js",
+      "_TextField-CDuld0po.js"
     ]
   },
   "resources/js/Pages/Bills/Create.jsx": {
-    "file": "assets/Create-gZNc4-cK.js",
+    "file": "assets/Create-C_ouJWjH.js",
     "name": "Create",
     "src": "resources/js/Pages/Bills/Create.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_Layout-DQRu1Ffm.js",
-      "_app-0Z2KpI1l.js",
-      "_index-C7P0P4Sa.js",
-      "_ArrowBack-BnrSNxU1.js",
-      "_Grid-O3zKT5UJ.js",
-      "_TextField-NSCvulBS.js",
-      "_CheckBoxOutlineBlank-DdaPN_uO.js",
-      "_Add-D8atyPup.js",
-      "_TableContainer-M4EM3-sb.js",
-      "_TableRow-CnSUDeKE.js",
-      "_TableCell-BQJFIH9i.js",
-      "_InputAdornment-DtkpSnBA.js",
-      "_Delete-CYRmDn9v.js",
-      "_Save-sfi3xPC3.js",
-      "_SwitchBase-IMXq3F-G.js"
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_Warning-D4Q5C4xN.js",
+      "_ClickAwayListener-D8c1aD_d.js",
+      "_TextField-CDuld0po.js",
+      "_InputAdornment-BwxOYrCK.js",
+      "_Clear-BvjZlhAk.js",
+      "_Chip-BrF_o1Vz.js",
+      "_ListItemAvatar-DdLb1h33.js",
+      "_TableContainer-HjEidATc.js",
+      "_TableRow-DgC751_7.js",
+      "_TableCell-BP3TP_aI.js",
+      "_Delete-C4JnUjqK.js",
+      "_ArrowBack-BfZ7CDvX.js",
+      "_FormControlLabel-CZ8HT0Cs.js",
+      "_Switch-DGVhPnwd.js",
+      "_Grid-BR5_o-YL.js",
+      "_Person-CxFAFChu.js",
+      "_ExpandMore-vIzj5Asy.js",
+      "_Collapse-BLX3Syjq.js",
+      "_Save-C_7Q9U14.js",
+      "_Autocomplete-dubXATxu.js",
+      "_Checkbox-D_ByuM62.js",
+      "_CheckBoxOutlineBlank-DjdbTQLr.js",
+      "_SwitchBase-v4iPr3ip.js",
+      "_Close-l13Y9WQO.js",
+      "_usePreviousProps-DavtfK7q.js"
     ]
   },
   "resources/js/Pages/Bills/Edit.jsx": {
-    "file": "assets/Edit-BPwOJF8N.js",
+    "file": "assets/Edit-gDLuCNif.js",
     "name": "Edit",
     "src": "resources/js/Pages/Bills/Edit.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_Layout-DQRu1Ffm.js",
-      "_app-0Z2KpI1l.js",
-      "_index-C7P0P4Sa.js",
-      "_ArrowBack-BnrSNxU1.js",
-      "_Grid-O3zKT5UJ.js",
-      "_TextField-NSCvulBS.js",
-      "_CheckBoxOutlineBlank-DdaPN_uO.js",
-      "_Add-D8atyPup.js",
-      "_TableContainer-M4EM3-sb.js",
-      "_TableRow-CnSUDeKE.js",
-      "_TableCell-BQJFIH9i.js",
-      "_InputAdornment-DtkpSnBA.js",
-      "_Delete-CYRmDn9v.js",
-      "_Save-sfi3xPC3.js",
-      "_SwitchBase-IMXq3F-G.js"
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_ArrowBack-BfZ7CDvX.js",
+      "_Alert-CcnEjiVb.js",
+      "_Grid-BR5_o-YL.js",
+      "_TextField-CDuld0po.js",
+      "_Autocomplete-dubXATxu.js",
+      "_Chip-BrF_o1Vz.js",
+      "_Checkbox-D_ByuM62.js",
+      "_CheckBoxOutlineBlank-DjdbTQLr.js",
+      "_TableContainer-HjEidATc.js",
+      "_TableRow-DgC751_7.js",
+      "_TableCell-BP3TP_aI.js",
+      "_InputAdornment-BwxOYrCK.js",
+      "_Delete-C4JnUjqK.js",
+      "_Save-C_7Q9U14.js",
+      "_Close-l13Y9WQO.js",
+      "_usePreviousProps-DavtfK7q.js",
+      "_SwitchBase-v4iPr3ip.js"
     ]
   },
   "resources/js/Pages/Bills/Index.jsx": {
-    "file": "assets/Index-brEFAsl8.js",
+    "file": "assets/Index-QrwNoDFp.js",
     "name": "Index",
     "src": "resources/js/Pages/Bills/Index.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_Layout-DQRu1Ffm.js",
-      "_app-0Z2KpI1l.js",
-      "_Add-D8atyPup.js",
-      "_TextField-NSCvulBS.js",
-      "_InputAdornment-DtkpSnBA.js",
-      "_Search-BAgLG2AU.js",
-      "_TableContainer-M4EM3-sb.js",
-      "_TableRow-CnSUDeKE.js",
-      "_TableCell-BQJFIH9i.js",
-      "_PictureAsPdf-CCwRW6tS.js",
-      "_DialogContent-D1aNQfGN.js"
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_EmptyState-chANGCuY.js",
+      "_FilterBar-C0fBbb2K.js",
+      "_Chip-BrF_o1Vz.js",
+      "_DataGrid-COmlJ6N7.js",
+      "_Visibility-BILgjFf9.js",
+      "_PictureAsPdf-Cax_hLq-.js",
+      "_FilterList-C2S-JFgd.js",
+      "_TextField-CDuld0po.js",
+      "_InputAdornment-BwxOYrCK.js",
+      "_Clear-BvjZlhAk.js",
+      "_ExpandMore-vIzj5Asy.js",
+      "_Collapse-BLX3Syjq.js",
+      "_Grid-BR5_o-YL.js",
+      "_DialogTitle-YisWslj8.js",
+      "_Badge-BUHywOej.js",
+      "_usePreviousProps-DavtfK7q.js",
+      "_Delete-C4JnUjqK.js",
+      "_index-Gl8RsDBU.js",
+      "_Autocomplete-dubXATxu.js",
+      "_Close-l13Y9WQO.js",
+      "_ClickAwayListener-D8c1aD_d.js",
+      "_Checkbox-D_ByuM62.js",
+      "_SwitchBase-v4iPr3ip.js",
+      "_FormControlLabel-CZ8HT0Cs.js",
+      "_TablePagination-DWxvqGVM.js",
+      "_KeyboardArrowRight-DfzUdcek.js",
+      "_TableCell-BP3TP_aI.js",
+      "_LinearProgress-BHZEwKVf.js"
     ]
   },
   "resources/js/Pages/Bills/Show.jsx": {
-    "file": "assets/Show-BcynY4Gm.js",
+    "file": "assets/Show-CPmAR9Zl.js",
     "name": "Show",
     "src": "resources/js/Pages/Bills/Show.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_Layout-DQRu1Ffm.js",
-      "_app-0Z2KpI1l.js",
-      "_ConfirmDialog-DfQDxvSV.js",
-      "_ArrowBack-BnrSNxU1.js",
-      "_PictureAsPdf-CCwRW6tS.js",
-      "_Grid-O3zKT5UJ.js",
-      "_TableRow-CnSUDeKE.js",
-      "_TableCell-BQJFIH9i.js",
-      "_DialogContent-D1aNQfGN.js",
-      "_getValidReactChildren-BRWoYq41.js",
-      "_Warning-C6-2R4Dj.js"
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_ConfirmDialog-DMfhMbWL.js",
+      "_ArrowBack-BfZ7CDvX.js",
+      "_Edit-CwBov9dH.js",
+      "_Cancel-BchlFJ6U.js",
+      "_PictureAsPdf-Cax_hLq-.js",
+      "_Grid-BR5_o-YL.js",
+      "_Chip-BrF_o1Vz.js",
+      "_TableRow-DgC751_7.js",
+      "_TableCell-BP3TP_aI.js",
+      "_DialogTitle-YisWslj8.js",
+      "_Close-BRqnPnut.js",
+      "_ToggleButtonGroup-DfQrYhSV.js",
+      "_CheckCircle-B1HoWYsw.js",
+      "_Info-NPSlcj5z.js",
+      "_Delete-C4JnUjqK.js",
+      "_Error-CuHQMt6U.js",
+      "_Warning-D4Q5C4xN.js",
+      "_getValidReactChildren-CgDcf45g.js"
     ]
   },
   "resources/js/Pages/Categories/Index.jsx": {
-    "file": "assets/Index-BDsnWf5l.js",
+    "file": "assets/Index-sAz48wFe.js",
     "name": "Index",
     "src": "resources/js/Pages/Categories/Index.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_Layout-DQRu1Ffm.js",
-      "_app-0Z2KpI1l.js",
-      "_ConfirmDialog-DfQDxvSV.js",
-      "_Add-D8atyPup.js",
-      "_TableContainer-M4EM3-sb.js",
-      "_TableRow-CnSUDeKE.js",
-      "_TableCell-BQJFIH9i.js",
-      "_Delete-CYRmDn9v.js",
-      "_DialogContent-D1aNQfGN.js",
-      "_TextField-NSCvulBS.js",
-      "_Warning-C6-2R4Dj.js"
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_EmptyState-chANGCuY.js",
+      "_ConfirmDialog-DMfhMbWL.js",
+      "_Chip-BrF_o1Vz.js",
+      "_Edit-CwBov9dH.js",
+      "_Delete-C4JnUjqK.js",
+      "_DialogTitle-YisWslj8.js",
+      "_TextField-CDuld0po.js",
+      "_DataGrid-COmlJ6N7.js",
+      "_FilterList-C2S-JFgd.js",
+      "_CheckCircle-B1HoWYsw.js",
+      "_Info-NPSlcj5z.js",
+      "_Error-CuHQMt6U.js",
+      "_Warning-D4Q5C4xN.js",
+      "_index-Gl8RsDBU.js",
+      "_Autocomplete-dubXATxu.js",
+      "_Close-l13Y9WQO.js",
+      "_usePreviousProps-DavtfK7q.js",
+      "_ClickAwayListener-D8c1aD_d.js",
+      "_InputAdornment-BwxOYrCK.js",
+      "_Checkbox-D_ByuM62.js",
+      "_SwitchBase-v4iPr3ip.js",
+      "_Badge-BUHywOej.js",
+      "_FormControlLabel-CZ8HT0Cs.js",
+      "_TablePagination-DWxvqGVM.js",
+      "_KeyboardArrowRight-DfzUdcek.js",
+      "_TableCell-BP3TP_aI.js",
+      "_LinearProgress-BHZEwKVf.js"
     ]
   },
   "resources/js/Pages/Dashboard.jsx": {
-    "file": "assets/Dashboard-BHnHC6IH.js",
+    "file": "assets/Dashboard-BVsX59H2.js",
     "name": "Dashboard",
     "src": "resources/js/Pages/Dashboard.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_Layout-DQRu1Ffm.js",
-      "_app-0Z2KpI1l.js",
-      "_Add-D8atyPup.js",
-      "_Grid-O3zKT5UJ.js",
-      "_Warning-C6-2R4Dj.js"
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_EmptyState-chANGCuY.js",
+      "_DateRange-CMKyWHBt.js",
+      "_ButtonGroup-CUbFdZvD.js",
+      "_Chip-BrF_o1Vz.js",
+      "_FilterList-C2S-JFgd.js",
+      "_ExpandMore-vIzj5Asy.js",
+      "_Refresh-CI4p5Emt.js",
+      "_Clear-BvjZlhAk.js",
+      "_Collapse-BLX3Syjq.js",
+      "_Grid-BR5_o-YL.js",
+      "_TextField-CDuld0po.js",
+      "_StatCard-CjSHW2_h.js",
+      "_Warning-D4Q5C4xN.js",
+      "_CardContent-CiTM5mhj.js",
+      "_CheckCircle-B1HoWYsw.js",
+      "_PriorityHigh-BkCWAnjl.js",
+      "_ToggleButtonGroup-DfQrYhSV.js",
+      "_index-Gl8RsDBU.js",
+      "_KeyboardArrowRight-DfzUdcek.js",
+      "_getValidReactChildren-CgDcf45g.js"
+    ]
+  },
+  "resources/js/Pages/Findings/Index.jsx": {
+    "file": "assets/Index-DJVTP7bO.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Findings/Index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_StatCard-CjSHW2_h.js",
+      "_EmptyState-chANGCuY.js",
+      "_Charts-BxRQ9khW.js",
+      "_Refresh-CI4p5Emt.js",
+      "_Grid-BR5_o-YL.js",
+      "_Warning-D4Q5C4xN.js",
+      "_Error-CuHQMt6U.js",
+      "_Timeline-CBk5IFne.js",
+      "_TextField-CDuld0po.js",
+      "_InputAdornment-BwxOYrCK.js",
+      "_CardContent-CiTM5mhj.js",
+      "_TableContainer-HjEidATc.js",
+      "_TableRow-DgC751_7.js",
+      "_TableCell-BP3TP_aI.js",
+      "_Checkbox-D_ByuM62.js",
+      "_CheckCircle-B1HoWYsw.js",
+      "_Chip-BrF_o1Vz.js",
+      "_ExpandMore-vIzj5Asy.js",
+      "_Visibility-BILgjFf9.js",
+      "_Collapse-BLX3Syjq.js",
+      "_TablePagination-DWxvqGVM.js",
+      "_CardHeader-CgLvl55C.js",
+      "_DialogTitle-YisWslj8.js",
+      "_Close-BRqnPnut.js",
+      "_RemoveCircle-DCeOTN9i.js",
+      "_FilterList-C2S-JFgd.js",
+      "_SwitchBase-v4iPr3ip.js",
+      "_KeyboardArrowRight-DfzUdcek.js"
+    ]
+  },
+  "resources/js/Pages/Notifications/Index.jsx": {
+    "file": "assets/Index--dpS7Zo9.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Notifications/Index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_StatCard-CjSHW2_h.js",
+      "_EmptyState-chANGCuY.js",
+      "_Refresh-CI4p5Emt.js",
+      "_Grid-BR5_o-YL.js",
+      "_NotificationsActive-CaZy0OdR.js",
+      "_Schedule-kWPrd0Wj.js",
+      "_Error-CuHQMt6U.js",
+      "_TextField-CDuld0po.js",
+      "_InputAdornment-BwxOYrCK.js",
+      "_FilterList-C2S-JFgd.js",
+      "_TableContainer-HjEidATc.js",
+      "_TableRow-DgC751_7.js",
+      "_TableCell-BP3TP_aI.js",
+      "_Badge-BUHywOej.js",
+      "_Chip-BrF_o1Vz.js",
+      "_Delete-C4JnUjqK.js",
+      "_TablePagination-DWxvqGVM.js",
+      "_PriorityHigh-BkCWAnjl.js",
+      "_CardContent-CiTM5mhj.js",
+      "_usePreviousProps-DavtfK7q.js",
+      "_KeyboardArrowRight-DfzUdcek.js"
+    ]
+  },
+  "resources/js/Pages/Ops/Status.jsx": {
+    "file": "assets/Status-XFKGGVpP.js",
+    "name": "Status",
+    "src": "resources/js/Pages/Ops/Status.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_StatCard-CjSHW2_h.js",
+      "_EmptyState-chANGCuY.js",
+      "_Refresh-CI4p5Emt.js",
+      "_Grid-BR5_o-YL.js",
+      "_Schedule-kWPrd0Wj.js",
+      "_CheckCircle-B1HoWYsw.js",
+      "_Error-CuHQMt6U.js",
+      "_NotificationsActive-CaZy0OdR.js",
+      "_CardContent-CiTM5mhj.js",
+      "_CardHeader-CgLvl55C.js",
+      "_Alert-CcnEjiVb.js",
+      "_AccessTime-Bx2des1e.js",
+      "_TableContainer-HjEidATc.js",
+      "_TableRow-DgC751_7.js",
+      "_TableCell-BP3TP_aI.js",
+      "_Close-BRqnPnut.js",
+      "_Chip-BrF_o1Vz.js",
+      "_Timeline-CBk5IFne.js",
+      "_ExpandMore-vIzj5Asy.js",
+      "_Warning-D4Q5C4xN.js",
+      "_FilterList-C2S-JFgd.js",
+      "_Close-l13Y9WQO.js"
     ]
   },
   "resources/js/Pages/Products/Create.jsx": {
-    "file": "assets/Create-BUa7YRJu.js",
+    "file": "assets/Create-CLhgKvJ9.js",
     "name": "Create",
     "src": "resources/js/Pages/Products/Create.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_Layout-DQRu1Ffm.js",
-      "_app-0Z2KpI1l.js",
-      "_ArrowBack-BnrSNxU1.js",
-      "_Grid-O3zKT5UJ.js",
-      "_CloudUpload-DznlwJ0c.js",
-      "_TextField-NSCvulBS.js",
-      "_InputAdornment-DtkpSnBA.js",
-      "_FormControlLabel-LS7wJhWP.js",
-      "_Switch-CuRryv0i.js",
-      "_Save-sfi3xPC3.js",
-      "_SwitchBase-IMXq3F-G.js"
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_ArrowBack-BfZ7CDvX.js",
+      "_Grid-BR5_o-YL.js",
+      "_CloudUpload-B1CtYeE9.js",
+      "_TextField-CDuld0po.js",
+      "_Chip-BrF_o1Vz.js",
+      "_InputAdornment-BwxOYrCK.js",
+      "_FormControlLabel-CZ8HT0Cs.js",
+      "_Switch-DGVhPnwd.js",
+      "_Save-C_7Q9U14.js",
+      "_SwitchBase-v4iPr3ip.js"
     ]
   },
   "resources/js/Pages/Products/Edit.jsx": {
-    "file": "assets/Edit-3bOyiy1S.js",
+    "file": "assets/Edit-BRqONXc-.js",
     "name": "Edit",
     "src": "resources/js/Pages/Products/Edit.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_Layout-DQRu1Ffm.js",
-      "_app-0Z2KpI1l.js",
-      "_ArrowBack-BnrSNxU1.js",
-      "_Grid-O3zKT5UJ.js",
-      "_CloudUpload-DznlwJ0c.js",
-      "_TextField-NSCvulBS.js",
-      "_InputAdornment-DtkpSnBA.js",
-      "_FormControlLabel-LS7wJhWP.js",
-      "_Switch-CuRryv0i.js",
-      "_Save-sfi3xPC3.js",
-      "_SwitchBase-IMXq3F-G.js"
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_ArrowBack-BfZ7CDvX.js",
+      "_Grid-BR5_o-YL.js",
+      "_CloudUpload-B1CtYeE9.js",
+      "_TextField-CDuld0po.js",
+      "_Chip-BrF_o1Vz.js",
+      "_InputAdornment-BwxOYrCK.js",
+      "_FormControlLabel-CZ8HT0Cs.js",
+      "_Switch-DGVhPnwd.js",
+      "_Save-C_7Q9U14.js",
+      "_SwitchBase-v4iPr3ip.js"
     ]
   },
   "resources/js/Pages/Products/Index.jsx": {
-    "file": "assets/Index-CLB-oYve.js",
+    "file": "assets/Index-BrkK9e9x.js",
     "name": "Index",
     "src": "resources/js/Pages/Products/Index.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_Layout-DQRu1Ffm.js",
-      "_app-0Z2KpI1l.js",
-      "_ConfirmDialog-DfQDxvSV.js",
-      "_getValidReactChildren-BRWoYq41.js",
-      "_Add-D8atyPup.js",
-      "_Delete-CYRmDn9v.js",
-      "_Search-BAgLG2AU.js",
-      "_TextField-NSCvulBS.js",
-      "_index-C7P0P4Sa.js",
-      "_InputAdornment-DtkpSnBA.js",
-      "_FormControlLabel-LS7wJhWP.js",
-      "_Grid-O3zKT5UJ.js",
-      "_DialogContent-D1aNQfGN.js",
-      "_Warning-C6-2R4Dj.js",
-      "_TableCell-BQJFIH9i.js",
-      "_SwitchBase-IMXq3F-G.js"
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_FilterBar-C0fBbb2K.js",
+      "_ConfirmDialog-DMfhMbWL.js",
+      "_Chip-BrF_o1Vz.js",
+      "_ButtonGroup-CUbFdZvD.js",
+      "_RemoveCircle-DCeOTN9i.js",
+      "_Edit-CwBov9dH.js",
+      "_Delete-C4JnUjqK.js",
+      "_DialogTitle-YisWslj8.js",
+      "_TextField-CDuld0po.js",
+      "_DataGrid-COmlJ6N7.js",
+      "_InputAdornment-BwxOYrCK.js",
+      "_Clear-BvjZlhAk.js",
+      "_ExpandMore-vIzj5Asy.js",
+      "_FilterList-C2S-JFgd.js",
+      "_Collapse-BLX3Syjq.js",
+      "_Grid-BR5_o-YL.js",
+      "_Badge-BUHywOej.js",
+      "_usePreviousProps-DavtfK7q.js",
+      "_CheckCircle-B1HoWYsw.js",
+      "_Info-NPSlcj5z.js",
+      "_Error-CuHQMt6U.js",
+      "_Warning-D4Q5C4xN.js",
+      "_getValidReactChildren-CgDcf45g.js",
+      "_index-Gl8RsDBU.js",
+      "_Autocomplete-dubXATxu.js",
+      "_Close-l13Y9WQO.js",
+      "_ClickAwayListener-D8c1aD_d.js",
+      "_Checkbox-D_ByuM62.js",
+      "_SwitchBase-v4iPr3ip.js",
+      "_FormControlLabel-CZ8HT0Cs.js",
+      "_TablePagination-DWxvqGVM.js",
+      "_KeyboardArrowRight-DfzUdcek.js",
+      "_TableCell-BP3TP_aI.js",
+      "_LinearProgress-BHZEwKVf.js"
+    ]
+  },
+  "resources/js/Pages/Purchases/Create.jsx": {
+    "file": "assets/Create-DGm4fV_k.js",
+    "name": "Create",
+    "src": "resources/js/Pages/Purchases/Create.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_ArrowBack-BfZ7CDvX.js",
+      "_Grid-BR5_o-YL.js",
+      "_Autocomplete-dubXATxu.js",
+      "_TextField-CDuld0po.js",
+      "_TableContainer-HjEidATc.js",
+      "_TableRow-DgC751_7.js",
+      "_TableCell-BP3TP_aI.js",
+      "_InputAdornment-BwxOYrCK.js",
+      "_Delete-C4JnUjqK.js",
+      "_Save-C_7Q9U14.js",
+      "_Close-l13Y9WQO.js",
+      "_usePreviousProps-DavtfK7q.js",
+      "_Chip-BrF_o1Vz.js"
+    ]
+  },
+  "resources/js/Pages/Purchases/Edit.jsx": {
+    "file": "assets/Edit-DvW-i3GU.js",
+    "name": "Edit",
+    "src": "resources/js/Pages/Purchases/Edit.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_ArrowBack-BfZ7CDvX.js",
+      "_Grid-BR5_o-YL.js",
+      "_Autocomplete-dubXATxu.js",
+      "_TextField-CDuld0po.js",
+      "_TableContainer-HjEidATc.js",
+      "_TableRow-DgC751_7.js",
+      "_TableCell-BP3TP_aI.js",
+      "_Delete-C4JnUjqK.js",
+      "_Save-C_7Q9U14.js",
+      "_Close-l13Y9WQO.js",
+      "_usePreviousProps-DavtfK7q.js",
+      "_Chip-BrF_o1Vz.js"
+    ]
+  },
+  "resources/js/Pages/Purchases/Index.jsx": {
+    "file": "assets/Index-BIXBaJp2.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Purchases/Index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_EmptyState-chANGCuY.js",
+      "_FilterBar-C0fBbb2K.js",
+      "_Chip-BrF_o1Vz.js",
+      "_Visibility-BILgjFf9.js",
+      "_PictureAsPdf-Cax_hLq-.js",
+      "_Grid-BR5_o-YL.js",
+      "_CardContent-CiTM5mhj.js",
+      "_DataGrid-COmlJ6N7.js",
+      "_FilterList-C2S-JFgd.js",
+      "_TextField-CDuld0po.js",
+      "_InputAdornment-BwxOYrCK.js",
+      "_Clear-BvjZlhAk.js",
+      "_ExpandMore-vIzj5Asy.js",
+      "_Collapse-BLX3Syjq.js",
+      "_DialogTitle-YisWslj8.js",
+      "_Badge-BUHywOej.js",
+      "_usePreviousProps-DavtfK7q.js",
+      "_Delete-C4JnUjqK.js",
+      "_index-Gl8RsDBU.js",
+      "_Autocomplete-dubXATxu.js",
+      "_Close-l13Y9WQO.js",
+      "_ClickAwayListener-D8c1aD_d.js",
+      "_Checkbox-D_ByuM62.js",
+      "_SwitchBase-v4iPr3ip.js",
+      "_FormControlLabel-CZ8HT0Cs.js",
+      "_TablePagination-DWxvqGVM.js",
+      "_KeyboardArrowRight-DfzUdcek.js",
+      "_TableCell-BP3TP_aI.js",
+      "_LinearProgress-BHZEwKVf.js"
+    ]
+  },
+  "resources/js/Pages/Purchases/Receive.jsx": {
+    "file": "assets/Receive-Dz2_UHFL.js",
+    "name": "Receive",
+    "src": "resources/js/Pages/Purchases/Receive.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_ArrowBack-BfZ7CDvX.js",
+      "_LinearProgress-BHZEwKVf.js",
+      "_Alert-CcnEjiVb.js",
+      "_TableContainer-HjEidATc.js",
+      "_TableRow-DgC751_7.js",
+      "_TableCell-BP3TP_aI.js",
+      "_Chip-BrF_o1Vz.js",
+      "_CheckCircle-B1HoWYsw.js",
+      "_TextField-CDuld0po.js",
+      "_InputAdornment-BwxOYrCK.js",
+      "_Warning-D4Q5C4xN.js",
+      "_Close-l13Y9WQO.js"
+    ]
+  },
+  "resources/js/Pages/Purchases/Show.jsx": {
+    "file": "assets/Show-uUj82TAH.js",
+    "name": "Show",
+    "src": "resources/js/Pages/Purchases/Show.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_ArrowBack-BfZ7CDvX.js",
+      "_Chip-BrF_o1Vz.js",
+      "_Edit-CwBov9dH.js",
+      "_Send-BRaVUMuv.js",
+      "_PictureAsPdf-Cax_hLq-.js",
+      "_Cancel-BchlFJ6U.js",
+      "_Grid-BR5_o-YL.js",
+      "_LinearProgress-BHZEwKVf.js",
+      "_TableContainer-HjEidATc.js",
+      "_TableRow-DgC751_7.js",
+      "_TableCell-BP3TP_aI.js",
+      "_CheckCircle-B1HoWYsw.js",
+      "_DialogTitle-YisWslj8.js"
+    ]
+  },
+  "resources/js/Pages/Replenishment/Index.jsx": {
+    "file": "assets/Index-CTQ_XXCS.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Replenishment/Index.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx",
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_EmptyState-chANGCuY.js",
+      "_FilterBar-C0fBbb2K.js",
+      "_Chip-BrF_o1Vz.js",
+      "_LinearProgress-BHZEwKVf.js",
+      "_BarChart-BB_X34wT.js",
+      "_Info-NPSlcj5z.js",
+      "_Refresh-CI4p5Emt.js",
+      "_Grid-BR5_o-YL.js",
+      "_CardContent-CiTM5mhj.js",
+      "_Cancel-BchlFJ6U.js",
+      "_DialogTitle-YisWslj8.js",
+      "_Close-BRqnPnut.js",
+      "_DataGrid-COmlJ6N7.js",
+      "_FilterList-C2S-JFgd.js",
+      "_TextField-CDuld0po.js",
+      "_InputAdornment-BwxOYrCK.js",
+      "_Clear-BvjZlhAk.js",
+      "_ExpandMore-vIzj5Asy.js",
+      "_Collapse-BLX3Syjq.js",
+      "_Badge-BUHywOej.js",
+      "_usePreviousProps-DavtfK7q.js",
+      "_Delete-C4JnUjqK.js",
+      "_index-Gl8RsDBU.js",
+      "_Autocomplete-dubXATxu.js",
+      "_Close-l13Y9WQO.js",
+      "_ClickAwayListener-D8c1aD_d.js",
+      "_Checkbox-D_ByuM62.js",
+      "_SwitchBase-v4iPr3ip.js",
+      "_FormControlLabel-CZ8HT0Cs.js",
+      "_TablePagination-DWxvqGVM.js",
+      "_KeyboardArrowRight-DfzUdcek.js",
+      "_TableCell-BP3TP_aI.js"
     ]
   },
   "resources/js/Pages/Settings/Index.jsx": {
-    "file": "assets/Index-BA_xb6XU.js",
+    "file": "assets/Index-CfdLeB-X.js",
     "name": "Index",
     "src": "resources/js/Pages/Settings/Index.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_Layout-DQRu1Ffm.js",
-      "_app-0Z2KpI1l.js",
-      "_Grid-O3zKT5UJ.js",
-      "_TextField-NSCvulBS.js",
-      "_Save-sfi3xPC3.js"
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_Grid-BR5_o-YL.js",
+      "_TextField-CDuld0po.js",
+      "_Save-C_7Q9U14.js"
     ]
   },
   "resources/js/Pages/Suppliers/Index.jsx": {
-    "file": "assets/Index-CfPJSsw_.js",
+    "file": "assets/Index-boKa0Ayk.js",
     "name": "Index",
     "src": "resources/js/Pages/Suppliers/Index.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_Layout-DQRu1Ffm.js",
-      "_app-0Z2KpI1l.js",
-      "_ConfirmDialog-DfQDxvSV.js",
-      "_Add-D8atyPup.js",
-      "_TableContainer-M4EM3-sb.js",
-      "_TableRow-CnSUDeKE.js",
-      "_TableCell-BQJFIH9i.js",
-      "_Delete-CYRmDn9v.js",
-      "_DialogContent-D1aNQfGN.js",
-      "_TextField-NSCvulBS.js",
-      "_FormControlLabel-LS7wJhWP.js",
-      "_Switch-CuRryv0i.js",
-      "_Warning-C6-2R4Dj.js",
-      "_SwitchBase-IMXq3F-G.js"
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_EmptyState-chANGCuY.js",
+      "_ConfirmDialog-DMfhMbWL.js",
+      "_Chip-BrF_o1Vz.js",
+      "_Edit-CwBov9dH.js",
+      "_Delete-C4JnUjqK.js",
+      "_DialogTitle-YisWslj8.js",
+      "_TextField-CDuld0po.js",
+      "_FormControlLabel-CZ8HT0Cs.js",
+      "_Switch-DGVhPnwd.js",
+      "_DataGrid-COmlJ6N7.js",
+      "_FilterList-C2S-JFgd.js",
+      "_CheckCircle-B1HoWYsw.js",
+      "_Info-NPSlcj5z.js",
+      "_Error-CuHQMt6U.js",
+      "_Warning-D4Q5C4xN.js",
+      "_SwitchBase-v4iPr3ip.js",
+      "_index-Gl8RsDBU.js",
+      "_Autocomplete-dubXATxu.js",
+      "_Close-l13Y9WQO.js",
+      "_usePreviousProps-DavtfK7q.js",
+      "_ClickAwayListener-D8c1aD_d.js",
+      "_InputAdornment-BwxOYrCK.js",
+      "_Checkbox-D_ByuM62.js",
+      "_Badge-BUHywOej.js",
+      "_TablePagination-DWxvqGVM.js",
+      "_KeyboardArrowRight-DfzUdcek.js",
+      "_TableCell-BP3TP_aI.js",
+      "_LinearProgress-BHZEwKVf.js"
     ]
   },
   "resources/js/Pages/Workers/Index.jsx": {
-    "file": "assets/Index-z023nc1W.js",
+    "file": "assets/Index-Ncey-379.js",
     "name": "Index",
     "src": "resources/js/Pages/Workers/Index.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_Layout-DQRu1Ffm.js",
-      "_app-0Z2KpI1l.js",
-      "_ConfirmDialog-DfQDxvSV.js",
-      "_Add-D8atyPup.js",
-      "_TextField-NSCvulBS.js",
-      "_InputAdornment-DtkpSnBA.js",
-      "_Search-BAgLG2AU.js",
-      "_TableContainer-M4EM3-sb.js",
-      "_TableRow-CnSUDeKE.js",
-      "_TableCell-BQJFIH9i.js",
-      "_Delete-CYRmDn9v.js",
-      "_DialogContent-D1aNQfGN.js",
-      "_FormControlLabel-LS7wJhWP.js",
-      "_Switch-CuRryv0i.js",
-      "_Warning-C6-2R4Dj.js",
-      "_SwitchBase-IMXq3F-G.js"
+      "_AppShell-BhxxZHCM.js",
+      "_app-CdAkH9DP.js",
+      "_EmptyState-chANGCuY.js",
+      "_FilterBar-C0fBbb2K.js",
+      "_ConfirmDialog-DMfhMbWL.js",
+      "_Chip-BrF_o1Vz.js",
+      "_Edit-CwBov9dH.js",
+      "_Delete-C4JnUjqK.js",
+      "_Person-CxFAFChu.js",
+      "_DialogTitle-YisWslj8.js",
+      "_TextField-CDuld0po.js",
+      "_FormControlLabel-CZ8HT0Cs.js",
+      "_Switch-DGVhPnwd.js",
+      "_DataGrid-COmlJ6N7.js",
+      "_FilterList-C2S-JFgd.js",
+      "_InputAdornment-BwxOYrCK.js",
+      "_Clear-BvjZlhAk.js",
+      "_ExpandMore-vIzj5Asy.js",
+      "_Collapse-BLX3Syjq.js",
+      "_Grid-BR5_o-YL.js",
+      "_Badge-BUHywOej.js",
+      "_usePreviousProps-DavtfK7q.js",
+      "_CheckCircle-B1HoWYsw.js",
+      "_Info-NPSlcj5z.js",
+      "_Error-CuHQMt6U.js",
+      "_Warning-D4Q5C4xN.js",
+      "_SwitchBase-v4iPr3ip.js",
+      "_index-Gl8RsDBU.js",
+      "_Autocomplete-dubXATxu.js",
+      "_Close-l13Y9WQO.js",
+      "_ClickAwayListener-D8c1aD_d.js",
+      "_Checkbox-D_ByuM62.js",
+      "_TablePagination-DWxvqGVM.js",
+      "_KeyboardArrowRight-DfzUdcek.js",
+      "_TableCell-BP3TP_aI.js",
+      "_LinearProgress-BHZEwKVf.js"
     ]
   },
   "resources/js/app.jsx": {
-    "file": "assets/app-rxeNZGCw.js",
+    "file": "assets/app-BZNp-1Wc.js",
     "name": "app",
     "src": "resources/js/app.jsx",
     "isEntry": true,
     "dynamicImports": [
+      "resources/js/Pages/Analytics/Inventory.jsx",
+      "resources/js/Pages/Analytics/Sales.jsx",
+      "resources/js/Pages/AuditLog/Index.jsx",
       "resources/js/Pages/Auth/Login.jsx",
       "resources/js/Pages/Auth/Register.jsx",
       "resources/js/Pages/Bills/Create.jsx",
@@ -808,89 +1696,96 @@
       "resources/js/Pages/Bills/Show.jsx",
       "resources/js/Pages/Categories/Index.jsx",
       "resources/js/Pages/Dashboard.jsx",
+      "resources/js/Pages/Findings/Index.jsx",
+      "resources/js/Pages/Notifications/Index.jsx",
+      "resources/js/Pages/Ops/Status.jsx",
       "resources/js/Pages/Products/Create.jsx",
       "resources/js/Pages/Products/Edit.jsx",
       "resources/js/Pages/Products/Index.jsx",
+      "resources/js/Pages/Purchases/Create.jsx",
+      "resources/js/Pages/Purchases/Edit.jsx",
+      "resources/js/Pages/Purchases/Index.jsx",
+      "resources/js/Pages/Purchases/Receive.jsx",
+      "resources/js/Pages/Purchases/Show.jsx",
+      "resources/js/Pages/Replenishment/Index.jsx",
       "resources/js/Pages/Settings/Index.jsx",
       "resources/js/Pages/Suppliers/Index.jsx",
       "resources/js/Pages/Workers/Index.jsx"
     ],
     "css": [
-      "assets/app-C6D8Q6OS.css"
+      "assets/app-CwFwzpFN.css"
     ],
     "assets": [
-      "assets/roboto-cyrillic-ext-300-normal-CUPJdUZp.woff2",
-      "assets/roboto-cyrillic-ext-300-normal-DQdcc27I.woff",
-      "assets/roboto-cyrillic-300-normal-BoeCr7ev.woff2",
-      "assets/roboto-cyrillic-300-normal-D568C3aM.woff",
-      "assets/roboto-greek-ext-300-normal-BsUvD7IV.woff2",
-      "assets/roboto-greek-ext-300-normal-4A1Qb8eJ.woff",
-      "assets/roboto-greek-300-normal-Cnub06j7.woff2",
-      "assets/roboto-greek-300-normal-CTj2MfNN.woff",
-      "assets/roboto-math-300-normal-BMxwzQmU.woff2",
-      "assets/roboto-math-300-normal-BU9CUCyj.woff",
-      "assets/roboto-symbols-300-normal-BtHl5mYl.woff2",
-      "assets/roboto-symbols-300-normal-kyoSXp-d.woff",
-      "assets/roboto-vietnamese-300-normal-CNeuLW5X.woff2",
-      "assets/roboto-vietnamese-300-normal-DXBG9gdz.woff",
-      "assets/roboto-latin-ext-300-normal-BOz0oSmX.woff2",
-      "assets/roboto-latin-ext-300-normal-Tcf9y2tg.woff",
-      "assets/roboto-latin-300-normal-CztWkFGs.woff2",
-      "assets/roboto-latin-300-normal-KByCBsad.woff",
-      "assets/roboto-cyrillic-ext-400-normal-DzMWdK87.woff2",
-      "assets/roboto-cyrillic-ext-400-normal-DtZHuW6i.woff",
-      "assets/roboto-cyrillic-400-normal-DAIM1_dR.woff2",
-      "assets/roboto-cyrillic-400-normal-DZJji7Rx.woff",
-      "assets/roboto-greek-ext-400-normal-LMQUMKXc.woff2",
-      "assets/roboto-greek-ext-400-normal-E4A3zSa0.woff",
-      "assets/roboto-greek-400-normal-jFM2czAU.woff2",
-      "assets/roboto-greek-400-normal-CcizSnRP.woff",
-      "assets/roboto-math-400-normal-B3wgz80t.woff2",
-      "assets/roboto-math-400-normal-rzxYvyVt.woff",
-      "assets/roboto-symbols-400-normal-fF1SLJBj.woff2",
-      "assets/roboto-symbols-400-normal-Tzuungub.woff",
-      "assets/roboto-vietnamese-400-normal-CDDxGrUb.woff2",
-      "assets/roboto-vietnamese-400-normal-DmXaN3yE.woff",
-      "assets/roboto-latin-ext-400-normal-ZYmyxeOy.woff2",
-      "assets/roboto-latin-ext-400-normal-eTRLN0Nt.woff",
-      "assets/roboto-latin-400-normal-CNwBRw8h.woff2",
-      "assets/roboto-latin-400-normal-068yxgMN.woff",
-      "assets/roboto-cyrillic-ext-500-normal-B7rQpwPu.woff2",
-      "assets/roboto-cyrillic-ext-500-normal-C927yMrb.woff",
-      "assets/roboto-cyrillic-500-normal-hCeO1jFL.woff2",
-      "assets/roboto-cyrillic-500-normal-BI4HuXre.woff",
-      "assets/roboto-greek-ext-500-normal-CGTRT-go.woff2",
-      "assets/roboto-greek-ext-500-normal-BoWv1jNG.woff",
-      "assets/roboto-greek-500-normal-BJMS0heP.woff2",
-      "assets/roboto-greek-500-normal-BLLWU9W-.woff",
-      "assets/roboto-math-500-normal-CFNaIMFC.woff2",
-      "assets/roboto-math-500-normal-DaFX-ZC8.woff",
-      "assets/roboto-symbols-500-normal-BXFTxrNR.woff2",
-      "assets/roboto-symbols-500-normal-CAhAe-ik.woff",
-      "assets/roboto-vietnamese-500-normal-HYpufUYk.woff2",
-      "assets/roboto-vietnamese-500-normal-DW96CsrR.woff",
-      "assets/roboto-latin-ext-500-normal-C_ARlJGk.woff2",
-      "assets/roboto-latin-ext-500-normal-FFcS8vBN.woff",
-      "assets/roboto-latin-500-normal-CkrA1NAy.woff2",
-      "assets/roboto-latin-500-normal-CC5nhZkh.woff",
-      "assets/roboto-cyrillic-ext-700-normal-UFn0vR9r.woff2",
-      "assets/roboto-cyrillic-ext-700-normal-BuQgZIrO.woff",
-      "assets/roboto-cyrillic-700-normal-BiSG5NnW.woff2",
-      "assets/roboto-cyrillic-700-normal-KqaQ5bNp.woff",
-      "assets/roboto-greek-ext-700-normal-CzvIc217.woff2",
-      "assets/roboto-greek-ext-700-normal-DAFKdZbJ.woff",
-      "assets/roboto-greek-700-normal-BcGn9doz.woff2",
-      "assets/roboto-greek-700-normal-D3kmAf0K.woff",
-      "assets/roboto-math-700-normal-VUAI6Bz2.woff2",
-      "assets/roboto-math-700-normal-pYD1nhov.woff",
-      "assets/roboto-symbols-700-normal-rJi6RjIy.woff2",
-      "assets/roboto-symbols-700-normal-CuuvBBxy.woff",
-      "assets/roboto-vietnamese-700-normal-iKxYNAzq.woff2",
-      "assets/roboto-vietnamese-700-normal-Dz0HwF-w.woff",
-      "assets/roboto-latin-ext-700-normal-70GS1MYH.woff2",
-      "assets/roboto-latin-ext-700-normal-BS1OuQqR.woff",
-      "assets/roboto-latin-700-normal-CXeAXeti.woff2",
-      "assets/roboto-latin-700-normal-DUekQERp.woff"
+      "assets/inter-cyrillic-ext-300-normal-CgCALhwJ.woff2",
+      "assets/inter-cyrillic-ext-300-normal-RId2JxDB.woff",
+      "assets/inter-cyrillic-300-normal-BnqRxXuy.woff2",
+      "assets/inter-cyrillic-300-normal-LR1W_oT8.woff",
+      "assets/inter-greek-ext-300-normal-l2DDyC6M.woff2",
+      "assets/inter-greek-ext-300-normal-DLbbeei1.woff",
+      "assets/inter-greek-300-normal-DmGD3g_f.woff2",
+      "assets/inter-greek-300-normal-BrhSP0vQ.woff",
+      "assets/inter-vietnamese-300-normal-Bdr24Bqb.woff2",
+      "assets/inter-vietnamese-300-normal-DDGmYYdT.woff",
+      "assets/inter-latin-ext-300-normal-CPgO9Ksf.woff2",
+      "assets/inter-latin-ext-300-normal-Dp1L8vcn.woff",
+      "assets/inter-latin-300-normal-BVlfKGgI.woff2",
+      "assets/inter-latin-300-normal-i8F0SvXL.woff",
+      "assets/inter-cyrillic-ext-400-normal-BQZuk6qB.woff2",
+      "assets/inter-cyrillic-ext-400-normal-DQukG94-.woff",
+      "assets/inter-cyrillic-400-normal-obahsSVq.woff2",
+      "assets/inter-cyrillic-400-normal-HOLc17fK.woff",
+      "assets/inter-greek-ext-400-normal-DGGRlc-M.woff2",
+      "assets/inter-greek-ext-400-normal-KugGGMne.woff",
+      "assets/inter-greek-400-normal-B4URO6DV.woff2",
+      "assets/inter-greek-400-normal-q2sYcFCs.woff",
+      "assets/inter-vietnamese-400-normal-DMkecbls.woff2",
+      "assets/inter-vietnamese-400-normal-Bbgyi5SW.woff",
+      "assets/inter-latin-ext-400-normal-C1nco2VV.woff2",
+      "assets/inter-latin-ext-400-normal-77YHD8bZ.woff",
+      "assets/inter-latin-400-normal-C38fXH4l.woff2",
+      "assets/inter-latin-400-normal-CyCys3Eg.woff",
+      "assets/inter-cyrillic-ext-500-normal-B0yAr1jD.woff2",
+      "assets/inter-cyrillic-ext-500-normal-BmqWE9Dz.woff",
+      "assets/inter-cyrillic-500-normal-BasfLYem.woff2",
+      "assets/inter-cyrillic-500-normal-CxZf_p3X.woff",
+      "assets/inter-greek-ext-500-normal-C4iEst2y.woff2",
+      "assets/inter-greek-ext-500-normal-2j5mBUwD.woff",
+      "assets/inter-greek-500-normal-BIZE56-Y.woff2",
+      "assets/inter-greek-500-normal-Xzm54t5V.woff",
+      "assets/inter-vietnamese-500-normal-DOriooB6.woff2",
+      "assets/inter-vietnamese-500-normal-mJboJaSs.woff",
+      "assets/inter-latin-ext-500-normal-CV4jyFjo.woff2",
+      "assets/inter-latin-ext-500-normal-BxGbmqWO.woff",
+      "assets/inter-latin-500-normal-Cerq10X2.woff2",
+      "assets/inter-latin-500-normal-BL9OpVg8.woff",
+      "assets/inter-cyrillic-ext-600-normal-Dfes3d0z.woff2",
+      "assets/inter-cyrillic-ext-600-normal-Bcila6Z-.woff",
+      "assets/inter-cyrillic-600-normal-CWCymEST.woff2",
+      "assets/inter-cyrillic-600-normal-4D_pXhcN.woff",
+      "assets/inter-greek-ext-600-normal-DRtmH8MT.woff2",
+      "assets/inter-greek-ext-600-normal-B8X0CLgF.woff",
+      "assets/inter-greek-600-normal-plRanbMR.woff2",
+      "assets/inter-greek-600-normal-BZpKdvQh.woff",
+      "assets/inter-vietnamese-600-normal-Cc8MFFhd.woff2",
+      "assets/inter-vietnamese-600-normal-BuLX-rYi.woff",
+      "assets/inter-latin-ext-600-normal-D2bJ5OIk.woff2",
+      "assets/inter-latin-ext-600-normal-CIVaiw4L.woff",
+      "assets/inter-latin-600-normal-LgqL8muc.woff2",
+      "assets/inter-latin-600-normal-CiBQ2DWP.woff",
+      "assets/inter-cyrillic-ext-700-normal-BjwYoWNd.woff2",
+      "assets/inter-cyrillic-ext-700-normal-LO58E6JB.woff",
+      "assets/inter-cyrillic-700-normal-CjBOestx.woff2",
+      "assets/inter-cyrillic-700-normal-DrXBdSj3.woff",
+      "assets/inter-greek-ext-700-normal-qfdV9bQt.woff2",
+      "assets/inter-greek-ext-700-normal-BoQ6DsYi.woff",
+      "assets/inter-greek-700-normal-C3JjAnD8.woff2",
+      "assets/inter-greek-700-normal-BUv2fZ6O.woff",
+      "assets/inter-vietnamese-700-normal-DlLaEgI2.woff2",
+      "assets/inter-vietnamese-700-normal-BZaoP0fm.woff",
+      "assets/inter-latin-ext-700-normal-Ca8adRJv.woff2",
+      "assets/inter-latin-ext-700-normal-TidjK2hL.woff",
+      "assets/inter-latin-700-normal-Yt3aPRUw.woff2",
+      "assets/inter-latin-700-normal-BLAVimhd.woff"
     ]
   }
 }
