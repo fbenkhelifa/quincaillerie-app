@@ -1,8 +1,8 @@
 import { forwardRef } from 'react';
 import { numberToWordsFR, numberToWordsAR } from '@/utils/numberToWords';
 
-const PrintableInvoice = forwardRef(({ bill, storeSettings, locale = 'fr' }, ref) => {
-    const isArabic = locale === 'ar';
+const PrintableInvoice = forwardRef(({ bill, storeSettings, lang = 'fr' }, ref) => {
+    const isArabic = lang === 'ar';
     
     const formatCurrency = (value) => {
         return new Intl.NumberFormat('fr-DZ', {

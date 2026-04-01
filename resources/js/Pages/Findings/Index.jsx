@@ -420,7 +420,7 @@ export default function Index({
                                         <TableRow>
                                             <TableCell colSpan={6}>
                                                 <EmptyState
-                                                    icon={<ResolvedIcon />}
+                                                    icon={ResolvedIcon}
                                                     title={t('Aucune anomalie')}
                                                     description={t('Aucune anomalie détectée avec ces filtres')}
                                                 />

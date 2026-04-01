@@ -1,0 +1,70 @@
+ M app/Http/Controllers/AnalyticsController.php
+ M app/Models/AnomalyFinding.php
+ M app/Services/Analytics/InventoryAnalyticsService.php
+ M app/Services/Analytics/SalesAnalyticsService.php
+ D public/storage/products/hXc5VdCpIWm40KX81O2yX54TIovKCKMMb6TiM0tr.png
+ M resources/js/Components/Dashboard/DashboardCharts.jsx
+ M resources/js/Components/Dashboard/DashboardFilterBar.jsx
+ M resources/js/Components/PrintableInvoice.jsx
+ M resources/js/Pages/Analytics/Inventory.jsx
+ M resources/js/Pages/AuditLog/Index.jsx
+ M resources/js/Pages/Dashboard.jsx
+ M resources/js/Pages/Findings/Index.jsx
+ M resources/js/Pages/Notifications/Index.jsx
+ M resources/js/Pages/Ops/Status.jsx
+ M resources/js/app.jsx
+?? .env.local.backup
+?? database/migrations/2026_01_12_000001_add_arabic_fields_to_settings_table.php
+?? docs/report.zip
+?? git_status_after_cleanup.txt
+!! .env
+!! node_modules/
+!! storage/app/public/products/rdVHD1NK3Pu58L3PczAFa489ORc5RZX8642774ZG.jpg
+!! storage/framework/views/12b6fba030b18ac22505871b0ea8e512.php
+!! storage/framework/views/18ceed3bbfdc162883033e87d3cf6cd7.php
+!! storage/framework/views/196c4ce170513b15a4716a710a16229c.php
+!! storage/framework/views/20602ce6977cb06e9f3dc6c308799750.php
+!! storage/framework/views/252d59330c1c526744abdc9a2e45f938.php
+!! storage/framework/views/27cd859ab76c32ef2426db4077d3ca66.php
+!! storage/framework/views/354ae49d50e0aadb433e8d7bec4f46e7.php
+!! storage/framework/views/36b66c3b4468a8a70c34b462f0c27cde.php
+!! storage/framework/views/3e7b0228ba209bd66fe4970f00198ba1.php
+!! storage/framework/views/49a0fb7203c6e75da38b2a5f35f68820.php
+!! storage/framework/views/4b0485e972ce183cd644c124e9b69e9b.php
+!! storage/framework/views/4fa35e864052c91d8b536d32eba4f7ff.php
+!! storage/framework/views/51fc83decf9495e1de302e38e66f0663.php
+!! storage/framework/views/55233966306c20be4bb36bf523a70ac0.php
+!! storage/framework/views/569dad2918cfb99c0df6d1e537c778f0.php
+!! storage/framework/views/5a1e54817c778b6f385d1c53f3c0c56a.php
+!! storage/framework/views/5b3fed182d7af31d3a916b10de340e43.php
+!! storage/framework/views/62893067dfdfae3149844db95190671e.php
+!! storage/framework/views/647fac9bfa1bfeeb493cd3d46ee926e1.php
+!! storage/framework/views/65911cc3eee6edcdc7dd4d338d1dc1cf.php
+!! storage/framework/views/6ae6cbdf9dbacc1059d3e9f595f835a5.php
+!! storage/framework/views/6d869e1cfdeda8322b7178b439a55209.php
+!! storage/framework/views/6f97719549930d5c52b81154778f80b6.php
+!! storage/framework/views/74c935095eedcda30f319252aa24e0d9.php
+!! storage/framework/views/7b30aeb626a15f457300a73ce84f9367.php
+!! storage/framework/views/87409c4f287e3f94ff1aba6cf06954cf.php
+!! storage/framework/views/8c789a80f2d44ae06d6f53bd4aad3f89.php
+!! storage/framework/views/92166bb4d02a2aa24d64229a81231990.php
+!! storage/framework/views/a3247cd1de7af2e53184d7a0c658419d.php
+!! storage/framework/views/a7154f86de01ca9021d3bbd6e556c9ad.php
+!! storage/framework/views/a886befb3588a5ac719bd735e0a4fc61.php
+!! storage/framework/views/a89808d711341f2d7e2ff1ee34e8cdf7.php
+!! storage/framework/views/ab59d1b8a2dbfa702944161c43a1d981.php
+!! storage/framework/views/bf13424c32b395336a15aa602be06d33.php
+!! storage/framework/views/bf43a5619321d3b8bcc57dfb42aeee6e.php
+!! storage/framework/views/c58b9ac7dbc5692311c12c5acf774575.php
+!! storage/framework/views/c950fdbc705812236c9fc66c917c4787.php
+!! storage/framework/views/d9fff43740149fe6d51d46327ab33d9c.php
+!! storage/framework/views/dacdd90818cbf386069c43d7bee1fc5b.php
+!! storage/framework/views/dbd92349c86e06d6157422962f5a9919.php
+!! storage/framework/views/dbe6fb0533d12c6c78c4e5e164c734c7.php
+!! storage/framework/views/e31d04ae403f9a5ab1a4ce13a8354d2f.php
+!! storage/framework/views/e4313a33ac7e8a8dde4c4e156467f5d9.php
+!! storage/framework/views/e95d16721b1e95bf4afee831e26c698e.php
+!! storage/framework/views/e9e54975c2ef94174e735f9ec5f36d7e.php
+!! storage/framework/views/ec1a9954bd69d030a94bd38aa357765d.php
+!! storage/logs/laravel.log
+!! vendor/

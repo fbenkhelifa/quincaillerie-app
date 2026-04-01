@@ -328,7 +328,7 @@ export default function NotificationsIndex({ notifications, stats, types, severi
                 <Paper>
                     {notifications.data.length === 0 ? (
                         <EmptyState
-                            icon={<NotificationsIcon sx={{ fontSize: 64, opacity: 0.5 }} />}
+                            icon={NotificationsIcon}
                             title={t('Aucune notification')}
                             description={t('Aucune notification ne correspond à vos critères.')}
                         />

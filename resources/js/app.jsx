@@ -143,8 +143,14 @@ createInertiaApp({
             import.meta.glob('./Pages/**/*.jsx')
         ),
     setup({ el, App, props }) {
-        const root = createRoot(el);
-        root.render(<AppWrapper App={App} props={props} />);
+        // Prevent duplicate createRoot calls during HMR
+        if (el._reactRoot) {
+            el._reactRoot.render(<AppWrapper App={App} props={props} />);
+        } else {
+            const root = createRoot(el);
+            el._reactRoot = root;
+            root.render(<AppWrapper App={App} props={props} />);
+        }
     },
     progress: {
         color: '#2563EB',

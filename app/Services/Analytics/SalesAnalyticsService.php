@@ -175,7 +175,7 @@ class SalesAnalyticsService
                 ->select(
                     'product_id',
                     DB::raw('SUM(quantity) as total_qty'),
-                    DB::raw('SUM(subtotal) as total_revenue')
+                    DB::raw('SUM(total) as total_revenue')
                 )
                 ->groupBy('product_id')
                 ->orderByDesc('total_revenue')
@@ -220,12 +220,11 @@ class SalesAnalyticsService
                 ->select(
                     'categories.id',
                     'categories.name',
-                    'categories.color',
                     DB::raw('SUM(bill_items.quantity) as total_qty'),
-                    DB::raw('SUM(bill_items.subtotal) as total_revenue'),
+                    DB::raw('SUM(bill_items.total) as total_revenue'),
                     DB::raw('COUNT(DISTINCT bill_items.bill_id) as order_count')
                 )
-                ->groupBy('categories.id', 'categories.name', 'categories.color')
+                ->groupBy('categories.id', 'categories.name')
                 ->orderByDesc('total_revenue')
                 ->get();
 

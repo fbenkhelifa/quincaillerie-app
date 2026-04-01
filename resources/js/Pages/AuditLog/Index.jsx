@@ -337,7 +337,7 @@ export default function Index({
                                         <TableRow>
                                             <TableCell colSpan={6}>
                                                 <EmptyState
-                                                    icon={<HistoryIcon />}
+                                                    icon={HistoryIcon}
                                                     title={t('Aucun log')}
                                                     description={t('Aucune action enregistrée avec ces filtres')}
                                                 />

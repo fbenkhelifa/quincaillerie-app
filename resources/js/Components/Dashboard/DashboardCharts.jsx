@@ -349,7 +349,7 @@ export function StockRiskChart({ data = [], loading = false, title }) {
                 <ResponsiveContainer width="100%" height={300}>
                     <BarChart data={data}>
                         <CartesianGrid strokeDasharray="3 3" stroke={theme.palette.divider} />
-                        <XAxis dataKey="category" tick={{ fontSize: 10 }} stroke={theme.palette.text.secondary} />
+                        <XAxis dataKey="name" tick={{ fontSize: 10 }} stroke={theme.palette.text.secondary} />
                         <YAxis tick={{ fontSize: 11 }} stroke={theme.palette.text.secondary} />
                         <Tooltip
                             contentStyle={{
@@ -359,7 +359,7 @@ export function StockRiskChart({ data = [], loading = false, title }) {
                             }}
                         />
                         <Legend />
-                        <Bar dataKey="ok_stock" name={t('Stock OK')} stackId="a" fill={theme.palette.success.main} />
+                        <Bar dataKey="healthy" name={t('Stock OK')} stackId="a" fill={theme.palette.success.main} />
                         <Bar dataKey="low_stock" name={t('Stock bas')} stackId="a" fill={theme.palette.warning.main} />
                         <Bar dataKey="out_of_stock" name={t('Rupture')} stackId="a" fill={theme.palette.error.main} radius={[4, 4, 0, 0]} />
                     </BarChart>
@@ -420,7 +420,7 @@ export function MovementsTimelineChart({ data = [], loading = false, title }) {
                         <ReferenceLine y={0} stroke={theme.palette.divider} />
                         <Area
                             type="monotone"
-                            dataKey="in"
+                            dataKey="purchases"
                             name={t('Entrées')}
                             stroke={theme.palette.success.main}
                             fill="url(#inGradient)"
@@ -428,7 +428,7 @@ export function MovementsTimelineChart({ data = [], loading = false, title }) {
                         />
                         <Area
                             type="monotone"
-                            dataKey="out"
+                            dataKey="sales"
                             name={t('Sorties')}
                             stroke={theme.palette.error.main}
                             fill="url(#outGradient)"

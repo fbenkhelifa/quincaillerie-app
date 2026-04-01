@@ -376,7 +376,7 @@ export default function OpsStatus({ lastRuns, queueHealth, recentRuns, stats, sc
 
                     {recentRuns.length === 0 ? (
                         <EmptyState
-                            icon={<TimelineIcon sx={{ fontSize: 64, opacity: 0.5 }} />}
+                            icon={TimelineIcon}
                             title={t('Aucune exécution')}
                             description={t('Aucune tâche n\'a été exécutée récemment.')}
                         />

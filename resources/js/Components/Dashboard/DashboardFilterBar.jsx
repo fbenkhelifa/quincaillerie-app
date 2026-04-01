@@ -257,9 +257,9 @@ export default function DashboardFilterBar({
                             value={filters.worker_id}
                             onChange={(e) => handleFilterChange('worker_id', e.target.value)}
                         >
-                            <MenuItem key="all" value="">{t('Tous')}</MenuItem>
+                            <MenuItem key="worker-all" value="">{t('Tous')}</MenuItem>
                             {filterOptions.workers?.map((worker) => (
-                                <MenuItem key={worker.value} value={worker.value}>
+                                <MenuItem key={`worker-${worker.value}`} value={worker.value}>
                                     {worker.label}
                                 </MenuItem>
                             ))}
@@ -276,9 +276,9 @@ export default function DashboardFilterBar({
                             value={filters.payment_method}
                             onChange={(e) => handleFilterChange('payment_method', e.target.value)}
                         >
-                            <MenuItem key="all" value="">{t('Tous')}</MenuItem>
+                            <MenuItem key="payment-all" value="">{t('Tous')}</MenuItem>
                             {filterOptions.payment_methods?.map((method) => (
-                                <MenuItem key={method.value} value={method.value}>
+                                <MenuItem key={`payment-${method.value}`} value={method.value}>
                                     {method.label}
                                 </MenuItem>
                             ))}
@@ -295,9 +295,9 @@ export default function DashboardFilterBar({
                             value={filters.category_id}
                             onChange={(e) => handleFilterChange('category_id', e.target.value)}
                         >
-                            <MenuItem key="all" value="">{t('Toutes')}</MenuItem>
+                            <MenuItem key="category-all" value="">{t('Toutes')}</MenuItem>
                             {filterOptions.categories?.map((category) => (
-                                <MenuItem key={category.value} value={category.value}>
+                                <MenuItem key={`category-${category.value}`} value={category.value}>
                                     {category.label}
                                 </MenuItem>
                             ))}

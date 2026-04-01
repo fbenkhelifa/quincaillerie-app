@@ -58,6 +58,14 @@ export default function Dashboard({
 
     const { kpis = {}, charts = {}, recommended_actions = {}, meta = {} } = dashboardData;
 
+    // Helper to get KPI value regardless of whether kpis is an array or object
+    const getKpiValue = useCallback((key) => {
+        if (Array.isArray(kpis)) {
+            return kpis.find(k => k.key === key)?.value;
+        }
+        return kpis[key]?.value;
+    }, [kpis]);
+
     const formatCurrency = useCallback((value) => {
         return new Intl.NumberFormat(locale === 'ar' ? 'ar-DZ' : 'fr-DZ', {
             style: 'decimal',
@@ -226,7 +234,7 @@ export default function Dashboard({
                                     <Grid container spacing={3}>
                                         <Grid item xs={12} lg={8}>
                                             <AlertsSeverityChart
-                                                data={charts.alerts_severity || []}
+                                                data={charts.alerts_by_severity || []}
                                                 loading={loading}
                                             />
                                         </Grid>
@@ -243,17 +251,17 @@ export default function Dashboard({
                                                         />
                                                         <SummaryItem
                                                             label={t('Chiffre d\'affaires')}
-                                                            value={formatCurrency(kpis.find(k => k.key === 'revenue')?.value)}
+                                                            value={formatCurrency(getKpiValue('revenue'))}
                                                             color="success.main"
                                                         />
                                                         <SummaryItem
                                                             label={t('Nombre de factures')}
-                                                            value={kpis.find(k => k.key === 'bills_count')?.value || 0}
+                                                            value={getKpiValue('orders') || 0}
                                                         />
                                                         <SummaryItem
                                                             label={t('Articles en rupture')}
-                                                            value={kpis.find(k => k.key === 'low_stock')?.value || 0}
-                                                            color={kpis.find(k => k.key === 'low_stock')?.value > 0 ? 'warning.main' : 'text.primary'}
+                                                            value={getKpiValue('stockout_risk') || 0}
+                                                            color={getKpiValue('stockout_risk') > 0 ? 'warning.main' : 'text.primary'}
                                                         />
                                                     </Box>
                                                 </CardContent>

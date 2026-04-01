@@ -46,6 +46,17 @@ class AnomalyFinding extends Model
     public const TYPE_DEAD_STOCK = 'dead_stock';
     public const TYPE_STOCK_DISCREPANCY = 'stock_discrepancy';
 
+    public const TYPES = [
+        self::TYPE_REPEATED_CANCELLATION,
+        self::TYPE_NEGATIVE_STOCK,
+        self::TYPE_LARGE_ADJUSTMENT,
+        self::TYPE_HIGH_DISCOUNT,
+        self::TYPE_UNUSUAL_VOID,
+        self::TYPE_PRICE_OVERRIDE,
+        self::TYPE_DEAD_STOCK,
+        self::TYPE_STOCK_DISCREPANCY,
+    ];
+
     // Relationships
     public function entity(): MorphTo
     {

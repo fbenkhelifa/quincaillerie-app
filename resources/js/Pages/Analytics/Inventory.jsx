@@ -63,6 +63,7 @@ export default function Inventory({
     const theme = useTheme();
     const [startDate, setStartDate] = useState(filters.start_date);
     const [endDate, setEndDate] = useState(filters.end_date);
+    const [refreshing, setRefreshing] = useState(false);
 
     const formatCurrency = (value) => {
         return new Intl.NumberFormat(locale === 'ar' ? 'ar-DZ' : 'fr-DZ', {
@@ -83,8 +84,16 @@ export default function Inventory({
         }, { preserveState: true });
     };
 
-    const refreshData = () => {
-        router.post(route('analytics.refresh'), { type: 'analytics' });
+    const refreshData = async () => {
+        setRefreshing(true);
+        try {
+            await window.axios.post(route('analytics.refresh'), { type: 'analytics' });
+            // Reload the page to get fresh data
+            router.reload({ preserveScroll: true, onFinish: () => setRefreshing(false) });
+        } catch (error) {
+            console.error('Refresh failed:', error);
+            setRefreshing(false);
+        }
     };
 
     const handleExport = () => {
@@ -127,7 +136,17 @@ export default function Inventory({
                     </Box>
                     <Box sx={{ display: 'flex', gap: 1 }}>
                         <Tooltip title={t('Actualiser')}>
-                            <IconButton onClick={refreshData}>
+                            <IconButton 
+                                onClick={refreshData} 
+                                disabled={refreshing}
+                                sx={{
+                                    animation: refreshing ? 'spin 1s linear infinite' : 'none',
+                                    '@keyframes spin': {
+                                        '0%': { transform: 'rotate(0deg)' },
+                                        '100%': { transform: 'rotate(360deg)' },
+                                    },
+                                }}
+                            >
                                 <RefreshIcon />
                             </IconButton>
                         </Tooltip>
@@ -187,28 +206,28 @@ export default function Inventory({
                 <Grid item xs={12} sm={6} lg={3}>
                     <StatCard
                         title={t('Valeur totale du stock')}
-                        value={formatCurrency(valuation.total_value)}
+                        value={formatCurrency(valuation?.summary?.total_cost_value)}
                         icon={<StockIcon sx={{ fontSize: 28 }} />}
                         color="primary"
-                        subtitle={`${formatNumber(valuation.total_items)} ${t('articles')}`}
+                        subtitle={`${formatNumber(valuation?.summary?.total_units)} ${t('articles')}`}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} lg={3}>
                     <StatCard
                         title={t('Valeur au prix de vente')}
-                        value={formatCurrency(valuation.retail_value)}
+                        value={formatCurrency(valuation?.summary?.total_retail_value)}
                         icon={<TurnoverIcon sx={{ fontSize: 28 }} />}
                         color="success"
-                        subtitle={`${t('Marge potentielle')}: ${formatCurrency(valuation.potential_margin)}`}
+                        subtitle={`${t('Marge potentielle')}: ${formatCurrency(valuation?.summary?.potential_margin)}`}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} lg={3}>
                     <StatCard
                         title={t('Produits en rupture')}
-                        value={formatNumber(valuation.out_of_stock_count)}
+                        value={formatNumber(lowStockAlerts?.filter(a => a.quantity <= 0).length || 0)}
                         icon={<AlertIcon sx={{ fontSize: 28 }} />}
                         color="error"
-                        subtitle={`${valuation.low_stock_count || 0} ${t('en stock bas')}`}
+                        subtitle={`${lowStockAlerts?.length || 0} ${t('en stock bas')}`}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} lg={3}>
@@ -235,7 +254,7 @@ export default function Inventory({
                             <LineChart
                                 data={valuationHistory || []}
                                 series={[
-                                    { key: 'total_value', color: theme.palette.primary.main, label: t('Valeur coût') },
+                                    { key: 'cost_value', color: theme.palette.primary.main, label: t('Valeur coût') },
                                     { key: 'retail_value', color: theme.palette.success.main, label: t('Valeur vente') },
                                 ]}
                                 height={350}
@@ -256,9 +275,9 @@ export default function Inventory({
                         />
                         <CardContent>
                             <PieChart
-                                data={valuation.by_category?.map(cat => ({
-                                    label: cat.name,
-                                    value: cat.value,
+                                data={valuation?.by_category?.map(cat => ({
+                                    label: cat.category_name,
+                                    value: cat.cost_value,
                                 })) || []}
                                 donut
                                 height={280}
@@ -294,8 +313,8 @@ export default function Inventory({
                                                         {item.name}
                                                     </Typography>
                                                 </TableCell>
-                                                <TableCell align="center">{formatNumber(item.sold)}</TableCell>
-                                                <TableCell align="center">{formatNumber(item.avg_stock)}</TableCell>
+                                                <TableCell align="center">{formatNumber(item.sold_qty)}</TableCell>
+                                                <TableCell align="center">{formatNumber(item.current_stock)}</TableCell>
                                                 <TableCell align="center">
                                                     <Typography fontWeight={600}>
                                                         {item.turnover_ratio?.toFixed(1)}x
@@ -344,10 +363,10 @@ export default function Inventory({
                                                             {item.name}
                                                         </Typography>
                                                     </TableCell>
-                                                    <TableCell align="center">{formatNumber(item.stock_quantity)}</TableCell>
+                                                    <TableCell align="center">{formatNumber(item.quantity)}</TableCell>
                                                     <TableCell align="center">
                                                         <Chip
-                                                            label={`${item.days_since_movement}j`}
+                                                            label={item.last_activity || '90+j'}
                                                             color="error"
                                                             size="small"
                                                             variant="outlined"
@@ -355,7 +374,7 @@ export default function Inventory({
                                                     </TableCell>
                                                     <TableCell align="right">
                                                         <Typography color="error.main" fontWeight={600}>
-                                                            {formatCurrency(item.blocked_value)}
+                                                            {formatCurrency(item.value)}
                                                         </Typography>
                                                     </TableCell>
                                                 </TableRow>
@@ -365,7 +384,7 @@ export default function Inventory({
                                 </TableContainer>
                             ) : (
                                 <EmptyState
-                                    icon={<DeadStockIcon />}
+                                    icon={DeadStockIcon}
                                     title={t('Aucun stock dormant')}
                                     description={t('Tous vos produits ont eu des mouvements récents')}
                                 />
