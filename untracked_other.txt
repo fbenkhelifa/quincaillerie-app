@@ -1,0 +1,6 @@
+build_count.txt
+git_status_full.txt
+node_count.txt
+storage_count.txt
+untracked_other.txt
+vendor_count.txt
