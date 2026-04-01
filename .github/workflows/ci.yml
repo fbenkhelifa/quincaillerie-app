@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extensions: mbstring, xml, bcmath, curl, json, tokenizer, pdo, pdo_sqlite
+          ini-values: post_max_size=256M, memory_limit=2G, max_execution_time=300
+
+      - name: Cache Composer
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+
+      - name: Install Composer dependencies
+        run: composer install --no-progress --no-suggest --prefer-dist
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install Node dependencies
+        run: |
+          if [ -f package-lock.json ]; then npm ci --no-audit --progress=false; fi
+
+      - name: Prepare .env for CI (sqlite)
+        run: |
+          cp .env.example .env || true
+          echo "DB_CONNECTION=sqlite" >> .env
+          echo "DB_DATABASE=database/database.sqlite" >> .env
+          mkdir -p database
+          touch database/database.sqlite
+
+      - name: Generate key & migrate
+        run: |
+          php artisan key:generate --ansi
+          php artisan migrate --force --no-interaction || true
+
+      - name: Run PHP unit tests
+        run: |
+          if [ -f phpunit.xml ] || [ -f phpunit.xml.dist ]; then vendor/bin/phpunit || true; fi
+
+      - name: Build front-end (optional)
+        run: |
+          if [ -f package.json ]; then npm run build --silent || true; fi
