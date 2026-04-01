@@ -1,1 +1,32 @@
-node_modules
+# Node modules
+node_modules/
+
+# Composer vendor
+/vendor/
+
+# Environment files
+.env
+.env.local
+
+# Laravel storage and other generated files
+/public/storage
+/storage/*.key
+/storage/app/public
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+/public/hot
+
+# Vite / build
+/public/build
+/build
+
+# IDEs and editors
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
