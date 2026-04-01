@@ -30,3 +30,7 @@ node_modules/
 .DS_Store
 Thumbs.db
 
+# Ignore archived docs and report bundles
+docs/*.zip
+
+
